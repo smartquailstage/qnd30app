@@ -3,7 +3,7 @@ LABEL maintainer="mau_dev@smartquail.io"
 
 ENV PYTHONUNBUFFERED 1
 
-ENV NODE_VERSION=qnd30_app_stg
+ENV NODE_VERSION=qnd30app
 ENV NODE_APP_NAME=qnd30_app_stg
 ENV USER=qnd30
 

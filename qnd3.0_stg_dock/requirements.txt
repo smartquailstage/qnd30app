@@ -1,7 +1,7 @@
 django>=3.2,<4.0
 django-baton
 #Wagtail
-wagtail==3.0.3
+wagtail==4.0
 
 django-social-share
 wagtailgmaps
@@ -10,11 +10,12 @@ wagalytics==1.3
 requests
 celery
 #gunicorn
-uWSGI==2.0.20
+uWSGI==2.0.24
 redis
 django-dotenv
 psycopg2-binary
 django-storages
+django-contrib-comments
 
 #Django Web App dependencies
 django-social-auth
@@ -36,7 +37,6 @@ django-parler
 django-localflavor
 django-rosetta
 wagtail-localize
-wagtailmenus
 
 
 boto3
@@ -47,3 +47,4 @@ python-dotenv==0.21.0
 #Ecommerce
 braintree
 weasyprint
+wagtailmenus
