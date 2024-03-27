@@ -1,2 +1,2 @@
 # qnd30app
-NetHousing IoT Smart Buildings Business.
+Juan Silva Photo. V.1.0
