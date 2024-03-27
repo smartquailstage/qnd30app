@@ -46,7 +46,7 @@ services:
     environment:
       - PORT=80
     depends_on:
-      - qnode12_app
+      - qnd30_app
     ports:
       - 80:80
       - 443:443  
