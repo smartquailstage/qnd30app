@@ -1,0 +1,22 @@
+{% extends "webapp_0/base.html" %}
+{% load wagtailimages_tags wagtailcore_tags %}
+{% load widget_tweaks %}
+{% load static %}
+{% load menu_tags %}
+
+{% block content %}
+{% main_menu template="webapp_0/header.html" %}
+
+    <h1>{{ page.title }}</h1>
+    <p class="meta">{{ page.date }}</p>
+    {% image page.image fill-320x320 %}
+    <div class="intro">{{ page.intro }}</div>
+    {% for child in self.body %}
+        {% if child.block_type == 'heading' %}
+            <h2>{{ child }}</h2>
+        {% else %}
+            {{ child }}
+        {% endif %}
+    {% endfor %}
+    <p><a href="{% pageurl page.get_parent %}">Return to blog</a></p>
+{% endblock %}

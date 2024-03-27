@@ -1,0 +1,1 @@
+from .clean_page_revisions import Command as CleanPageRevisionsCommand
