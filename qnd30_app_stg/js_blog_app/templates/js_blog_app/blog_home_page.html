@@ -21,7 +21,7 @@
                 <h4>Photographer and publisher director </h4>
                 <h2>Juan Silva</h2>
                 <p>{{page.title_ini | richtext }} </p>
-                <a href="portfolio.html" class="btn fl-btn">About my Work</a>
+                <a href="{% slugurl 'myblog' %}" class="btn fl-btn">About my Work</a>
             </div>
         </div>
         <div class="slide-progress-wrap"><div class="slide-progress"></div></div>
@@ -37,7 +37,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item fl-wrap">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image scale-100 as F1 %}
+                                    <div class="bg" data-bg="{{ F1.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -45,7 +48,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide ">
                                 <div class="ms_item fl-wrap kenburns ">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_2 scale-100 as F2 %}
+                                    <div class="bg" data-bg="{{ F2.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -53,7 +59,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item fl-wrap">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_3 scale-100 as F3 %}
+                                    <div class="bg" data-bg="{{ F3.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -75,7 +84,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item2 fl-wrap">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_4 scale-100 as F4 %}
+                                    <div class="bg" data-bg="{{ F4.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -83,7 +95,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item2 fl-wrap">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_5 scale-100 as F5 %}
+                                    <div class="bg" data-bg="{{ F5.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -91,7 +106,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item2 fl-wrap kenburns ">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_6 scale-100 as F6 %}
+                                    <div class="bg" data-bg="{{ F6.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -113,7 +131,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item3 fl-wrap kenburns">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_7 scale-100 as F7 %}
+                                    <div class="bg" data-bg="{{ F7.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -121,7 +142,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item3 fl-wrap">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_8 scale-100 as F8 %}
+                                    <div class="bg" data-bg="{{ F8.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -129,7 +153,10 @@
                             <!--ms_item-->
                             <div class="swiper-slide">
                                 <div class="ms_item3 fl-wrap">
-                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    {% for item in page.galleria.all %}
+                                    {% image item.image_9 scale-100 as F9 %}
+                                    <div class="bg" data-bg="{{ F9.url }}"></div>
+                                    {% endfor %}
                                     <div class="overlay"></div>
                                 </div>
                             </div>
