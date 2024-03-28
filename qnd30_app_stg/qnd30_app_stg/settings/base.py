@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     #Wagtail Inicials
     'core',
     #'wagtail',
+    'wagtail',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -75,9 +76,9 @@ INSTALLED_APPS = [
     'wagtail.documents',
     'wagtail.images',
     'wagtail.search',
-
+    
     'wagtail.admin',
-    'wagtail.core',
+   # 'wagtail.core',
     'wagtail.contrib.settings',
     'wagtail.contrib.routable_page',
     'wagtail.contrib.modeladmin',
