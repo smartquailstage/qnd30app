@@ -25,27 +25,27 @@
                 <li><a href="#">{{ post.specific.date }}</a></li>
                 <li> - </li>
                 <li>
-                    {% for tag in blog_page.tags.all %}
+                    {% for tag in post.tags.all %}
                         <a href="{% url 'blog_tag' tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </li>
                 <li><a href="#">Design</a></li>
             </ul>
             <div class="blog-media fl-wrap">
-                {% image blog_page.image fill-250x250 as post_portada %}
+                {% image post.image fill-250x250 as post_portada %}
                 <img src="{{ post_portada.url }}" class="respimg" alt="">
             </div>
             <div class="blog-text fl-wrap">
                 <div class="pr-tags fl-wrap">
                     <span>Tags : </span>
                     <ul>
-                        {% for tag in blog_page.tags.all %}
+                        {% for tag in post.tags.all %}
                             <li><a href="{% url 'blog_tag' tag.slug %}">{{ tag.slug }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
                 <p>
-                    {% for block in blog_page.body %}
+                    {% for block in post.body %}
                         {% if block.block_type == 'heading' %}
                           <h3>{{ block.value }}</h3>
                         {% elif block.block_type == 'paragraph' %}
@@ -54,7 +54,7 @@
                         {% endif %}
                     {% endfor %}
                 </p>
-                <a href="{{ blog_page.url }}" class="btn float-btn flat-btn">Read more</a>
+                <a href="{{ post.url }}" class="btn float-btn flat-btn">Read more</a>
             </div>
         </div>
         {% endfor %}

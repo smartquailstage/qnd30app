@@ -1,0 +1,148 @@
+{% extends "webapp_0/base.html" %}
+{% load wagtailimages_tags wagtailcore_tags %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load widget_tweaks %}
+{% load static %}
+{% load menu_tags %}
+
+{% block content %}
+{% main_menu template="webapp_0/header.html" %}
+
+<div class="content full-height">
+    <!--home-main_container-->	
+    <div class="home-main_container">
+        <!--follow-wrap-->
+
+        <!--follow-wrap end-->
+        <!--home-main_title-->
+        <div class="home-main_title">
+            <div class="home-main_title_item">
+                <h4>Photographer and publisher director </h4>
+                <h2>Juan Silva</h2>
+                <p>{{page.title_ini | richtext }} </p>
+                <a href="portfolio.html" class="btn fl-btn">About my Work</a>
+            </div>
+        </div>
+        <div class="slide-progress-wrap"><div class="slide-progress"></div></div>
+        <!--home-main_title end-->
+        <div class="slider-mask"></div>
+        <!--multi-slideshow-wrap_1 -->
+        <div class="multi-slideshow-wrap_1 ms-wrap">
+            <div class="full-height fl-wrap">
+                <!--ms-container-->
+                <div class="multi-slideshow_1 ms-container fl-wrap full-height">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item fl-wrap">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->
+                            <!--ms_item-->
+                            <div class="swiper-slide ">
+                                <div class="ms_item fl-wrap kenburns ">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item fl-wrap">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->                                                 
+                        </div>
+                    </div>
+                </div>
+                <!--ms-container end-->
+            </div>
+        </div>
+        <!--multi-slideshow-wrap_1 end-->
+        <!--multi-slideshow-wrap_2-->
+        <div class="multi-slideshow-wrap_2">
+            <div class="full-height fl-wrap">
+                <!--ms-container-->
+                <div class="multi-slideshow_2 ms-container fl-wrap full-height">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item2 fl-wrap">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item2 fl-wrap">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item2 fl-wrap kenburns ">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->                                                 
+                        </div>
+                    </div>
+                </div>
+                <!--ms-container end-->                
+            </div>
+        </div>
+        <!--multi-slideshow-wrap_2 end-->
+        <!--multi-slideshow-wrap_3-->
+        <div class="multi-slideshow-wrap_3">
+            <div class="full-height fl-wrap">
+                <!--ms-container-->
+                <div class="multi-slideshow_3 ms-container fl-wrap full-height">
+                    <div class="swiper-container" dir="rtl">
+                        <div class="swiper-wrapper">
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item3 fl-wrap kenburns">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item3 fl-wrap">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->
+                            <!--ms_item-->
+                            <div class="swiper-slide">
+                                <div class="ms_item3 fl-wrap">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="overlay"></div>
+                                </div>
+                            </div>
+                            <!--ms_item end-->                                                 
+                        </div>
+                    </div>
+                </div>
+                <!--ms-container end-->   
+            </div>
+        </div>
+        <!--multi-slideshow-wrap_3 end-->
+    </div>
+    <!--home-main_container end-->	
+</div>
+
+{% endblock %}
