@@ -1,5 +1,5 @@
 # Use Python 3.11 Alpine image
-FROM python:3.11-alpine3.14
+FROM python:3.11.3-alpine3.18
 
 # Metadata
 LABEL maintainer="mau_dev@smartquail.io"
