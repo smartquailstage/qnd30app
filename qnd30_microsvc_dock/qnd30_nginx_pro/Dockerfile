@@ -17,16 +17,16 @@ USER root
 RUN apk add --no-cache openssl bash
 RUN chmod +x /run.sh
 
-RUN mkdir -p /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/staticfiles && \
-    chmod 755 /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/staticfiles && \
-    mkdir -p /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/media && \
-    chmod 755 /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/media && \
-    mkdir -p /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/static && \
-    chmod 755 /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/static 
+RUN mkdir -p /qnd30app/qnd30_app_stg/qnd30_app_stg/staticfiles && \
+    chmod 755 /qnd30app/qnd30_app_stg/qnd30_app_stg/staticfiles && \
+    mkdir -p /qnd30app/qnd30_app_stg/qnd30_app_stg/media && \
+    chmod 755 /qnd30app/qnd30_app_stg/qnd30_app_stg/media && \
+    mkdir -p /qnd30app/qnd30_app_stg/qnd30_app_stg/static && \
+    chmod 755 /qnd30app/qnd30_app_stg/qnd30_app_stg/static 
 
-VOLUME /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/staticfiles
-VOLUME /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/mediafiles
-VOLUME /qnd30_app_stg/qnd30_app_stg/qnd30_app_stg/static
+VOLUME /qnd30app/qnd30_app_stg/qnd30_app_stg/staticfiles
+VOLUME /qnd30app/qnd30_app_stg/qnd30_app_stg/mediafiles
+VOLUME /qnd30app/qnd30_app_stg/qnd30_app_stg/static
 VOLUME /vol/www
 VOLUME /vol/proxy
 VOLUME /etc/letsencrypt
