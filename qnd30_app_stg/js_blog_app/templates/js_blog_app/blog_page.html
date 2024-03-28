@@ -7,6 +7,184 @@
 {% block content %}
 {% main_menu template="webapp_0/header.html" %}
 
+<div class="column-image">
+    <div class="bg"  data-bg="images/bg/1.jpg"></div>
+    <div class="overlay"></div>
+    <div class="column-title">
+        <h2>My Stories</h2>
+        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar.</h3>
+    </div>
+    <div class="column-notifer">
+        <div class="scroll-down-wrap transparent_sdw">
+            <div class="mousey">
+                <div class="scroller"></div>
+            </div>
+            <span>Scroll down  to Discover</span>
+        </div>
+    </div>
+    <div class="fixed-column-dec"></div>
+</div>
+<!-- column-image end  -->	
+<!-- column-wrapper -->	
+<div class="column-wrapper single-content-section">
+    <!--fixed-bottom-content -->	
+    <div class="fixed-bottom-content">
+        <!-- pagination   -->
+        <div class="content-nav-fixed">
+            <ul>
+                <li>
+                    <a href="blog-single.html" class="ln"><i class="fal fa-long-arrow-left"></i><span>Prev <strong>- Post Title</strong></span></a>
+                    <div class="content-nav_mediatooltip cnmd_leftside"><img  src="images/folio/1.jpg"   alt=""></div>
+                </li>
+                <li>
+                    <a href="blog-single.html" class="rn"><span >Next <strong>- Post Title</strong></span> <i class="fal fa-long-arrow-right"></i></a>
+                    <div class="content-nav_mediatooltip cnmd_rightside"><img  src="images/folio/1.jpg"   alt=""></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--fixed-bottom-content end  -->	
+    <!--section  -->	
+     <section class="single-content-section">
+        <div class="container small-container">
+            <!-- post -->
+            <div class="post fl-wrap fw-post single-post ">
+                <h2><span>{{ page.title }}</span></h2>
+                <ul class="blog-title-opt">
+                    <li><a href="#">12 may 2017</a></li>
+                    <li> - </li>
+                    <li><a href="#">Interviews </a></li>
+                    <li><a href="#">Design</a></li>
+                    <li> - </li>
+                    <li><a href="#"><span class="author_avatar"> </span>Juan Silva</a></li>
+                </ul>
+                <!-- blog media -->
+                <div class="blog-media fl-wrap">
+                    <div class="single-slider-wrap">
+                        <div class="single-slider fl-wrap">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper lightgallery">
+                                    <div class="swiper-slide hov_zoom"><img src="images/folio/1.jpg" alt=""><a href="images/folio/1.jpg" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
+                                    <div class="swiper-slide hov_zoom"><img src="images/folio/1.jpg" alt=""><a href="images/folio/1.jpg" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
+                                    <div class="swiper-slide hov_zoom"><img src="images/folio/1.jpg" alt=""><a href="images/folio/1.jpg" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ss-slider-pagination_wrap">
+                            <div class="ss-slider-pagination"></div>
+                        </div>
+                        <div class="ss-slider-cont ss-slider-cont-prev color-bg"><i class="fal fa-long-arrow-left"></i></div>
+                        <div class="ss-slider-cont ss-slider-cont-next color-bg"><i class="fal fa-long-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- blog media end -->
+                <div class="blog-text fl-wrap">
+                    <div class="pr-tags fl-wrap">
+                        <span>Tags : </span>
+                        <ul>
+                            <li><a href="#">Design</a></li>
+                            <li><a href="#">Photography</a></li>
+                            <li><a href="#">Fasion</a></li>
+                        </ul>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare sem sed quam tempus aliquet vitae eget dolor. Proin eu ultrices libero. Curabitur vulputate vestibulum elementum. Suspendisse id neque a nibh mollis blandit. Quisque varius eros ac purus dignissim.
+                        Proin eu ultrices libero. Curabitur vulputate vestibulum elementum. Suspendisse id neque a nibh mollis blandit. Quisque varius eros ac purus dignissim.
+                    </p>
+                    <blockquote>
+                        <p> Cras lacinia magna vel molestie faucibus. Donec auctor et urnaLorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia magna vel molestie faucibus.Cras lacinia magna vel molestie faucibus. Donec auctor et urnaLorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia magna vel molestie faucibus.Cras lacinia magna vel molestie faucibus.   </p>
+                    </blockquote>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare sem sed quam tempus aliquet vitae eget dolor. Proin eu ultrices libero. Curabitur vulputate vestibulum elementum. Suspendisse id neque a nibh mollis blandit. Quisque varius eros ac purus dignissim.
+                        Proin eu ultrices libero. Curabitur vulputate vestibulum elementum. Suspendisse id neque a nibh mollis blandit. Quisque varius eros ac purus dignissim.
+                    </p>
+                    <p>Quisque varius eros ac purus dignissim.
+                        Proin eu ultrices libero. Curabitur vulputate vestibulum elementum. Suspendisse id neque a nibh mollis blandit. Quisque varius eros ac purus dignissim.
+                    </p>
+                </div>
+                <!-- post-author-->                                   
+                <div class="post-author fl-wrap">
+                    <div class="author-img">
+                        <img alt='' src="images/avatar/1.jpg">	
+                    </div>
+                    <div class="author-content">
+                        <h5><a href="#">Jane Kowalski</a></h5>
+                        <p>At one extremity the rope was unstranded, and the separate spread yarns were all braided and woven round the socket of the harpoon; the pole was then driven hard up into the socket; from the lower end the rope was traced half-way along the pole’s length, and firmly secured so, with intertwistings of twine.</p>
+                        <div class="author-social">
+                            <ul>
+                                <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--post-author end-->
+                <div id="comments" class="single-post-comm fl-wrap">
+                    <!--title-->
+                    <h6 id="comments-title">Comments<span>( 2 )</span></h6>
+                    <ul class="commentlist clearafix">
+                        <li class="comment">
+                            <div class="comment-body">
+                                <div class="comment-author">
+                                    <img alt='' src='images/avatar/1.jpg' width="50" height="50">
+                                </div>
+                                <cite class="fn"><a href="#">Kevin</a></cite>
+                                <div class="comment-meta">
+                                    <h6><a href="#">January 02, 2014 at 07:39 am</a> / <a class='comment-reply-link' href="#">Reply</a></h6>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo.</p>
+                            </div>
+                        </li>
+                        <li class="comment">
+                            <!--comment body-->
+                            <div class="comment-body">
+                                <div class="comment-author">
+                                    <img alt='' src='images/avatar/1.jpg' width="50" height="50">
+                                </div>
+                                <cite class="fn"><a href="#">Andy</a></cite>
+                                <div class="comment-meta">
+                                    <h6><a href="#">January 22, 2014 at 03:19 am</a> / <a class='comment-reply-link' href="#">Reply</a></h6>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <div id="respond" class="clearafix">
+                        <h6 id="reply-title">Leave A Review</h6>
+                        <form  class="custom-form "   name="commentform">
+                            <fieldset>
+                                <input type="text" name="name" id="name2" placeholder="Your Name *" value=""/>
+                                <input type="text"  name="email" id="email2" placeholder="Email Address *" value=""/>
+                                <textarea name="comments"  id="comments2" cols="40" rows="3" placeholder="Your Message:"></textarea>
+                                <button class="btn float-btn" id="submit">Add Comment </button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <!--end respond-->
+                </div>
+                <!--comments end -->
+            </div>
+            <!-- post end-->
+        </div>
+    </section>
+    <!--section end  -->	
+    <!--footer -->			
+    <footer class="min-footer fl-wrap content-animvisible">
+        <div class="container small-container">
+            <div class="footer-inner fl-wrap">
+                <!-- policy-box-->
+                <div class="policy-box">
+                    <span>&#169; Kotlis 2019  /  All rights reserved. </span>
+                </div>
+                <!-- policy-box end-->
+                <a href="#" class="to-top-btn to-top">Back to top <i class="fal fa-long-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+    <!--footer end  -->	
+</div>
+
     <h1>{{ page.title }}</h1>
     <p class="meta">{{ page.date }}</p>
     {% image page.image fill-320x320 %}
