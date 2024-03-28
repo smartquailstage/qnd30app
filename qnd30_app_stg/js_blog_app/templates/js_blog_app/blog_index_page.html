@@ -8,6 +8,8 @@
 
 {% block content %}
 {% main_menu template="webapp_0/header.html" %}
+
+<div id="wrapper">
 <div class="content">
     <div class="column-image">
         {% image page.image fill-250x250 as portada %}
@@ -119,5 +121,6 @@
             </div>
         </section>
     </div>
+</div>
 </div>
 {% endblock %}
