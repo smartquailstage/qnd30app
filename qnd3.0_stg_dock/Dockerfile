@@ -3,7 +3,8 @@ LABEL maintainer="mau_dev@smartquail.io"
 
 ENV PYTHONUNBUFFERED 1
 
-ENV NODE_VERSION=qnd30app
+ENV GIT_NODE=qnd30app
+ENV NODE_VERSION=qnd30_app_stg
 ENV NODE_APP_NAME=qnd30_app_stg
 ENV USER=qnd30
 
@@ -11,7 +12,7 @@ ENV USER=qnd30
 RUN apk add --no-cache git
 ARG username=smartquailDev
 ARG password=ms1719183830
-RUN git clone https://github.com/smartquailstage/${NODE_VERSION}.git
+RUN git clone https://github.com/smartquailstage/${GIT_NODE}.git
 
 
 #COPY . /qnode0_app
