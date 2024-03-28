@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  qnd30_app:
+  qnd30_app_stg:
     image: smartquail/qnd30app:latest
     restart: unless-stopped
     environment:
@@ -46,7 +46,7 @@ services:
     environment:
       - PORT=80
     depends_on:
-      - qnd30_app
+      - qnd30_app_stg
     ports:
       - 80:80
       - 443:443  
