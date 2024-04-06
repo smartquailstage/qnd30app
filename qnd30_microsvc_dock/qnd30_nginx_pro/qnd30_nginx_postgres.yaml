@@ -68,8 +68,6 @@ volumes:
   letsencrypt_certs:
   static-data-qnd30:
   smartquaildb_data-qnd30:
-  rabbitmq-data-qnd30:
-  redis_data-qnd30:
   smartquaildb_data-qnode12:
 
 networks: 
