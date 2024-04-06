@@ -60,38 +60,7 @@ services:
       - lansmartquail
 
 
-  redis:
-    image: redis:3.0
-    restart: always
-    expose:
-      - 6379
-    ports:
-      - "6379:6379"
-    env_file:
-      - .env
-    volumes:
-      - redis_data-qnode12:/data
-    entrypoint: redis-server --appendonly yes --port 6379
-    networks: 
-      - lansmartquail
 
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    restart: always
-    command: rabbitmq-server
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    env_file:
-      - .env
-    volumes:
-      - rabbitmq-data-qnd30:/var/lib/rabbitmq
-      - rabbitmq-data-qnd30:/var/log/rabbitmq
-    expose:
-      - 5672
-      - 15672
-    networks:
-        - lansmartquail
 
 volumes:
   certbot-web_2:
@@ -99,8 +68,6 @@ volumes:
   letsencrypt_certs:
   static-data-qnd30:
   smartquaildb_data-qnd30:
-  rabbitmq-data-qnd30:
-  redis_data-qnd30:
   smartquaildb_data-qnode12:
 
 networks: 
