@@ -1,3 +1,8 @@
+upstream django {
+    # server unix:///path/to/your/mysite/mysite.sock; # for a file socket
+    server qnd30_app_stg:9000; # for a web port socket (we'll use this first)
+}
+
 server {
     listen         443 ssl;
     server_name    ${DOMAIN}   64.23.235.13 127.0.0.1;
