@@ -17,8 +17,8 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - static-data-qnd30:/qnd30_app_stg/qnd30_app_stg/staticfiles
-      - static-data-qnd30:/qnd30_app_stg/qnd30_app_stg/media
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/staticfiles
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
    # command: sh -c "chmod +x /scripts/migrations.sh && sh /scripts/migrations.sh && sh /scripts/run.sh"
     networks: 
       - lansmartquail
@@ -51,8 +51,8 @@ services:
       - 80:80
       - 443:443  
     volumes:
-      - static-data-qnd30:/qnd30_app_stg/qnd30_app_stg/staticfiles
-      - static-data-qnd30:/qnd30_app_stg/qnd30_app_stg/media
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/staticfiles
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
       - certbot-web_2:/vol/www
       - proxy-dhparams_2:/vol/proxy
       - letsencrypt_certs:/etc/letsencrypt/
