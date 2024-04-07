@@ -31,11 +31,21 @@ server {
 
     location /static {
     alias /qnd30app/qnd30_app_stg/qnd30_app_stg/static;
+    add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
+    add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+    add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
+    add_header Access-Control-Allow-Credentials "true";
+    proxy_set_header X-Forwarded-Proto https;
     client_max_body_size    2000M;
      }
 
     location /media {
     alias  /qnd30app/qnd30_app_stg/qnd30_app_stg/media;
+    add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
+    add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+    add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
+    add_header Access-Control-Allow-Credentials "true";
+    proxy_set_header X-Forwarded-Proto https;
     client_max_body_size    2000M;
      }
 

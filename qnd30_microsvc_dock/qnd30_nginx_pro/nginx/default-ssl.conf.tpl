@@ -30,7 +30,12 @@ server {
     location / {
         uwsgi_pass           ${APP_HOST}:${APP_PORT};
         include              /etc/nginx/uwsgi_params;
-        client_max_body_size 1000M;
+        add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
+        add_header Access-Control-Allow-Credentials "true";
+        proxy_set_header X-Forwarded-Proto https;
+        client_max_body_size 2000M;
     }
 }
 
@@ -54,6 +59,11 @@ server {
     
     location /media {
     alias /qnd30app/qnd30_app_stg/qnd30_app_stg/media;
+    add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
+    add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+    add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
+    add_header Access-Control-Allow-Credentials "true";
+    proxy_set_header X-Forwarded-Proto https;
     client_max_body_size    2000M;
     }
 
@@ -61,7 +71,12 @@ server {
     location / {
         uwsgi_pass           ${APP_HOST}:${APP_PORT};
         include              /etc/nginx/uwsgi_params;
-        client_max_body_size 1000M;
+        add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
+        add_header Access-Control-Allow-Credentials "true";
+        proxy_set_header X-Forwarded-Proto https;
+        client_max_body_size    2000M;
     }
 }
 
