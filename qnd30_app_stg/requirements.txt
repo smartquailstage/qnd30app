@@ -2,7 +2,7 @@ Django
 #django>=3.2,<4.0
 django-baton
 #Wagtail
-wagtail==6.0.1
+wagtail==6.0.2
 
 django-social-share
 wagtailgmaps
