@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'core',
     #'wagtail',
     'wagtail',
-    'wagtail.contrib.settings',
+
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -119,6 +119,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'ckeditor',
     'js_blog_app',
+    'wagtail.contrib.settings',
     'baton.autodiscover',
    
 ]
