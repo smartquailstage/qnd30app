@@ -6,10 +6,7 @@
 
 <header class="main-header">
     <!-- logo   -->
-    {%for item in page.galleria_4.all %}
-     {% image item.logo width-110 format-png as logo %}
-    <a href="{% slugurl 'home' %}" class="logo-holder"><img src="{{logo.url}}" alt=""></a>  
-    {% endfor %}
+    <a href="{% slugurl 'home' %}" class="logo-holder"><img src="{% static '/img/LOGO65.png'%}" style="width: 170px;" alt=""></a> 
     <!-- logo end  -->		
     <!-- search -->				
     <!-- search end  -->
