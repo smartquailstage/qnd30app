@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'core',
     #'wagtail',
     'wagtail',
+    'wagtail.contrib.settings',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
