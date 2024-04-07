@@ -80,7 +80,7 @@ INSTALLED_APPS = [
     
     'wagtail.admin',
    # 'wagtail.core',
-    'wagtail.contrib.settings',
+   # 'wagtail.contrib.settings',
     'wagtail.contrib.routable_page',
     #'wagtail.contrib.modeladmin',
     #'wagalytics',
