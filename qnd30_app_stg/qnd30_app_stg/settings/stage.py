@@ -1,12 +1,21 @@
 from .base import *
 
 
+
+
 ENV_FILE_PATH = BASE_DIR / ".env"
 load_dotenv(str(ENV_FILE_PATH))
 
 DEBUG=  "0"
 
 
+CSRF_COOKIE_DOMAIN=".juansilvaphoto.com"
+CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ['https://www.juansilvaphoto.com']
+CORS_ALLOWED_ORIGINS = [
+    'https://quitocultura.smartquail.io',
+    # Otros orígenes permitidos si los hay
+]
 
 BATON = {
     'SITE_HEADER': '<a href="#"><img src="/static/img/m2.png" height="26px"></a>',
