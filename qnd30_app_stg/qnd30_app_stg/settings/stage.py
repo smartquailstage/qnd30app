@@ -11,9 +11,9 @@ DEBUG=  "0"
 
 CSRF_COOKIE_DOMAIN=".juansilvaphoto.com"
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://www.juansilvaphoto.com']
+CSRF_TRUSTED_ORIGINS = ['https://www.juansilvaphoto.com','64.23.235.13']
 CORS_ALLOWED_ORIGINS = [
-    'https://quitocultura.smartquail.io',
+    'https://www.juansilvaphoto.com','64.23.235.13'
     # Otros orígenes permitidos si los hay
 ]
 
