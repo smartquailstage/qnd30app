@@ -19,30 +19,39 @@
     <!-- mobile nav end-->				
     <!--  navigation -->
     <div class="nav-holder main-menu">
-        <nav>
-            <ul>
-                <li>
-                    <a href="{% slugurl 'home' %}" class="act-link">Home</a>
-                    <!--second level -->
-                </li>
-                <li>
-                    <a href="#">Portfolio </a>
-                    <!--second level -->
-                    <ul>
+      <nav>
+          <ul>
+              <li>
+                  <a href="{% slugurl 'home' %}" class="act-link">Home</a>
+                  <!--second level -->
+              </li>
+              <li>
+                  <a href="#">Portfolio </a>
+                  <!--second level -->
+                  <ul>
                       {% for item in menu_items %}
                       <li><a href="{{ item.href }}"> {{ item.text }}</a></li>
                       {% endfor %}
                   </ul>
-                </li>
-                <li>
-                    <a href="{% url 'wagtailadmin_home' %}">Customers</a>
-                </li>
-                <li>
-                    <a href="{% slugurl 'shootingnow' %}">Shooting now</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+                  <!--second level end-->
+              </li>
+              <li>
+                  <a href="{% slugurl 'wheretowatch' %}"> <i class="fal fa-ios-infinite"></i> Where To Watch</a>
+                  <!--second level -->
+                  <ul>
+                      {% for item in menu_items %}
+                      <li><a href="{{ item.href }}"> {{ item.text }}</a></li>
+                      {% endfor %}
+                  </ul>
+                  <!--second level end-->
+              </li>
+              <li>
+                  <a href="{% url 'wagtailadmin_home' %}"> <i class="fal fa-users"></i></a>
+              </li>
+              
+          </ul>
+      </nav>
+  </div>
     <!-- navigation  end -->               
 </header>
 
