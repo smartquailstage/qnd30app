@@ -1,6 +1,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load social_share %}
+{% load webapp_0_tags %}
 {% load static %}
 {% load menu_tags %}
 
@@ -40,20 +41,16 @@
                     </ul>
                     <!--second level end-->
                 </li>
+                {% wheretowatch_menu as menus %}
                 <li>
-                    <a href="{% slugurl 'wheretowatch' %}"> <i class="fal fa-ios-infinite"></i> Where To Watch</a>
-                    <!--second level -->
-                    <ul>
-                        {% wheretowatch_menus as menus %}
-                        {% for menu in menus %}
-                        <h6 class="title">{{menu.heading}}</h6>
-                        <div class="content">
-                          {% flat_menu menu.handle template="webapp_0/wheretowatch.html" %}
-                        </div>
-                        {% endfor %}
-                    </ul>
-                    <!--second level end-->
+                    
+                    {% for menu in menus %}
+                    <a href="{% slugurl 'wheretowatch' %}">{{menu.heading}}</a>
+                      {% flat_menu menu.handle template="webapp_0/wheretowatch.html" %}
+                    
+                   
                 </li>
+                {% endfor %}
                 <li>
                     <a href="{% url 'wagtailadmin_home' %}"> <i class="fal fa-users"></i></a>
                 </li>
