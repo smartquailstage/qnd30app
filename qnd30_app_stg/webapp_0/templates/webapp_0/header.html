@@ -44,8 +44,12 @@
                     <a href="{% slugurl 'wheretowatch' %}"> <i class="fal fa-ios-infinite"></i> Where To Watch</a>
                     <!--second level -->
                     <ul>
-                        {% for item in menu_items %}
-                        <li><a href="{{ item.href }}"> {{ item.text }}</a></li>
+                        {% wheretowatch_menus as menus %}
+                        {% for menu in menus %}
+                        <h6 class="title">{{menu.heading}}</h6>
+                        <div class="content">
+                          {% flat_menu menu.handle template="webapp_0/wheretowatch.html" %}
+                        </div>
                         {% endfor %}
                     </ul>
                     <!--second level end-->
