@@ -10,7 +10,8 @@
 <div id="wrapper">
 
 <div class="column-image">
-    <div class="bg"  data-bg="images/bg/1.jpg"></div>
+    {% image page.image fill-250x250 as portada %}
+    <div class="bg"  data-bg="{{ portada.url }}"></div>
     <div class="overlay"></div>
     <div class="column-title">
         <a href="{% pageurl page.get_parent %}"> <h2><i class="fal fa-camera"></i>My Experience</h2></a>
@@ -45,13 +46,97 @@
                     <div class="single-slider-wrap">
                         <div class="single-slider fl-wrap">
                             <div class="swiper-container">
-                                <div class="swiper-wrapper lightgallery">
-                                    <div class="swiper-slide hov_zoom"><img src="images/folio/1.jpg" alt=""><a href="images/folio/1.jpg" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
-                                    <div class="swiper-slide hov_zoom"><img src="images/folio/1.jpg" alt=""><a href="images/folio/1.jpg" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
-                                    <div class="swiper-slide hov_zoom"><img src="images/folio/1.jpg" alt=""><a href="images/folio/1.jpg" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
+                                             
+                                <div class="swiper-wrapper lightgallery"> 
+                                    
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for item in page.galleria.all %}  
+                                        {% image item.image_2 scale-100 as F1 %}
+                                        <img src="{{ F1.url }}" alt="">
+                                        <a href="{{ F1.url }}" class="box-media-zoom   popup-image">
+                                            <i class="fal fa-search">
+                                            </i>
+                                        </a> 
+                                        {% endfor %}
+                                    </div>
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for item in page.galleria.all %}  
+                                        {% image item.image_3 scale-100 as F2 %}
+                                        <img src="{{ F2.url }}" alt="">
+                                        <a href="{{ F2.url }}" class="box-media-zoom   popup-image">
+                                            <i class="fal fa-search">
+                                            </i>
+                                        </a> 
+                                        {% endfor %}
+                                    </div>
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for item in page.galleria.all %}  
+                                        {% image item.image_4 scale-100 as F3 %}
+                                        <img src="{{ F3.url }}" alt="">
+                                        <a href="{{ F3.url }}" class="box-media-zoom   popup-image">
+                                            <i class="fal fa-search">
+                                            </i>
+                                        </a> 
+                                        {% endfor %}
+                                    </div>
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for item in page.galleria.all %}  
+                                        {% image item.image_5 scale-100 as F4 %}
+                                        <img src="{{ F4.url }}" alt="">
+                                        <a href="{{ F4.url }}" class="box-media-zoom   popup-image">
+                                            <i class="fal fa-search">
+                                            </i>
+                                        </a> 
+                                        {% endfor %}
+                                    </div>
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for item in page.galleria.all %}  
+                                        {% image item.image_6 scale-100 as F5 %}
+                                        <img src="{{ F5.url }}" alt="">
+                                        <a href="{{ F5.url }}" class="box-media-zoom   popup-image">
+                                            <i class="fal fa-search">
+                                            </i>
+                                        </a> 
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for block in GaleriadeImagenesBlog.video %}
+                                        {% if block.block_type == 'video' %}
+        <video controls>
+            <source src="{{ block.value.file.url }}" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos MP4.
+        </video>
+    {% endif %}
+{% endfor %}
+                                    </div>
+
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for block in GaleriadeImagenesBlog.video_2 %}
+                                        {% if block.block_type == 'video' %}
+        <video controls>
+            <source src="{{ block.value.file.url }}" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos MP4.
+        </video>
+    {% endif %}
+{% endfor %}
+                                    </div>
+                                    <div class="swiper-slide hov_zoom">
+                                        {% for block in GaleriadeImagenesBlog.video_3 %}
+                                        {% if block.block_type == 'video' %}
+        <video controls>
+            <source src="{{ block.value.file.url }}" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos MP4.
+        </video>
+    {% endif %}
+{% endfor %}
+                                    </div>
+                                   
                                 </div>
+                               
                             </div>
                         </div>
+                        
                         <div class="ss-slider-pagination_wrap">
                             <div class="ss-slider-pagination"></div>
                         </div>
@@ -61,14 +146,7 @@
                 </div>
                 <!-- blog media end -->
                 <div class="blog-text fl-wrap">
-                    <div class="pr-tags fl-wrap">
-                        <span>Tags : </span>
-                        <ul>
-                            <li><a href="#">Design</a></li>
-                            <li><a href="#">Photography</a></li>
-                            <li><a href="#">Fasion</a></li>
-                        </ul>
-                    </div>
+               
                     <p>
                         {{ page.intro }}
                     </p>
@@ -85,7 +163,10 @@
                 <!-- post-author-->                                   
                 <div class="post-author fl-wrap">
                     <div class="author-img">
-                        <img alt='' src="images/avatar/1.jpg">	
+                        {% for item in page.galleria.all %}  
+                        {% image item.image_5 scale-100 as F0 %}
+                        <img alt='' src="{{ F0.url }}">	
+                        {% endfor %}
                     </div>
                     <div class="author-content">
                         <h5><a href="#">Juan Silva</a></h5>
@@ -117,7 +198,7 @@
                     </div>
                 </div>
                 <!--post-author end-->
-
+                <a href="{% pageurl page.get_parent %}" class="btn fl-btn">Where to Watch</a>
                 <!--comments end -->
             </div>
             <!-- post end-->
@@ -130,17 +211,4 @@
 </div>
 </div>
 
-
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
-    {% image page.image fill-320x320 %}
-    <div class="intro">{{ page.intro }}</div>
-    {% for child in self.body %}
-        {% if child.block_type == 'heading' %}
-            <h2>{{ child }}</h2>
-        {% else %}
-            {{ child }}
-        {% endif %}
-    {% endfor %}
-    <p><a href="{% pageurl page.get_parent %}">Return to blog</a></p>
 {% endblock %}

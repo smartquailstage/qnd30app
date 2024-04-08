@@ -36,16 +36,16 @@
                   </ul>
                   <!--second level end-->
               </li>
+              {% wheretowatch_menu as menus %}
               <li>
-                  <a href="{% slugurl 'wheretowatch' %}"> <i class="fal fa-ios-infinite"></i> Where To Watch</a>
-                  <!--second level -->
-                  <ul>
-                      {% for item in menu_items %}
-                      <li><a href="{{ item.href }}"> {{ item.text }}</a></li>
-                      {% endfor %}
-                  </ul>
-                  <!--second level end-->
+                  
+                  {% for menu in menus %}
+                  <a href="{% slugurl 'wheretowatch' %}">{{menu.heading}}</a>
+                    {% flat_menu menu.handle template="webapp_0/wheretowatch.html" %}
+                  
+                 
               </li>
+              {% endfor %}
               <li>
                   <a href="{% url 'wagtailadmin_home' %}"> <i class="fal fa-users"></i></a>
               </li>

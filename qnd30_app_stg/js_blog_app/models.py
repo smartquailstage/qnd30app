@@ -14,7 +14,7 @@ from wagtail.admin.panels import (
     InlinePanel,
     MultiFieldPanel,
 )
-
+from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 
 class BlogHomePage(Page):
@@ -84,6 +84,13 @@ class BlogPageTag(TaggedItemBase):
     content_object = models.ForeignKey('BlogPage', on_delete=models.CASCADE, related_name='tagged_items')
 
 
+class VideoBlock(AbstractMediaChooserBlock):
+    def render_basic(self, value, context=None):
+        if not value:
+            return ''
+
+        return self.render(value, context)
+
 class BlogPage(Page):
     image = models.ForeignKey(
         'wagtailimages.Image',
@@ -105,6 +112,39 @@ class BlogPage(Page):
         FieldPanel('date'),
         FieldPanel('intro',classname="full" ),
         FieldPanel('image'),
+        InlinePanel('galleria', label="Galeria para slider de post"),
         FieldPanel('body'),
         FieldPanel('tags'),
+    ]
+
+
+class GaleriadeImagenesBlog(Orderable):
+    page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='galleria')
+    image = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Foto de perfil')
+    image_2 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen de portada')
+    image_3 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 1 de galeria')
+    image_4 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 2 de galeria')
+    image_5 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 3 de galeria')
+    image_6 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 4 de galeria')
+    image_7 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 5 de galeria')
+    image_8 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 6 de galeria')
+    image_9 = models.ForeignKey('wagtailimages.Image',null=True,blank=True,on_delete=models.SET_NULL,related_name='+',verbose_name='Imagen 7 de galeria')
+    video =  StreamField([('video', VideoBlock()),],null=True,blank=True)
+    video_2 =  StreamField([('video', VideoBlock()),],null=True,blank=True)
+    video_3 =  StreamField([('video', VideoBlock()),],null=True,blank=True)
+
+
+    panels = [
+        FieldPanel('image'),
+        FieldPanel('image_2'),
+        FieldPanel('image_3'),
+        FieldPanel('image_4'),
+        FieldPanel('image_5'),
+        FieldPanel('image_6'),
+        FieldPanel('image_7'),
+        FieldPanel('image_8'),
+        FieldPanel('image_9'),
+        FieldPanel('video'),
+        FieldPanel('video_2'),
+        FieldPanel('video_3'),
     ]
