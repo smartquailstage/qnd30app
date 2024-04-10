@@ -47,10 +47,9 @@
                     {% for menu in menus %}
                     <a href="{% slugurl 'wheretowatch' %}">{{menu.heading}}</a>
                       {% flat_menu menu.handle template="webapp_0/wheretowatch.html" %}
-                    
-                   
+                    {% endfor %}
                 </li>
-                {% endfor %}
+                
                 <li>
                     <a href="{% url 'wagtailadmin_home' %}"> <i class="fal fa-users"></i></a>
                 </li>
