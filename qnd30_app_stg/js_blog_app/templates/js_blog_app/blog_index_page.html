@@ -6,6 +6,7 @@
 {% load static %}
 {% load menu_tags %}
 
+
 {% block content %}
 {% main_menu template="webapp_0/header.html" %}
 
@@ -20,7 +21,9 @@
             <h2>{{ page.subtitle_ini | richtext }}</h2>
             <h2>Juan Silva</h2>
         </div>
+        <h2>sadfsd</h2>
         {% for post in blogpages %}
+
         <div class="post fl-wrap fw-post">
             <h2><span>{{ post.title | richtext }}</span></h2>
             <ul class="blog-title-opt">
@@ -37,6 +40,9 @@
                 {% image post.image fill-250x250 as post_portada %}
                 <img src="{{ post_portada.url }}" class="respimg" alt="">
             </div>
+
+           
+
             <div class="blog-text fl-wrap">
                 <div class="pr-tags fl-wrap">
                     <span>Tags : </span>
@@ -58,8 +64,13 @@
                 </p>
                 <a href="{{ post.url }}" class="btn float-btn flat-btn">Read more</a>
             </div>
+            <div class="blog-media fl-wrap">
+                {% image post.image fill-250x250 as post_portada %}
+                <img src="{{ post_portada.url }}" class="respimg" alt="">
+            </div>
         </div>
         {% endfor %}
+      
     </div>
     <div class="column-wrapper single-content-section">
      

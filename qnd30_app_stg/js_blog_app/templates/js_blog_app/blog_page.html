@@ -3,6 +3,7 @@
 {% load widget_tweaks %}
 {% load static %}
 {% load menu_tags %}
+{% load embed_video_tags %}
 
 {% block content %}
 {% main_menu template="webapp_0/header.html" %}
@@ -14,7 +15,7 @@
     <div class="bg"  data-bg="{{ portada.url }}"></div>
     <div class="overlay"></div>
     <div class="column-title">
-        <a href="{% pageurl page.get_parent %}"> <h2><i class="fal fa-camera"></i>My Journey</h2></a>
+        <a href="{% pageurl page.get_parent %}"> <h2>{{ nombre_campana | richtext }} </h2></a>
     </div>
 
     <div class="fixed-column-dec"></div>
@@ -99,6 +100,21 @@
                                         </a> 
                                         {% endfor %}
                                     </div>
+                                    <div class="swiper-slide hov_zoom">
+                                    {% video item.video as my_video %}
+                                   
+                                        <source src="{{  my_video.url  }}" type="video/mp4">
+                            
+                                    URL: {{ my_video.url }}
+                                    Thumbnail: {{ my_video.thumbnail }}
+                                    Backend: {{ my_video.backend }}
+                                  
+                                    {% video my_video "large" %}
+                                  {% endvideo %}
+                                  
+                                  <!-- Or embed shortcut: -->
+                                  {% video my_video '800x600' %}
+                                  </div>
 
                                     <div class="swiper-slide hov_zoom">
                                         {% for block in GaleriadeImagenesBlog.video %}

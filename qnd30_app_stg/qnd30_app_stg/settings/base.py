@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     #'card_test',
     #'thumbnails',
     #'cart',
+    #'djangocms_video',
    
     'django.contrib.contenttypes',
     'django.contrib.admin',
@@ -77,6 +78,7 @@ INSTALLED_APPS = [
     'wagtail.documents',
     'wagtail.images',
     'wagtail.search',
+
     
     'wagtail.admin',
    # 'wagtail.core',
@@ -110,19 +112,50 @@ INSTALLED_APPS = [
     'social_django',
     'sorl.thumbnail',
     #'students',
-    'embed_video',
+   
     'qr_code',
     'storages',
     #'actions',
+  
        
     #'memcache_status',
     'rest_framework',
     'ckeditor',
     'js_blog_app',
+    #'djangocms_video',
     'wagtail.contrib.settings',
     'baton.autodiscover',
+     'embed_video',
    
 ]
+
+WAGTAILMEDIA = {
+    "MEDIA_MODEL": "wagtailmedia.Media",  # string, dotted-notation.
+    "MEDIA_FORM_BASE": "",  # string, dotted-notation. Defaults to an empty string
+    "AUDIO_EXTENSIONS": [
+        "aac",
+        "aiff",
+        "flac",
+        "m4a",
+        "m4b",
+        "mp3",
+        "mp4",
+        "ogg",
+        "wav",
+    ],  # list of extensions
+    "VIDEO_EXTENSIONS": [
+        "avi",
+        "h264",
+        "m4v",
+        "mkv",
+        "mov",
+        "mp4",
+        "mpeg",
+        "mpg",
+        "ogv",
+        "webm",
+    ],  # list of extensions
+}
 
 
 

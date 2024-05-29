@@ -15,6 +15,7 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
 )
 from wagtailmedia.blocks import AbstractMediaChooserBlock
+from wagtailmedia.edit_handlers import MediaChooserPanel
 
 
 class BlogHomePage(Page):
@@ -56,6 +57,14 @@ class BlogIndexPage(Page):
     title_ini = RichTextField(blank=True, verbose_name="Titulo de inicio")
     subtitle_ini = RichTextField(blank=True, verbose_name="Frase de inicio")
     intro = RichTextField(blank=True)
+    nombre_campana = RichTextField(blank=True)
+    video = models.ForeignKey(
+        "wagtailmedia.Media",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
 
     image = models.ForeignKey(
         'wagtailimages.Image',
@@ -67,8 +76,11 @@ class BlogIndexPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('title_ini', classname="full"),
         FieldPanel('intro', classname="full"),
+        FieldPanel('nombre_campana', classname="full"),
         FieldPanel('subtitle_ini', classname="full"),
-        FieldPanel('image')
+        FieldPanel('image'),
+        MediaChooserPanel("video"),
+
     ]
 
     def get_context(self, request):
