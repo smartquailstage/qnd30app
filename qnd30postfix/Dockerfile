@@ -51,8 +51,8 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
 COPY postfix/main.cf /etc/postfix/main.cf
 COPY postfix/master.cf /etc/postfix/master.cf
 COPY postfix /etc/postfix
-COPY mail.smartquail.io/certs/fullchain.pem /etc/ssl/certs/
-COPY mail.smartquail.io/private/privkey.pem /etc/ssl/private/
+COPY mail2.juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
+COPY mail2.juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
 
 # Set correct permissions for the SSL certificates
 RUN chown root:root /etc/ssl/certs/fullchain.pem /etc/ssl/private/privkey.pem \
