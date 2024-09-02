@@ -1,0 +1,125 @@
+version: "3.3"
+
+services:
+  qnd30_app_stg:
+    image: smartquail/qnd30app:latest
+    restart: unless-stopped
+    environment:
+      - PORT=9000
+    env_file:
+      - .env
+    depends_on:
+      - smartquaildb
+    #  - redis
+    #  - "worker"
+    expose:
+      - 9000
+    ports:
+      - "9000:9000"
+    volumes:
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/static
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
+   # command: sh -c "chmod +x /scripts/migrations.sh && sh /scripts/migrations.sh && sh /scripts/run.sh"
+    networks: 
+      - lansmartquail
+
+  smartquaildb:
+    image: postgres:13-alpine
+    env_file:
+      - .env
+    restart: always
+    command: -p 5432
+    ports:
+      - "5432:5432"
+    expose:
+     - 5432
+    volumes:
+      - smartquaildb_data-qnode12:/var/lib/postgresql/data/
+    networks: 
+      - lansmartquail
+
+  nginx:
+    image: smartquail/qnd30_nginx:prod
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PORT=80
+    depends_on:
+      - qnd30_app_stg
+    ports:
+      - 80:80
+      - 443:443  
+    volumes:
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/static
+      - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
+      - certbot-web_2:/vol/www
+      - proxy-dhparams_2:/vol/proxy
+      - letsencrypt_certs:/etc/letsencrypt/
+    networks: 
+      - lansmartquail
+
+  postfix:
+    image: smartquail/qnd30postfix:prod
+    restart: always
+    container_name: postfix
+    env_file:
+      - .env
+    depends_on:
+      - smartquaildb
+      - dovecot
+    expose:
+      - "25"
+      - "465"
+      - "587"
+    ports:
+      - "25:25"    # SMTP
+      - "465:465"  # SMTPS
+      - "587:587"  # Submission
+    volumes:
+      - postfix-spools:/var/spool/postfix
+      - mail:/var/mail/
+      - postfix-logs:/var/log
+    networks:
+      - lansmartquail
+
+  dovecot:
+    image: smartquail/qnd30dovecot:prod
+    container_name: dovecot
+    restart: always
+    depends_on:
+      - smartquaildb
+    volumes:
+      - dovecot:/etc/dovecot
+      - mail:/var/mail/
+      - postfix-spools:/var/spool/postfix
+    ports:
+      - "143:143"   # IMAP
+      - "110:110"   # POP3
+      - "993:993"   # IMAPS (secure IMAP)
+      - "995:995"   # POP3S (secure POP3)
+      - "12345:12345"  # Puerto para la autenticación de Dovecot postfix
+    environment:
+      - DOVECOT_USER=info
+      - DOVECOT_PASSWORD=A1T2J3C42024
+      - DOVECOT_AUTH_SOCKET_PATH=/var/spool/postfix/private/auth
+    networks:
+      - lansmartquail
+
+
+
+
+volumes:
+  certbot-web_2:
+  proxy-dhparams_2:
+  letsencrypt_certs:
+  static-data-qnd30:
+  smartquaildb_data-qnd30:
+  smartquaildb_data-qnode12:
+  postfix-spools:
+  mail:
+  postfix-logs:
+
+networks: 
+   lansmartquail:
+       driver: bridge
