@@ -119,6 +119,7 @@ volumes:
   postfix-spools:
   mail:
   postfix-logs:
+  dovecot:
 
 networks: 
    lansmartquail:
