@@ -3,7 +3,7 @@
 # Configuración de las credenciales de PostgreSQL
 export PGPASSWORD="smartquaildev1719pass"
 export PGUSER="sqadmindb"
-export POSTFIX_POSTGRES_DB="POSFIXDB"
+export POSTFIX_POSTGRES_DB="posfixdb"
 export POSTFIX_POSTGRES_USER="sqadmindb"
 export POSTFIX_POSTGRES_HOST="smartquaildb"
 

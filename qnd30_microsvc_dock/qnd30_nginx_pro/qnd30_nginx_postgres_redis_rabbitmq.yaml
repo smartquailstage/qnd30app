@@ -93,6 +93,8 @@ services:
     networks:
         - lansmartquail
 
+
+
 volumes:
   certbot-web_2:
   proxy-dhparams_2:
@@ -102,6 +104,7 @@ volumes:
   rabbitmq-data-qnd30:
   redis_data-qnd30:
   smartquaildb_data-qnode12:
+ 
 
 networks: 
    lansmartquail:
