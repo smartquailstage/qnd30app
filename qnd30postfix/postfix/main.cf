@@ -30,7 +30,7 @@ alias_maps =
 mydestination = 
 
 # Relayhost if any is configured
-relayhost = [smtp.mail.smartquail.io]:587
+relayhost = [smtp.mail2.juansilvaphoto.com]:587
 relay_domains = *
 
 
