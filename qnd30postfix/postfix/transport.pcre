@@ -4,7 +4,7 @@
 /gmail\.com$/              smtp:[gmail-smtp-in.l.google.com]
 
 # Direcciones locales en mail.smartquail.io
-/mail\.smartquail\.io$/    :
-/^info@mail.smartquail.io$/ local:
+/mail\.juansilvaphoto\.com$/    :
+/^info@mail2.juansilvaphoto.com$/ local:
 
-/@mail.smartquail.io$/     virtual
+/@mail2.juansilvaphoto.com$/     virtual
