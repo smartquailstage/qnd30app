@@ -292,10 +292,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'qnd30_app_stg.wsgi.application'
 
-WAGTAILADMIN_BASE_URL =  os.environ.get('DOMAINS')
-WAGTAILIMAGES_MAX_UPLOAD_SIZE = 5 * 1024 * 1024 * 1024  # 5 GB en bytes
-WAGTAILIMAGES_MAX_IMAGE_PIXELS = None
-#WAGTAILIMAGES_MAX_IMAGE_PIXELS = 1000000000  # 1 millardo de píxeles (1 Gb)
+# Establecer un tamaño máximo de carga de imagen más razonable
+WAGTAILIMAGES_MAX_UPLOAD_SIZE = 2 * 1024 * 1024 * 1024  # 2 GB en bytes
+
+# Limitar el número máximo de píxeles a un valor razonable
+WAGTAILIMAGES_MAX_IMAGE_PIXELS = 1000000000  # 1 millardo de píxeles (aproximadamente 1 GB)
+
+# Configuraciones de memoria
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1073741824  # 1 GB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 1073741824  # 1 GB
 
