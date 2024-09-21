@@ -10,8 +10,6 @@ services:
       - .env
     depends_on:
       - smartquaildb
-    #  - redis
-    #  - "worker"
     expose:
       - 9000
     ports:
@@ -19,7 +17,8 @@ services:
     volumes:
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/static
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
-   # command: sh -c "chmod +x /scripts/migrations.sh && sh /scripts/migrations.sh && sh /scripts/run.sh"
+    mem_limit: 2g              # Límite máximo de memoria
+    mem_reservation: 1g        # Reserva mínima de memoria
     networks: 
       - lansmartquail
 
