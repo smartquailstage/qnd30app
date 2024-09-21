@@ -17,8 +17,12 @@ services:
     volumes:
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/static
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
-    mem_limit: 2g              # Límite máximo de memoria
-    mem_reservation: 1g        # Reserva mínima de memoria
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
     networks: 
       - lansmartquail
 
