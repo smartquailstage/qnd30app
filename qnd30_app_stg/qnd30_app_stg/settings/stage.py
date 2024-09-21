@@ -11,9 +11,9 @@ DEBUG=  "0"
 
 CSRF_COOKIE_DOMAIN=".juansilvaphoto.com"
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://www.juansilvaphoto.com','https://64.23.235.13']
+CSRF_TRUSTED_ORIGINS = ['https://www.juansilvaphoto.com','https://64.23.235.13','https://juansilvaphoto.com']
 CORS_ALLOWED_ORIGINS = [
-    'https://www.juansilvaphoto.com','https://64.23.235.13'
+    'https://www.juansilvaphoto.com','https://64.23.235.13','https://juansilvaphoto.com'
     # Otros orígenes permitidos si los hay
 ]
 
