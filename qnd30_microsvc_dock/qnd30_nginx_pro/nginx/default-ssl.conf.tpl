@@ -18,13 +18,13 @@ server {
 
     location /static {
         alias /qnd30app/qnd30_app_stg/qnd30_app_stg/static;
-        client_max_body_size 2000M;
+        client_max_body_size 5000M;  # Cambiado a 5 GB
         add_header 'Access-Control-Allow-Origin' '*';  # Ajustar según sea necesario
     }
 
     location /media {
         alias /qnd30app/qnd30_app_stg/qnd30_app_stg/media;
-        client_max_body_size 2000M;
+        client_max_body_size 5000M;  # Cambiado a 5 GB
         add_header 'Access-Control-Allow-Origin' '*';  # Ajustar según sea necesario
     }
 
@@ -35,7 +35,7 @@ server {
         add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
         add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
         add_header Access-Control-Allow-Credentials "true";
-        client_max_body_size 2000M;
+        client_max_body_size 5000M;  # Cambiado a 5 GB
     }
 }
 
@@ -54,13 +54,13 @@ server {
 
     location /static {
         alias /qnd30app/qnd30_app_stg/qnd30_app_stg/static;
-        client_max_body_size 2000M;
+        client_max_body_size 5000M;  # Cambiado a 5 GB
         add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
     }
 
     location /media {
         alias /qnd30app/qnd30_app_stg/qnd30_app_stg/media;
-        client_max_body_size 2000M;
+        client_max_body_size 5000M;  # Cambiado a 5 GB
         add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
     }
 
@@ -71,8 +71,6 @@ server {
         add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
         add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
         add_header Access-Control-Allow-Credentials "true";
-        client_max_body_size 2000M;
+        client_max_body_size 5000M;  # Cambiado a 5 GB
     }
 }
-
-
