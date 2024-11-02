@@ -3,8 +3,8 @@
 ###############
 
 # Main domain and hostname
-mydomain = {{ DOMAIN }}
-myhostname = {{ HOSTNAME }}
+mydomain = juansilvaphoto.com
+myhostname = mail.juansilvaphoto.com
 myorigin = $mydomain
 
 home_mailbox = Maildir/
