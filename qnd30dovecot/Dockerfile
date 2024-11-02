@@ -65,9 +65,9 @@ RUN apt-get -y update && \
     chown vmail:vmail /srv/mail && \
     mkdir -p /var/mail && \
     chown vmail:vmail /var/mail && \
-    chmod 700 /var/mail && \  # Cambiar a 700 para mayor seguridad
+    chmod 700 /var/mail && \ 
     mkdir -p /var/spool/postfix/private && \
-    chown -R postfix:postfix /var/spool/postfix/private && \  # Cambiar a postfix
+    chown -R postfix:postfix /var/spool/postfix/private && \  
     # Configurar la zona horaria
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
