@@ -75,8 +75,8 @@ RUN apt-get -y update && \
 # Configurar permisos y propiedad para directorios
 RUN mkdir -p /var/mail/info@juansilvaphoto.com/tmp && \
     chown -R vmail:vmail /var/mail && \
-    chmod -R 700 /var/mail/info@juansilvaphoto.com/tmp && \  # Asegurarse de que tmp sea seguro
-    chmod -R 750 /var/mail  # Permisos generales para el resto
+    chmod -R 700 /var/mail/info@juansilvaphoto.com/tmp && \  
+    chmod -R 750 /var/mail 
 
 EXPOSE 24
 EXPOSE 110
