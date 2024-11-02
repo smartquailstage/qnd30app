@@ -30,7 +30,7 @@ alias_maps =
 mydestination = 
 
 # Relayhost if any is configured
-relayhost = [smtp.mail2.juansilvaphoto.com]:587
+relayhost = [smtp.juansilvaphoto.com]:587
 relay_domains = *
 
 
@@ -127,7 +127,7 @@ maillog_file = /dev/stdout
 
 virtual_mailbox_base = /var/mail
 
-#virtual_mailbox_domains = mail.smartquail.io
+#virtual_mailbox_domains = juansilvaphoto.com
 virtual_mailbox_domains = pgsql:/etc/postfix/sql/virtual_mailbox_domains.cf
 virtual_mailbox_maps = pgsql:/etc/postfix/sql/virtual_mailbox_maps.cf
 virtual_alias_maps = pgsql:/etc/postfix/sql/virtual_alias_maps.cf

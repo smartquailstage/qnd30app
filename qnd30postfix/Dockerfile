@@ -8,8 +8,8 @@ ENV container=docker \
     TZ=America/Guayaquil
 
 # Environment variables
-ENV DOMAIN=mail2.juansilvaphoto.com
-ENV HOSTNAME=mail2.juansilvaphoto.com
+ENV DOMAIN=juansilvaphoto.com
+ENV HOSTNAME=juansilvaphoto.com
 
 # Install Postfix and necessary dependencies
 RUN apk update && apk add --no-cache \
@@ -51,8 +51,8 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
 COPY postfix/main.cf /etc/postfix/main.cf
 COPY postfix/master.cf /etc/postfix/master.cf
 COPY postfix /etc/postfix
-COPY mail2.juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
-COPY mail2.juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
+COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
+COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
 
 # Set correct permissions for the SSL certificates
 RUN chown root:root /etc/ssl/certs/fullchain.pem /etc/ssl/private/privkey.pem \

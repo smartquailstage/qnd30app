@@ -176,8 +176,8 @@ function serviceStart {
   /usr/sbin/postfix start-fg
 }
 
-export DOMAIN=${DOMAIN:-"mail2.juansilvaphoto.com"}
-export HOSTNAME=${HOSTNAME:-"mail2.juansilvaphoto.com"}
+export DOMAIN=${DOMAIN:-"juansilvaphoto.com"}
+export HOSTNAME=${HOSTNAME:-"juansilvaphoto.com"}
 export MESSAGE_SIZE_LIMIT=${MESSAGE_SIZE_LIMIT:-"50000000"}
 export RELAYNETS=${RELAYNETS:-""}
 export RELAYHOST=${RELAYHOST:-""}

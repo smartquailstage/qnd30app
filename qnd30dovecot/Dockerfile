@@ -16,8 +16,8 @@ COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
 COPY postfix/main.cf /etc/postfix/main.cf
 
 # Copiar certificados SSL
-COPY mail2.juansilvaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
-COPY mail2.juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
+COPY juansilvaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
+COPY juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
 
 
 
@@ -26,7 +26,6 @@ COPY configPD/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 COPY configPD/10-auth.conf /etc/dovecot/conf.d/10-auth.conf
 COPY configPD/10-mail.conf /etc/dovecot/conf.d/10-mail.conf
 COPY configPD/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
-COPY configPD/10-passdb.conf /etc/dovecot/conf.d/10-passdb.conf
 
 # Copiar el script de inicio
 COPY start.sh /start.sh
@@ -76,7 +75,7 @@ RUN apt-get -y update && \
     dpkg-reconfigure -f noninteractive tzdata
 
 # Configurar permisos y propiedad para directorios
-RUN mkdir -p /var/mail/info@mail2.juansilvaphoto/tmp && \
+RUN mkdir -p /var/mail/info@juansilvaphoto.com/tmp && \
     chown -R vmail:vmail /var/mail && \
     chmod -R 755 /var/mail
 

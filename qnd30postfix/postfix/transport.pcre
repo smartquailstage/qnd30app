@@ -3,8 +3,8 @@
 # Enviar correos a gmail.com a través de Google SMTP servers
 /gmail\.com$/              smtp:[gmail-smtp-in.l.google.com]
 
-# Direcciones locales en mail.smartquail.io
+# Direcciones locales en 
 /mail\.juansilvaphoto\.com$/    :
-/^info@mail2.juansilvaphoto.com$/ local:
+/^info@juansilvaphoto.com$/ local:
 
-/@mail2.juansilvaphoto.com$/     virtual
+/@juansilvaphoto.com$/     virtual
