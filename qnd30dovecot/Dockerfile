@@ -19,8 +19,6 @@ COPY postfix/main.cf /etc/postfix/main.cf
 COPY juansilvaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
 COPY juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
 
-
-
 # Archivos de configuración postfix+Dovecot
 COPY configPD/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 COPY configPD/10-auth.conf /etc/dovecot/conf.d/10-auth.conf
@@ -67,9 +65,9 @@ RUN apt-get -y update && \
     chown vmail:vmail /srv/mail && \
     mkdir -p /var/mail && \
     chown vmail:vmail /var/mail && \
-    chmod 755 /var/mail && \
+    chmod 700 /var/mail && \  # Cambiar a 700 para mayor seguridad
     mkdir -p /var/spool/postfix/private && \
-    chown vmail:vmail /var/spool/postfix/private && \
+    chown -R postfix:postfix /var/spool/postfix/private && \  # Cambiar a postfix
     # Configurar la zona horaria
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
@@ -77,15 +75,14 @@ RUN apt-get -y update && \
 # Configurar permisos y propiedad para directorios
 RUN mkdir -p /var/mail/info@juansilvaphoto.com/tmp && \
     chown -R vmail:vmail /var/mail && \
-    chmod -R 755 /var/mail
+    chmod -R 700 /var/mail/info@juansilvaphoto.com/tmp && \  # Asegurarse de que tmp sea seguro
+    chmod -R 750 /var/mail  # Permisos generales para el resto
 
 EXPOSE 24
 EXPOSE 110
 EXPOSE 143
-#EXPOSE 587
 EXPOSE 990
 EXPOSE 993
-#EXPOSE 4190
 
 VOLUME ["/etc/dovecot", "/var/mail/"]
 
