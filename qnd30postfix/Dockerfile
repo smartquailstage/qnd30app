@@ -9,7 +9,7 @@ ENV container=docker \
 
 # Environment variables
 ENV DOMAIN=juansilvaphoto.com
-ENV HOSTNAME=juansilvaphoto.com
+ENV HOSTNAME=mail.juansilvaphoto.com
 
 # Install Postfix and necessary dependencies
 RUN apk update && apk add --no-cache \
@@ -25,7 +25,8 @@ RUN apk update && apk add --no-cache \
     postgresql-client \
     pcre \
     db \
-    gdbm
+    gdbm \
+    opendkim opendkim-tools
 
 # Create postfix and vmail users and groups if they do not exist
 RUN addgroup -g 1001 postfix || true \
