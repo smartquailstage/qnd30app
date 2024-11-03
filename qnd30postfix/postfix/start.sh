@@ -1,5 +1,7 @@
 #!/bin/bash
 
+opendkim -f &
+
 # Configuración de las credenciales de PostgreSQL
 export PGPASSWORD="smartquaildev1719pass"
 export PGUSER="sqadmindb"
