@@ -10,6 +10,7 @@ ENV container=docker \
 # Environment variables
 ENV DOMAIN=juansilvaphoto.com
 ENV HOSTNAME=mail.juansilvaphoto.com
+ENV DKIM_SELECTOR=default
 
 # Install Postfix and necessary dependencies
 RUN apk update && apk add --no-cache \
@@ -26,7 +27,7 @@ RUN apk update && apk add --no-cache \
     pcre \
     db \
     gdbm \
-    opendkim opendkim-tools
+    opendkim
 
 # Create postfix and vmail users and groups if they do not exist
 RUN addgroup -g 1001 postfix || true \
@@ -36,14 +37,12 @@ RUN addgroup -g 1001 postfix || true \
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
-    # Set ownership and permissions for /var/spool/postfix
+    && mkdir -p /etc/opendkim/keys \
     && chown -R postfix:postfix /var/spool/postfix \
     && chmod 750 /var/spool/postfix/private \
     && chmod 750 /var/spool/postfix \
-    # Set ownership and permissions for /var/mail
     && chown -R vmail:vmail /var/mail \
     && chmod 700 /var/mail \
-    # Set permissions for SSL certificates
     && mkdir -p /etc/ssl/certs /etc/ssl/private \
     && chmod 700 /etc/ssl/private \
     && chown root:root /etc/ssl/certs /etc/ssl/private
@@ -60,6 +59,24 @@ RUN chown root:root /etc/ssl/certs/fullchain.pem /etc/ssl/private/privkey.pem \
     && chmod 644 /etc/ssl/certs/fullchain.pem \
     && chmod 600 /etc/ssl/private/privkey.pem
 
+# Configure OpenDKIM
+RUN echo "Syslog yes" >> /etc/opendkim.conf \
+    && echo "Umask 002" >> /etc/opendkim.conf \
+    && echo "Domain $DOMAIN" >> /etc/opendkim.conf \
+    && echo "KeyFile /etc/opendkim/keys/$DKIM_SELECTOR.private" >> /etc/opendkim.conf \
+    && echo "Selector $DKIM_SELECTOR" >> /etc/opendkim.conf \
+    && echo "AutoRestart yes" >> /etc/opendkim.conf \
+    && echo "AutoRestartRate 10/1h" >> /etc/opendkim.conf \
+    && echo "Background yes" >> /etc/opendkim.conf \
+    && echo "TrustedHosts 127.0.0.1" >> /etc/opendkim.conf \
+    && echo "SigningTable hash:/etc/opendkim/SigningTable" >> /etc/opendkim.conf \
+    && echo "KeyTable hash:/etc/opendkim/KeyTable" >> /etc/opendkim.conf
+
+# Add KeyTable and SigningTable configuration
+RUN echo "$DKIM_SELECTOR._domainkey.$DOMAIN $DOMAIN:$DKIM_SELECTOR:/etc/opendkim/keys/$DKIM_SELECTOR.private" > /etc/opendkim/KeyTable \
+    && echo "*@$DOMAIN $DKIM_SELECTOR._domainkey.$DOMAIN" > /etc/opendkim/SigningTable \
+    && chown -R opendkim:opendkim /etc/opendkim/keys
+
 # Expose the necessary ports for SMTP and secure connections
 EXPOSE 25 465 587
 
@@ -70,4 +87,5 @@ VOLUME ["/var/mail/"]
 COPY postfix/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
+# Set entrypoint for Postfix and OpenDKIM
 ENTRYPOINT ["/usr/local/bin/start.sh"]
