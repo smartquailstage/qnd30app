@@ -80,8 +80,21 @@ services:
       - postfix-spools:/var/spool/postfix
       - mail:/var/mail/
       - postfix-logs:/var/log
+      - opendkim:/var/spool/postfix/opendkim
     networks:
       - lansmartquail
+
+  opendkim:
+    image: opendkim:latest  # Usa la imagen de OpenDKIM que prefieras
+    container_name: opendkim
+    volumes:
+      -  opendkim:/etc/opendkim/keys  # Claves DKIM
+      -  opendkim:/etc/opendkim.conf
+      -  opendkim:/etc/opendkim/KeyTable
+      -  opendkim:/etc/opendkim/SigningTable
+      -  opendkim:/etc/opendkim/TrustedHosts
+      -  opendkim:/var/spool/postfix/opendkim  # Socket para Postfix
+    restart: always
 
   dovecot:
     image: smartquail/qnd30dovecot:prod
@@ -125,6 +138,7 @@ services:
 
 
 volumes:
+  opendkim:
   certbot-web_2:
   proxy-dhparams_2:
   letsencrypt_certs:

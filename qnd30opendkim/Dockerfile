@@ -4,8 +4,10 @@ RUN apt-get update && \
     apt-get install -y opendkim opendkim-tools && \
     apt-get clean
 
-# Crear directorio para el socket
-RUN mkdir -p /var/spool/postfix/opendkim && \
+# Crear directorio para las claves y el socket
+RUN mkdir -p /etc/opendkim/keys && \
+    mkdir -p /var/spool/postfix/opendkim && \
+    chown -R opendkim:opendkim /etc/opendkim/keys && \
     chown -R opendkim:opendkim /var/spool/postfix/opendkim
 
 # Copiar configuración
@@ -14,7 +16,13 @@ COPY KeyTable /etc/opendkim/KeyTable
 COPY SigningTable /etc/opendkim/SigningTable
 COPY TrustedHosts /etc/opendkim/TrustedHosts
 
+# Script para generar claves DKIM
+COPY generate_keys.sh /usr/local/bin/generate_keys.sh
+RUN chmod +x /usr/local/bin/generate_keys.sh
+
 # Exponer el socket
 VOLUME ["/var/spool/postfix/opendkim"]
+VOLUME ["/etc/opendkim/keys"]
 
-CMD ["opendkim", "-f", "-x", "/etc/opendkim.conf"]
+# Ejecutar script y luego OpenDKIM
+CMD ["/bin/bash", "-c", "/usr/local/bin/generate_keys.sh && opendkim -f -x /etc/opendkim.conf"]
