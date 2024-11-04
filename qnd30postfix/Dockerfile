@@ -8,9 +8,9 @@ ENV container=docker \
     TZ=America/Guayaquil
 
 # Environment variables
-ENV DOMAIN=juansilvaphoto.com
-ENV HOSTNAME=mailpost.juansilvaphoto.com
-ENV DKIM_SELECTOR=default
+ENV DOMAIN=juansilvaphoto.com \
+    HOSTNAME=mailpost.juansilvaphoto.com \
+    DKIM_SELECTOR=default
 
 # Install Postfix and necessary dependencies
 RUN apk update && apk add --no-cache \
@@ -33,9 +33,7 @@ RUN apk update && apk add --no-cache \
 RUN addgroup -g 1001 postfix || true \
     && adduser -D -u 1001 -G postfix -s /sbin/nologin postfix || true \
     && addgroup -g 1002 vmail || true \
-    && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true \
-    && addgroup -g 1002 info || true \
-    && adduser -D -u 1002 -G info -s /sbin/nologin info || true
+    && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
@@ -43,8 +41,6 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
     && chown -R postfix:postfix /var/spool/postfix \
     && chmod 750 /var/spool/postfix/private \
     && chmod 750 /var/spool/postfix \
-    && chown -R info:info /var/mail \
-    && chmod 700 /var/mail \
     && chown -R vmail:vmail /var/mail \
     && chmod 700 /var/mail \
     && mkdir -p /etc/ssl/certs /etc/ssl/private \
@@ -78,7 +74,11 @@ RUN echo "Syslog yes" >> /etc/opendkim.conf \
 
 # Add KeyTable and SigningTable configuration
 RUN echo "$DKIM_SELECTOR._domainkey.$DOMAIN $DOMAIN:$DKIM_SELECTOR:/etc/opendkim/keys/$DKIM_SELECTOR.private" > /etc/opendkim/KeyTable \
-    && echo "*@$DOMAIN $DKIM_SELECTOR._domainkey.$DOMAIN" > /etc/opendkim/SigningTable \
+    && echo "*@$DOMAIN $DKIM_SELECTOR._domainkey.$DOMAIN" > /etc/opendkim/SigningTable
+
+# Create the opendkim user and set permissions on the keys directory
+RUN addgroup -g 1003 opendkim || true \
+    && adduser -D -u 1003 -G opendkim -s /sbin/nologin opendkim || true \
     && chown -R opendkim:opendkim /etc/opendkim/keys
 
 # Expose the necessary ports for SMTP and secure connections
