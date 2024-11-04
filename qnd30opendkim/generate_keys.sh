@@ -12,5 +12,5 @@ mkdir -p $KEY_DIR
 opendkim-genkey -D $KEY_DIR -d $DOMAIN -s $SELECTOR
 
 # Cambiar permisos
-chown opendkim:opendkim $KEY_DIR/$SELECTOR.private
-chmod 600 $KEY_DIR/$SELECTOR.private
+chown opendkim:opendkim $KEY_DIR/${SELECTOR}.private
+chmod 600 $KEY_DIR/${SELECTOR}.private
