@@ -10,8 +10,6 @@ services:
       - .env
     depends_on:
       - smartquaildb
-    #  - redis
-    #  - "worker"
     expose:
       - 9000
     ports:
@@ -19,7 +17,7 @@ services:
     volumes:
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/static
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
-   # command: sh -c "chmod +x /scripts/migrations.sh && sh /scripts/migrations.sh && sh /scripts/run.sh"
+    # command: sh -c "chmod +x /scripts/migrations.sh && sh /scripts/migrations.sh && sh /scripts/run.sh"
     networks: 
       - lansmartquail
 
@@ -28,11 +26,8 @@ services:
     env_file:
       - .env
     restart: always
-    command: -p 5432
     ports:
       - "5432:5432"
-    expose:
-     - 5432
     volumes:
       - smartquaildb_data-qnode12:/var/lib/postgresql/data/
     networks: 
@@ -48,8 +43,8 @@ services:
     depends_on:
       - qnd30_app_stg
     ports:
-      - 80:80
-      - 443:443  
+      - "80:80"
+      - "443:443"  
     volumes:
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/static
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
@@ -88,14 +83,12 @@ services:
   opendkim:
     image: qnd30opendkim:prod  # Usa la imagen de OpenDKIM que prefieras
     container_name: opendkim
-    volumes:
-      -  opendkim:/etc/opendkim/keys  # Claves DKIM
-      -  opendkim:/etc/opendkim.conf
-      -  opendkim:/etc/opendkim/KeyTable
-      -  opendkim:/etc/opendkim/SigningTable
-      -  opendkim:/etc/opendkim/TrustedHosts
-      -  opendkim:/var/spool/postfix/opendkim  # Socket para Postfix
     restart: always
+    volumes:
+      - opendkim:/etc/opendkim/keys  # Claves DKIM
+      - opendkim:/var/spool/postfix/opendkim  # Socket para Postfix
+    networks:
+      - lansmartquail
 
   dovecot:
     image: smartquail/qnd30dovecot:prod
@@ -112,7 +105,6 @@ services:
       - "110:110"   # POP3
       - "993:993"   # IMAPS (secure IMAP)
       - "995:995"   # POP3S (secure POP3)
-      - "12345:12345"  # Puerto para la autenticación de Dovecot postfix
     environment:
       - DOVECOT_USER=info
       - DOVECOT_PASSWORD=A1T2J3C42024
@@ -127,7 +119,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: info@mail.smartquail.io  # Correo electrónico de administrador de PGAdmin
       PGADMIN_DEFAULT_PASSWORD: sqdatabaseadmin          # Contraseña de administrador de PGAdmin
-      PGADMIN_LISTEN_PORT: 80                  # Puerto de escucha de PGAdmin
+      PGADMIN_LISTEN_PORT: 80                             # Puerto de escucha de PGAdmin
     ports:
       - "5050:80"  # Puerto de PGAdmin accesible desde fuera del contenedor
     depends_on:
@@ -135,16 +127,12 @@ services:
     networks:
       - lansmartquail
 
-
-
-
 volumes:
   opendkim:
   certbot-web_2:
   proxy-dhparams_2:
   letsencrypt_certs:
   static-data-qnd30:
-  smartquaildb_data-qnd30:
   smartquaildb_data-qnode12:
   postfix-spools:
   mail:
@@ -152,5 +140,5 @@ volumes:
   dovecot:
 
 networks: 
-   lansmartquail:
-       driver: bridge
+  lansmartquail:
+    driver: bridge
