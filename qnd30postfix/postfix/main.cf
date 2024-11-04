@@ -7,7 +7,7 @@ mydomain = juansilvaphoto.com
 myhostname = mailpost.juansilvaphoto.com
 myorigin = $mydomain
 
-home_mailbox = Maildir/
+home_mailbox = /var/mail/Maildir
 
 # Message size limit
 message_size_limit = {{ MESSAGE_SIZE_LIMIT }}
