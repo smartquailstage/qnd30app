@@ -33,7 +33,7 @@ RUN apk update && apk add --no-cache \
 RUN addgroup -g 1001 postfix || true \
     && adduser -D -u 1001 -G postfix -s /sbin/nologin postfix || true \
     && addgroup -g 1002 vmail || true \
-    && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true
+    && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true \
     && addgroup -g 1002 info || true \
     && adduser -D -u 1002 -G info -s /sbin/nologin info || true
 
