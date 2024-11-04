@@ -68,6 +68,7 @@ services:
     depends_on:
       - smartquaildb
       - dovecot
+      - opendkim
     expose:
       - "25"
       - "465"
@@ -85,7 +86,7 @@ services:
       - lansmartquail
 
   opendkim:
-    image: opendkim:latest  # Usa la imagen de OpenDKIM que prefieras
+    image: qnd30opendkim:prod  # Usa la imagen de OpenDKIM que prefieras
     container_name: opendkim
     volumes:
       -  opendkim:/etc/opendkim/keys  # Claves DKIM
