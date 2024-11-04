@@ -4,7 +4,7 @@
 
 # Main domain and hostname
 mydomain = juansilvaphoto.com
-myhostname = mail.juansilvaphoto.com
+myhostname = mailpost.juansilvaphoto.com
 myorigin = $mydomain
 
 home_mailbox = Maildir/
@@ -136,7 +136,6 @@ virtual_uid_maps = static:1000
 virtual_gid_maps = static:1000
 virtual_alias_domains = *
 
-milter_protocol = 2
 milter_default_action = accept
-smtpd_milters = inet:localhost:8891
-non_smtpd_milters = inet:localhost:8891
+smtpd_milters = unix:/var/spool/postfix/opendkim/opendkim.sock
+non_smtpd_milters = $smtpd_milters

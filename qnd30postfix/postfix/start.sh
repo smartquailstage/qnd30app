@@ -179,7 +179,7 @@ function serviceStart {
 }
 
 export DOMAIN=${DOMAIN:-"juansilvaphoto.com"}
-export HOSTNAME=${HOSTNAME:-"mail.juansilvaphoto.com"}
+export HOSTNAME=${HOSTNAME:-"mailpost.juansilvaphoto.com"}
 export MESSAGE_SIZE_LIMIT=${MESSAGE_SIZE_LIMIT:-"50000000"}
 export RELAYNETS=${RELAYNETS:-""}
 export RELAYHOST=${RELAYHOST:-""}
