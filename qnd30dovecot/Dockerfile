@@ -8,8 +8,8 @@ ENV container=docker \
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Añadir claves y fuentes de APT
-ADD dovecot.gpg /etc/apt/keyrings/dovecot.gpg
-ADD dovecot.list /etc/apt/sources.list.d/
+COPY dovecot.gpg /etc/apt/keyrings/dovecot.gpg
+COPY dovecot.list /etc/apt/sources.list.d/
 
 # Copiar archivos de configuración de Dovecot y Postfix
 COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
@@ -36,8 +36,8 @@ RUN if ! id -u postfix > /dev/null 2>&1; then \
     fi
 
 # Instalar paquetes necesarios y configurar el entorno
-RUN apt-get -y update && \
-    apt-get -y install \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
       tini \
       dovecot-core \
       dovecot-gssapi \
@@ -59,17 +59,15 @@ RUN apt-get -y update && \
       tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     groupadd -g 1000 vmail && \
-    useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
+    useradd -u 1000 -g vmail -d /srv/vmail -s /sbin/nologin vmail && \
     passwd -l vmail && \
     mkdir -p /srv/mail && \
     chown vmail:vmail /srv/mail && \
     mkdir -p /var/mail && \
     chown vmail:vmail /var/mail && \
-    chmod 700 /var/mail && \ 
-    chown info:info /var/mail && \
-    chmod 700 /var/mail && \ 
+    chmod 700 /var/mail && \
     mkdir -p /var/spool/postfix/private && \
-    chown -R postfix:postfix /var/spool/postfix/private && \  
+    chown -R postfix:postfix /var/spool/postfix/private && \
     # Configurar la zona horaria
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
@@ -77,15 +75,13 @@ RUN apt-get -y update && \
 # Configurar permisos y propiedad para directorios
 RUN mkdir -p /var/mail/info@juansilvaphoto.com/tmp && \
     chown -R vmail:vmail /var/mail && \
-    chmod -R 700 /var/mail/info@juansilvaphoto.com/tmp && \  
+    chmod -R 700 /var/mail/info@juansilvaphoto.com/tmp && \
     chmod -R 750 /var/mail 
 
-EXPOSE 24
-EXPOSE 110
-EXPOSE 143
-EXPOSE 990
-EXPOSE 993
+# Exponer los puertos necesarios
+EXPOSE 24 110 143 990 993
 
+# Definir volúmenes
 VOLUME ["/etc/dovecot", "/var/mail/"]
 
 # Usar el script de inicio para arrancar el servicio
