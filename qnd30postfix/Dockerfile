@@ -34,6 +34,8 @@ RUN addgroup -g 1001 postfix || true \
     && adduser -D -u 1001 -G postfix -s /sbin/nologin postfix || true \
     && addgroup -g 1002 vmail || true \
     && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true
+    && addgroup -g 1002 info || true \
+    && adduser -D -u 1002 -G info -s /sbin/nologin info || true
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
@@ -41,6 +43,8 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
     && chown -R postfix:postfix /var/spool/postfix \
     && chmod 750 /var/spool/postfix/private \
     && chmod 750 /var/spool/postfix \
+    && chown -R info:info /var/mail \
+    && chmod 700 /var/mail \
     && chown -R vmail:vmail /var/mail \
     && chmod 700 /var/mail \
     && mkdir -p /etc/ssl/certs /etc/ssl/private \

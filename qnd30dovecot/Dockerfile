@@ -66,6 +66,8 @@ RUN apt-get -y update && \
     mkdir -p /var/mail && \
     chown vmail:vmail /var/mail && \
     chmod 700 /var/mail && \ 
+    chown info:info /var/mail && \
+    chmod 700 /var/mail && \ 
     mkdir -p /var/spool/postfix/private && \
     chown -R postfix:postfix /var/spool/postfix/private && \  
     # Configurar la zona horaria
