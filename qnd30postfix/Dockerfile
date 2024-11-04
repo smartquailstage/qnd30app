@@ -29,11 +29,13 @@ RUN apk update && apk add --no-cache \
     gdbm \
     opendkim
 
-# Create postfix and vmail users and groups if they do not exist
+# Create necessary users and groups
 RUN addgroup -g 1001 postfix || true \
     && adduser -D -u 1001 -G postfix -s /sbin/nologin postfix || true \
     && addgroup -g 1002 vmail || true \
-    && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true
+    && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true \
+    && addgroup -g 1003 opendkim || true \
+    && adduser -D -u 1003 -G opendkim -s /sbin/nologin opendkim || true
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
@@ -76,10 +78,9 @@ RUN echo "Syslog yes" >> /etc/opendkim.conf \
 RUN echo "$DKIM_SELECTOR._domainkey.$DOMAIN $DOMAIN:$DKIM_SELECTOR:/etc/opendkim/keys/$DKIM_SELECTOR.private" > /etc/opendkim/KeyTable \
     && echo "*@$DOMAIN $DKIM_SELECTOR._domainkey.$DOMAIN" > /etc/opendkim/SigningTable
 
-# Create the opendkim user and set permissions on the keys directory
-RUN addgroup -g 1003 opendkim || true \
-    && adduser -D -u 1003 -G opendkim -s /sbin/nologin opendkim || true \
-    && chown -R opendkim:opendkim /etc/opendkim/keys
+# Set permissions on the keys directory
+RUN chown -R opendkim:opendkim /etc/opendkim/keys \
+    && chmod 700 /etc/opendkim/keys
 
 # Expose the necessary ports for SMTP and secure connections
 EXPOSE 25 465 587
