@@ -162,6 +162,10 @@ function setPermissions {
   chown -R postfix:postfix /var/mail/
   chmod 700 /var/mail/
 
+   # Set ownership and permissions for mail directories
+  chown -R info:info /var/mail/
+  chmod 700 /var/mail/
+
   # Set permissions for SSL certificates
   chown root:root /etc/ssl/certs/fullchain.pem /etc/ssl/private/privkey.pem
   chmod 644 /etc/ssl/certs/fullchain.pem

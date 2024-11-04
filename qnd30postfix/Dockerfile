@@ -9,7 +9,7 @@ ENV container=docker \
 
 # Environment variables
 ENV DOMAIN=juansilvaphoto.com
-ENV HOSTNAME=mail.juansilvaphoto.com
+ENV HOSTNAME=mailpost.juansilvaphoto.com
 ENV DKIM_SELECTOR=default
 
 # Install Postfix and necessary dependencies
