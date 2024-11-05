@@ -17,7 +17,7 @@ COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
 COPY postfix/main.cf /etc/postfix/main.cf
 
 # Copiar certificados SSL
-COPY juansilvaphoto.com/certs/fullchain.pem /etc/dovecot/certs/fullchain.pem
+COPY juansilvaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
 COPY juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
 
 # Archivos de configuración postfix+Dovecot
