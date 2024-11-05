@@ -5,7 +5,7 @@ USER="vmail"
 GROUP="vmail"
 
 # Define the main directory
-MAIL_DIR="/var/mail"
+MAIL_DIR="/home/info/Maildir"
 
 # Start Dovecot in the background
 echo "Starting Dovecot..."
@@ -28,7 +28,7 @@ find "$MAIL_DIR" -type d -exec chown $USER:$GROUP {} \; -exec chmod 755 {} \;
 find "$MAIL_DIR" -type f -exec chown $USER:$GROUP {} \; -exec chmod 644 {} \;
 
 # Check if /var/mail/info@mail.smartquail.io/tmp exists; create if needed
-INFO_DIR="$MAIL_DIR/info@juansilvaphoto.com/tmp"
+INFO_DIR="$MAIL_DIR/tmp"
 mkdir -p "$INFO_DIR"
 
 # Adjust ownership and permissions for the specific info directory
@@ -39,14 +39,9 @@ chmod 755 "$INFO_DIR"
 # Verify the results
 echo "Verification of permissions and ownership:"
 ls -ld "$MAIL_DIR"
-ls -ld "$MAIL_DIR/info@juansilvaphoto.com"
 ls -ld "$INFO_DIR"
 
 echo "Permissions and ownership have been set."
-
-# Keep the container running by tailing the log file
-# If the log file does not exist, this will fail. So, let's use a different method to keep the container running.
-tail -f /var/log/dovecot.log
 
 # Ensure that Dovecot is running in the foreground (this might be preferred for Docker containers)
 exec dovecot -F
