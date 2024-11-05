@@ -12,8 +12,9 @@ RUN apt-get update && \
 RUN groupadd -r opendkim || true && \
     useradd -r -g opendkim -m opendkim || true && \
     mkdir -p /etc/opendkim/keys /var/spool/postfix/opendkim && \
-    chown -R opendkim:opendkim /etc/opendkim/keys /var/spool/postfix/opendkim && \
-    chmod 700 /etc/opendkim/keys
+    chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix && \
+    chmod 700 /etc/opendkim/keys && \
+    chmod 700 /var/spool/postfix/opendkim
 
 # Copiar la configuración de OpenDKIM (asegúrate de que estos archivos existan en el contexto de construcción)
 COPY opendkim.conf /etc/opendkim.conf
@@ -29,5 +30,6 @@ RUN chmod +x /usr/local/bin/generate_keys.sh
 VOLUME ["/var/spool/postfix/opendkim"]
 VOLUME ["/etc/opendkim/keys"]
 
-# Ejecutar el script de generación de claves y luego OpenDKIM
+# Ejecutar el script de generación de claves y luego OpenDKIM como usuario opendkim
+USER opendkim
 CMD ["/bin/bash", "-c", "/usr/local/bin/generate_keys.sh && opendkim -f -x /etc/opendkim.conf"]
