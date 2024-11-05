@@ -18,3 +18,8 @@ chown opendkim:opendkim /etc/opendkim/keys/default.txt
 # Mostrar las claves generadas
 cat /etc/opendkim/keys/default.txt
 cat /etc/opendkim/keys/default.private
+
+
+
+
+
