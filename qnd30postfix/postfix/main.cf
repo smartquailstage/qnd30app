@@ -19,7 +19,9 @@ mynetworks = 127.0.0.0/8, [::1]/128, 172.18.0.0/16 ,64.233.160.0/19, 64.23.235.1
 inet_interfaces = all
 inet_protocols = ipv4
 
-virtual_transport = lmtp:unix:private/dovecot-lmtp
+# Configuración de LMTP para Postfix
+virtual_transport = lmtp:unix:/var/spool/postfix/private/dovecot-lmtp
+
 
 transport_maps = pcre:/etc/postfix/transport.pcre
 
@@ -73,27 +75,27 @@ smtpd_client_restrictions =
 
 
 
-smtpd_relay_before_recipient_restrictions = yes
+smtpd_relay_before_recipient_restrictions = no
 
 ###############
 # TLS Settings
 ###############
 
-smtp_tls_security_level = may
-smtpd_tls_security_level = may
-smtpd_tls_auth_only = no
-smtpd_tls_cert_file = /etc/ssl/certs/fullchain.pem
-smtpd_tls_key_file = /etc/ssl/private/privkey.pem
-smtpd_tls_received_header = yes
-smtp_tls_note_starttls_offer = yes
-smtpd_tls_loglevel = 1
-smtpd_tls_session_cache_timeout = 3600s
+#smtp_tls_security_level = may
+#smtpd_tls_security_level = may
+#smtpd_tls_auth_only = no
+#smtpd_tls_cert_file = /etc/ssl/certs/fullchain.pem
+#smtpd_tls_key_file = /etc/ssl/private/privkey.pem
+#smtpd_tls_received_header = yes
+#smtp_tls_note_starttls_offer = yes
+#smtpd_tls_loglevel = 1
+#smtpd_tls_session_cache_timeout = 3600s
 
-tls_random_source = dev:/dev/urandom
-tlsmgr_cache_type = dovecot
-tls_session_cache_database = dovecot
-tls_session_cache_timeout = 1h
-tls_session_cache_size = 100000
+#tls_random_source = dev:/dev/urandom
+#tlsmgr_cache_type = dovecot
+#tls_session_cache_database = dovecot
+#tls_session_cache_timeout = 1h
+#tls_session_cache_size = 100000
 
 # Uncomment if using memcached for TLS session caching
 # tls_session_cache = memcached
@@ -110,7 +112,7 @@ smtp_tls_loglevel = 1
 
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_type = dovecot
-smtpd_sasl_path = private/auth
+smtpd_sasl_path = unix:/var/spool/postfix/private/auth
 smtpd_sasl_authenticated_header = yes
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_tls_security_options = noanonymous

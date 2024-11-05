@@ -72,7 +72,8 @@ services:
       - "465:465"  # SMTPS
       - "587:587"  # Submission
     volumes:
-      - postfix-spools:/var/spool/postfix
+      - postfix-spools:/var/spool/postfix/private/auth
+      - postfix-spools-lmtp:/var/spool/postfix/private/dovecot-lmtp
       - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
       - postfix-logs:/var/log
       - opendkim:/var/spool/postfix/opendkim
@@ -104,7 +105,8 @@ services:
     volumes:
       - dovecot:/etc/dovecot
       - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
-      - postfix-spools:/var/spool/postfix
+      - postfix-spools:/var/spool/postfix/private/auth
+      - postfix-spools-lmtp:/var/spool/postfix/private/dovecot-lmtp
     ports:
       - "143:143"   # IMAP
       - "110:110"   # POP3
@@ -114,6 +116,7 @@ services:
       - DOVECOT_USER=info
       - DOVECOT_PASSWORD=A1T2J3C42024
       - DOVECOT_AUTH_SOCKET_PATH=/var/spool/postfix/private/auth
+      - DOVECOT_AUTH_SOCKET_LMTP_PATH=/var/spool/postfix/private/dovecot-lmtp
     networks:
       - lansmartquail
 
@@ -140,6 +143,7 @@ volumes:
   static-data-qnd30:
   smartquaildb_data-qnode12:
   postfix-spools:
+  postfix-spools-lmtp:
   mail:  # Volumen compartido entre Postfix y Dovecot para el almacenamiento de correos
   postfix-logs:
   dovecot:
