@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Define the user and group
+# Define el usuario y grupo
 USER="vmail"
 GROUP="vmail"
 
-# Define the main directory
+# Define el directorio principal
 MAIL_DIR="/home/info/Maildir"
 INFO_DIR="$MAIL_DIR/tmp"
 
@@ -15,7 +15,8 @@ else
     echo "Starting Dovecot..."
     # Eliminar cualquier archivo PID huérfano
     rm -f /run/dovecot/master.pid
-    dovecot &
+    # Iniciar Dovecot en primer plano para que Docker pueda gestionarlo correctamente
+    dovecot -F &  # Usamos -F para mantener Dovecot en primer plano
     # Esperar unos segundos para asegurarse de que Dovecot se haya iniciado correctamente
     sleep 10
 fi
