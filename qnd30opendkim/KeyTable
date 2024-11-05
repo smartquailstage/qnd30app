@@ -1,1 +1,1 @@
-default._domainkey.juansilvaphoto.com juansilvaphoto.com:default:/etc/opendkim/keys/juansilvaphoto.com/default.private
+default._domainkey.juansilvaphoto.com juansilvaphoto.com:default:/etc/opendkim/keys/default.private
