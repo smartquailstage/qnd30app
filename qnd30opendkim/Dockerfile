@@ -7,15 +7,12 @@ RUN apt-get update && \
     opendkim-tools \
     && apt-get clean
 
-# Crear el grupo y el usuario 'opendkim' de forma segura
-RUN groupadd -r opendkim && \
-    useradd -r -g opendkim -m opendkim && \
-    mkdir -p /etc/opendkim/keys && \
-    chown -R opendkim:opendkim /etc/opendkim/keys
-
-# Crear directorios para el socket y las claves de OpenDKIM
-RUN mkdir -p /var/spool/postfix/opendkim && \
-    chown -R opendkim:opendkim /var/spool/postfix/opendkim
+# Crear el grupo y el usuario 'opendkim' de forma segura (evitar errores si ya existen)
+RUN groupadd -r opendkim || true && \
+    useradd -r -g opendkim -m opendkim || true && \
+    mkdir -p /etc/opendkim/keys /var/spool/postfix/opendkim && \
+    chown -R opendkim:opendkim /etc/opendkim/keys /var/spool/postfix/opendkim && \
+    chmod 700 /etc/opendkim/keys
 
 # Copiar la configuración de OpenDKIM (asegúrate de que estos archivos existan en el contexto de construcción)
 COPY opendkim.conf /etc/opendkim.conf
@@ -26,11 +23,6 @@ COPY TrustedHosts /etc/opendkim/TrustedHosts
 # Script para generar las claves DKIM
 COPY generate_keys.sh /usr/local/bin/generate_keys.sh
 RUN chmod +x /usr/local/bin/generate_keys.sh
-
-# Crear el directorio de claves y dar permisos adecuados
-RUN mkdir -p /etc/opendkim/keys && \
-    chown -R opendkim:opendkim /etc/opendkim/keys && \
-    chmod 700 /etc/opendkim/keys
 
 # Exponer el socket y las claves como volúmenes
 VOLUME ["/var/spool/postfix/opendkim"]
