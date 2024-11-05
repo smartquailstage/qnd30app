@@ -17,7 +17,6 @@ services:
     volumes:
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/static
       - static-data-qnd30:/qnd30app/qnd30_app_stg/qnd30_app_stg/media
-    # command: sh -c "chmod +x /scripts/migrations.sh && sh /scripts/migrations.sh && sh /scripts/run.sh"
     networks: 
       - lansmartquail
 
@@ -74,7 +73,7 @@ services:
       - "587:587"  # Submission
     volumes:
       - postfix-spools:/var/spool/postfix
-      - mail:/var/mail/
+      - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
       - postfix-logs:/var/log
       - opendkim:/var/spool/postfix/opendkim
     environment:
@@ -83,7 +82,9 @@ services:
       - lansmartquail
 
   opendkim:
-    image: qnd30opendkim:prod  # Usa la imagen de OpenDKIM que prefieras
+    image: smartquail/qnd30opendkim:prod  # Usa la imagen de OpenDKIM que prefieras
+    ports:
+      - "8891:8891"
     container_name: opendkim
     restart: always
     volumes:
@@ -100,7 +101,7 @@ services:
       - smartquaildb
     volumes:
       - dovecot:/etc/dovecot
-      - mail:/var/mail/
+      - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
       - postfix-spools:/var/spool/postfix
     ports:
       - "143:143"   # IMAP
@@ -137,7 +138,7 @@ volumes:
   static-data-qnd30:
   smartquaildb_data-qnode12:
   postfix-spools:
-  mail:
+  mail:  # Volumen compartido entre Postfix y Dovecot para el almacenamiento de correos
   postfix-logs:
   dovecot:
 

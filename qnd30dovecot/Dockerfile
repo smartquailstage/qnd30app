@@ -2,10 +2,11 @@ FROM debian:11-slim
 
 LABEL org.opencontainers.image.authors="dovecot@dovecot.org"
 
+# Configuración de entorno
 ENV container=docker \
     LC_ALL=C \
-    TZ=America/Guayaquil
-ARG DEBIAN_FRONTEND=noninteractive
+    TZ=America/Guayaquil \
+    DEBIAN_FRONTEND=noninteractive
 
 # Añadir claves y fuentes de APT
 COPY dovecot.gpg /etc/apt/keyrings/dovecot.gpg
@@ -57,32 +58,36 @@ RUN apt-get update && \
       ssl-cert \
       vim \
       tzdata && \
-    rm -rf /var/lib/apt/lists/* && \
-    groupadd -g 1000 vmail && \
+    rm -rf /var/lib/apt/lists/*
+
+# Crear el grupo y usuario 'vmail' para el correo
+RUN groupadd -g 1000 vmail && \
     useradd -u 1000 -g vmail -d /srv/vmail -s /sbin/nologin vmail && \
     passwd -l vmail && \
     mkdir -p /srv/mail && \
     chown vmail:vmail /srv/mail && \
-    mkdir -p /var/mail && \
-    chown vmail:vmail /var/mail && \
-    chmod 700 /var/mail && \
-    mkdir -p /var/spool/postfix/private && \
-    chown -R postfix:postfix /var/spool/postfix/private && \
-    # Configurar la zona horaria
-    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata
+    mkdir -p /home/info && \
+    chown vmail:vmail /home/info && \
+    mkdir -p /home/info/Maildir && \
+    chown -R vmail:vmail /home/info/Maildir && \
+    chmod 700 /home/info/Maildir && \
+    # Crear los directorios de Maildir y asegurar permisos
+    mkdir -p /home/info/Maildir/tmp && \
+    chmod 700 /home/info/Maildir/tmp && \
+    mkdir -p /home/info/Maildir/.Drafts && \
+    chmod 700 /home/info/Maildir/.Drafts && \
+    mkdir -p /home/info/Maildir/.Sent && \
+    chmod 700 /home/info/Maildir/.Sent && \
+    mkdir -p /home/info/Maildir/.Junk && \
+    chmod 700 /home/info/Maildir/.Junk && \
+    mkdir -p /home/info/Maildir/.Trash && \
+    chmod 700 /home/info/Maildir/.Trash
 
-# Configurar permisos y propiedad para directorios
-RUN mkdir -p /var/mail/info@juansilvaphoto.com/tmp && \
-    chown -R vmail:vmail /var/mail && \
-    chmod -R 700 /var/mail/info@juansilvaphoto.com/tmp && \
-    chmod -R 750 /var/mail 
-
-# Exponer los puertos necesarios
+# Exponer los puertos necesarios para IMAP, POP3 y conexiones seguras
 EXPOSE 24 110 143 990 993
 
 # Definir volúmenes
-VOLUME ["/etc/dovecot", "/var/mail/"]
+VOLUME ["/etc/dovecot", "/home/info/Maildir"]
 
 # Usar el script de inicio para arrancar el servicio
 ENTRYPOINT ["/usr/bin/tini", "--"]
