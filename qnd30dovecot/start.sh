@@ -52,9 +52,24 @@ echo "Setting permissions and ownership for $INFO_DIR"
 chown $USER:$GROUP "$INFO_DIR"
 chmod 700 "$INFO_DIR"  # Permisos restringidos para tmp (acceso solo para el usuario)
 
+# Crear los directorios necesarios dentro de Maildir si no existen (por ejemplo, Drafts, Sent, Junk, Trash)
+for dir in tmp .Drafts .Sent .Junk .Trash; do
+    if [ ! -d "$MAIL_DIR/$dir" ]; then
+        echo "Creating $MAIL_DIR/$dir..."
+        mkdir -p "$MAIL_DIR/$dir"
+        chown $USER:$GROUP "$MAIL_DIR/$dir"
+        chmod 700 "$MAIL_DIR/$dir"  # Permisos restringidos para estos directorios
+    else
+        echo "$MAIL_DIR/$dir already exists."
+    fi
+done
+
 # Verificar los resultados
 echo "Verification of permissions and ownership:"
 ls -ld "$MAIL_DIR"
 ls -ld "$INFO_DIR"
+for dir in tmp .Drafts .Sent .Junk .Trash; do
+    ls -ld "$MAIL_DIR/$dir"
+done
 
 echo "Permissions and ownership have been set."
