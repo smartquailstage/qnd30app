@@ -27,12 +27,11 @@ transport_maps = pcre:/etc/postfix/transport.pcre
 alias_maps = 
 
 # No destination restrictions
-mydestination = 
+mydestination = $myhostname, localhost.$mydomain, localhost
 
 # Relayhost if any is configured
 relayhost = 
 relay_domains = *
-
 
 
 ###############
@@ -70,6 +69,8 @@ smtpd_client_restrictions =
     permit_mynetworks,
     permit_sasl_authenticated,
     reject_unauth_destination
+
+
 
 
 smtpd_relay_before_recipient_restrictions = yes
@@ -114,7 +115,9 @@ smtpd_sasl_authenticated_header = yes
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_tls_security_options = noanonymous
 smtpd_sasl_local_domain = $myhostname
-smtpd_client_restrictions = reject_unknown_client_hostname
+#smtpd_client_restrictions = reject_unknown_client_hostname
+
+
 
 
 
