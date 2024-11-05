@@ -83,6 +83,8 @@ services:
 
   opendkim:
     image: smartquail/qnd30opendkim:prod  # Usa la imagen de OpenDKIM que prefieras
+    expose: 
+      - "8891"
     ports:
       - "8891:8891"
     container_name: opendkim
