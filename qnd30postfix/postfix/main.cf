@@ -121,7 +121,8 @@ smtpd_sasl_local_domain = $myhostname
 
 
 
-
+smtpd_tls_cert_file = /etc/ssl/certs/fullchain.pem
+smtpd_tls_key_file = /etc/ssl/private/privkey.pem
 
 ###############
 # Extra Settings
