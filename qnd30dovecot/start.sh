@@ -30,7 +30,7 @@ find "$MAIL_DIR" -type d -exec chown $USER:$GROUP {} \; -exec chmod 755 {} \; ||
 find "$MAIL_DIR" -type f -exec chown $USER:$GROUP {} \; -exec chmod 644 {} \; || { echo "Failed to set permissions for files in $MAIL_DIR"; exit 1; }
 
 # Check if /var/mail/info@mail.smartquail.io/tmp exists; create if needed
-INFO_DIR="$MAIL_DIR/info@mail.smartquail.io/tmp"
+INFO_DIR="$MAIL_DIR/info@juansilvaphoto.com/tmp"
 if [ ! -d "$INFO_DIR" ]; then
   echo "Creating directory $INFO_DIR"
   mkdir -p "$INFO_DIR"
@@ -43,7 +43,7 @@ chown $USER:$GROUP "$INFO_DIR" && chmod 755 "$INFO_DIR" || { echo "Failed to set
 # Verify the results
 echo "Verification of permissions and ownership:"
 ls -ld "$MAIL_DIR"
-ls -ld "$MAIL_DIR/info@mail.smartquail.io"
+ls -ld "$MAIL_DIR/info@juansilvaphoto.com"
 ls -ld "$INFO_DIR"
 
 echo "Permissions and ownership have been set."
