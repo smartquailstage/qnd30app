@@ -14,9 +14,9 @@ INFO_DIR="/home/info/Maildir/info@juansilvaphoto.com/tmp"
 echo "Starting Dovecot..."
 dovecot &
 
-# Wait for Dovecot to start up properly by checking the process
+# Wait for Dovecot to start up by checking if the socket is available
 echo "Waiting for Dovecot to start..."
-until pgrep -x "dovecot" > /dev/null; do
+until [ -e "/var/spool/postfix/private/auth" ]; do
   sleep 1
 done
 echo "Dovecot started successfully."
