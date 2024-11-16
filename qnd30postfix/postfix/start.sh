@@ -1,7 +1,5 @@
 #!/bin/bash
 
-opendkim -f &
-
 # Configuración de las credenciales de PostgreSQL
 export PGPASSWORD="smartquaildev1719pass"
 export PGUSER="sqadmindb"
@@ -17,7 +15,7 @@ function addUserInfo {
   local user_name="info"
   local user_home="/home/${user_name}"
 
-
+  # Verifica si el usuario ya existe
   if ! id -u "$user_name" &>/dev/null; then
     log "Adding user '${user_name}'"
 
@@ -94,12 +92,12 @@ function insertInitialData {
   log "Inserting initial data into PostgreSQL tables..."
 
   local insert_sql="
-    INSERT INTO virtual_domains (domain) VALUES ('juansilvaphoto.com') ON CONFLICT DO NOTHING;
+    INSERT INTO virtual_domains (domain) VALUES ('mailpost.juansilvaphoto.com') ON CONFLICT DO NOTHING;
     INSERT INTO virtual_users (domain_id, email, password) VALUES 
-      ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@juansilvaphoto.com', 'A1T2J3C42024') 
+      ((SELECT id FROM virtual_domains WHERE domain = 'mailpost.juansilvaphoto.com'), 'info@juansilvaphoto.com', 'A1T2J3C42024') 
     ON CONFLICT DO NOTHING;
     INSERT INTO virtual_aliases (domain_id, source, destination) VALUES 
-      ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@juansilvaphoto.com', 'info') 
+      ((SELECT id FROM virtual_domains WHERE domain = 'mailpost.juansilvaphoto.com'), 'info@juansilvaphoto.com', 'info') 
     ON CONFLICT DO NOTHING;
   "
 
@@ -162,10 +160,6 @@ function setPermissions {
   chown -R postfix:postfix /var/mail/
   chmod 700 /var/mail/
 
-   # Set ownership and permissions for mail directories
-  chown -R info:info /var/mail/
-  chmod 700 /var/mail/
-
   # Set permissions for SSL certificates
   chown root:root /etc/ssl/certs/fullchain.pem /etc/ssl/private/privkey.pem
   chmod 644 /etc/ssl/certs/fullchain.pem
@@ -182,7 +176,7 @@ function serviceStart {
   /usr/sbin/postfix start-fg
 }
 
-export DOMAIN=${DOMAIN:-"juansilvaphoto.com"}
+export DOMAIN=${DOMAIN:-"mailpost.juansilvaphoto.com"}
 export HOSTNAME=${HOSTNAME:-"mailpost.juansilvaphoto.com"}
 export MESSAGE_SIZE_LIMIT=${MESSAGE_SIZE_LIMIT:-"50000000"}
 export RELAYNETS=${RELAYNETS:-""}
