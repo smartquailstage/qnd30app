@@ -16,8 +16,8 @@ COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
 COPY postfix/main.cf /etc/postfix/main.cf
 
 # Copiar certificados SSL
-COPY mail.smartquail.io/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
-COPY mail.smartquail.io/private/privkey.pem /etc/dovecot/private/privkey.pem
+COPY juansivaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
+COPY juansivaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
 
 
 
