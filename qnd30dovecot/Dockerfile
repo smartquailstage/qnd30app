@@ -2,25 +2,25 @@ FROM debian:11-slim
 
 LABEL org.opencontainers.image.authors="dovecot@dovecot.org"
 
+# Establecer variables de entorno
 ENV container=docker \
     LC_ALL=C \
     TZ=America/Guayaquil
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Añadir claves y fuentes de APT
-ADD dovecot.gpg /etc/apt/keyrings/dovecot.gpg
-ADD dovecot.list /etc/apt/sources.list.d/
+COPY dovecot.gpg /etc/apt/keyrings/dovecot.gpg
+COPY dovecot.list /etc/apt/sources.list.d/
 
 # Copiar archivos de configuración de Dovecot y Postfix
 COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
 COPY postfix/main.cf /etc/postfix/main.cf
 
 # Copiar certificados SSL (asegúrate de que las rutas de origen existan)
-# Verifica que los archivos estén en la ruta correcta dentro del contexto de construcción de Docker
 COPY juansilvaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
 COPY juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
 
-# Archivos de configuración postfix+Dovecot
+# Archivos de configuración de Dovecot y Postfix
 COPY configPD/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 COPY configPD/10-auth.conf /etc/dovecot/conf.d/10-auth.conf
 COPY configPD/10-mail.conf /etc/dovecot/conf.d/10-mail.conf
@@ -58,8 +58,13 @@ RUN apt-get update && \
       ssl-cert \
       vim \
       tzdata && \
-    rm -rf /var/lib/apt/lists/* && \
-    groupadd -g 1000 vmail && \
+    # Configurar la zona horaria
+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    rm -rf /var/lib/apt/lists/*
+
+# Crear usuarios y grupos necesarios para la configuración de Dovecot y Postfix
+RUN groupadd -g 1000 vmail && \
     useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
     passwd -l vmail && \
     mkdir -p /srv/mail && \
@@ -68,20 +73,17 @@ RUN apt-get update && \
     chown vmail:vmail /var/mail && \
     chmod 755 /var/mail && \
     mkdir -p /var/spool/postfix/private && \
-    chown vmail:vmail /var/spool/postfix/private && \
-    # Configurar la zona horaria
-    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata
+    chown vmail:vmail /var/spool/postfix/private
 
-# Crear directorios necesarios y asignar permisos adecuados
-RUN mkdir -p /var/mail/info@mail.smartquail.io/tmp && \
+# Crear directorios necesarios para Dovecot
+RUN mkdir -p /var/mail/info@juansilvaphoto.com/tmp && \
     chown -R vmail:vmail /var/mail && \
     chmod -R 755 /var/mail && \
-    # Crear directorios de Dovecot privados si no existen
+    # Crear directorios privados de Dovecot si no existen
     mkdir -p /etc/dovecot/private && \
     chown -R vmail:vmail /etc/dovecot/private
 
-# Exponer puertos necesarios
+# Exponer puertos necesarios (activar los que realmente se usarán)
 EXPOSE 24
 EXPOSE 110
 EXPOSE 143
