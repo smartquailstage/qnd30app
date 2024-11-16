@@ -22,7 +22,7 @@ COPY juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
 
 # Archivos de configuración de Dovecot y Postfix
 COPY configPD/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
-COPY configPD/10-auth.conf /etc/dovecot/conf.d/10-auth.conf
+#COPY configPD/10-auth.conf /etc/dovecot/conf.d/10-auth.conf
 COPY configPD/10-mail.conf /etc/dovecot/conf.d/10-mail.conf
 COPY configPD/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
 
