@@ -16,10 +16,9 @@ COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
 COPY postfix/main.cf /etc/postfix/main.cf
 
 # Copiar certificados SSL (asegúrate de que las rutas de origen existan)
-COPY ./juansivaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
-COPY ./juansivaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
-
-
+# Verifica que los archivos estén en la ruta correcta dentro del contexto de construcción de Docker
+COPY juansilvaphoto.com/certs/fullchain.pem /etc/dovecot/private/fullchain.pem
+COPY juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
 
 # Archivos de configuración postfix+Dovecot
 COPY configPD/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
@@ -38,7 +37,7 @@ RUN if ! id -u postfix > /dev/null 2>&1; then \
     fi
 
 # Instalar paquetes necesarios y configurar el entorno
-RUN apt-get -y update && \
+RUN apt-get update && \
     apt-get -y install \
       tini \
       dovecot-core \
@@ -74,11 +73,15 @@ RUN apt-get -y update && \
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
-# Configurar permisos y propiedad para directorios
+# Crear directorios necesarios y asignar permisos adecuados
 RUN mkdir -p /var/mail/info@mail.smartquail.io/tmp && \
     chown -R vmail:vmail /var/mail && \
-    chmod -R 755 /var/mail
+    chmod -R 755 /var/mail && \
+    # Crear directorios de Dovecot privados si no existen
+    mkdir -p /etc/dovecot/private && \
+    chown -R vmail:vmail /etc/dovecot/private
 
+# Exponer puertos necesarios
 EXPOSE 24
 EXPOSE 110
 EXPOSE 143
@@ -87,6 +90,7 @@ EXPOSE 990
 EXPOSE 993
 #EXPOSE 4190
 
+# Montar volúmenes
 VOLUME ["/etc/dovecot", "/var/mail/"]
 
 # Usar el script de inicio para arrancar el servicio
