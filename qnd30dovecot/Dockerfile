@@ -71,17 +71,10 @@ RUN groupadd -g 1000 vmail && \
     chown vmail:vmail /srv/mail && \
     mkdir -p /var/mail && \
     chown vmail:vmail /var/mail && \
-    chmod 755 /var/mail && \
-    mkdir -p /var/spool/postfix/private && \
-    chown vmail:vmail /var/spool/postfix/private
+    chmod 755 /var/mail
 
-# Crear directorios necesarios para Dovecot
-RUN mkdir -p /var/mail/info@juansilvaphoto.com/tmp && \
-    chown -R vmail:vmail /var/mail && \
-    chmod -R 755 /var/mail && \
-    # Crear directorios privados de Dovecot si no existen
-    mkdir -p /etc/dovecot/private && \
-    chown -R vmail:vmail /etc/dovecot/private
+# No es necesario crear /var/spool/postfix/private ni /var/mail/info@juansilvaphoto.com/tmp aquí, 
+# ya que estos directorios y archivos de socket serán creados dinámicamente por los servicios.
 
 # Exponer puertos necesarios (activar los que realmente se usarán)
 EXPOSE 24
