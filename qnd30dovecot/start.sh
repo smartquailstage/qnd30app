@@ -11,8 +11,7 @@ MAIL_DIR="/var/mail"
 echo "Starting Dovecot..."
 dovecot &
 
-# Wait a few seconds to ensure Dovecot starts up correctly
-sleep 10
+
 
 # Create the main mail directory if it doesn't exist
 echo "Ensuring the main mail directory exists: $MAIL_DIR"
