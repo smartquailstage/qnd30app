@@ -41,9 +41,11 @@ RUN apt-get -y update && apt-get -y install \
 RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     chmod +x /sbin/tini
 
-# Añadir tus propios certificados al contenedor
-COPY cert.pem /etc/ssl/certs/
-COPY key.pem /etc/ssl/private/
+
+
+# Copiar certificados SSL (asegúrate de que las rutas de origen existan)
+COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
+COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
 
 # Crear enlaces simbólicos para que Dovecot use tus certificados personalizados
 RUN ln -sf /etc/ssl/certs/cert.pem /etc/dovecot/cert.pem && \
