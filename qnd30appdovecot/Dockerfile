@@ -48,8 +48,8 @@ COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
 COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
 
 # Crear enlaces simbólicos para que Dovecot use tus certificados personalizados
-RUN ln -sf /etc/ssl/certs/cert.pem /etc/dovecot/cert.pem && \
-    ln -sf /etc/ssl/private/key.pem /etc/dovecot/key.pem
+RUN ln -sf /etc/ssl/certs/fullchain.pem /etc/dovecot/fullchain.pem && \
+    ln -sf /etc/ssl/private/privkey.pem  /etc/dovecot/privkey.pem 
 
 # Añadir archivo de configuración de Dovecot
 COPY dovecot.conf /etc/dovecot/dovecot.conf
