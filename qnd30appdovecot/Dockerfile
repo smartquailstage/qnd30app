@@ -10,8 +10,9 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-# Actualizar e instalar solo los paquetes necesarios de Dovecot
+# Actualizar e instalar los paquetes necesarios de Dovecot, junto con curl para descargar tini
 RUN apt-get -y update && apt-get -y install \
+  curl \
   dovecot-core \
   dovecot-coi \
   dovecot-gssapi \
@@ -27,29 +28,29 @@ RUN apt-get -y update && apt-get -y install \
   dovecot-solr \
   dovecot-sqlite \
   dovecot-submissiond \
-  ca-certificates && \  # Eliminamos ssl-cert aquí
+  ca-certificates && \
   groupadd -g 1000 vmail && \
   useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
   passwd -l vmail && \
   rm -rf /etc/dovecot && \
-  mkdir /srv/mail && \
+  mkdir -p /srv/mail && \
   chown vmail:vmail /srv/mail && \
-  mkdir /etc/dovecot
+  mkdir -p /etc/dovecot
 
 # Descargar e instalar tini
 RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     chmod +x /sbin/tini
 
 # Añadir tus propios certificados al contenedor
-ADD cert.pem /etc/ssl/certs/
-ADD key.pem /etc/ssl/private/
+COPY cert.pem /etc/ssl/certs/
+COPY key.pem /etc/ssl/private/
 
 # Crear enlaces simbólicos para que Dovecot use tus certificados personalizados
-RUN ln -s /etc/ssl/certs/cert.pem /etc/dovecot/cert.pem && \
-    ln -s /etc/ssl/private/key.pem /etc/dovecot/key.pem
+RUN ln -sf /etc/ssl/certs/cert.pem /etc/dovecot/cert.pem && \
+    ln -sf /etc/ssl/private/key.pem /etc/dovecot/key.pem
 
 # Añadir archivo de configuración de Dovecot
-ADD dovecot.conf /etc/dovecot/dovecot.conf
+COPY dovecot.conf /etc/dovecot/dovecot.conf
 
 # Configurar volúmenes para persistencia
 VOLUME ["/etc/dovecot", "/srv/mail"]
