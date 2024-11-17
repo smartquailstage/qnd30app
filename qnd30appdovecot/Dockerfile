@@ -10,7 +10,7 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-# Instalar Dovecot y dependencias
+# Actualizar e instalar solo los paquetes necesarios de Dovecot
 RUN apt-get -y update && apt-get -y install \
   dovecot-core \
   dovecot-coi \
@@ -27,31 +27,32 @@ RUN apt-get -y update && apt-get -y install \
   dovecot-solr \
   dovecot-sqlite \
   dovecot-submissiond \
-  ca-certificates \
-  ssl-cert && \
+  ca-certificates && \  # Eliminamos ssl-cert aquí
   groupadd -g 1000 vmail && \
   useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
   passwd -l vmail && \
   rm -rf /etc/dovecot && \
-  chmod +x /sbin/tini && \
   mkdir /srv/mail && \
   chown vmail:vmail /srv/mail && \
-  make-ssl-cert generate-default-snakeoil && \
   mkdir /etc/dovecot
 
-# Copiar certificados SSL (asegúrate de que las rutas de origen existan)
-COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
-COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
+# Descargar e instalar tini
+RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
+    chmod +x /sbin/tini
+
+# Añadir tus propios certificados al contenedor
+ADD cert.pem /etc/ssl/certs/
+ADD key.pem /etc/ssl/private/
 
 # Crear enlaces simbólicos para que Dovecot use tus certificados personalizados
-RUN ln -s /etc/ssl/certs/fullchain.pem /etc/dovecot/cert.pem && \
-    ln -s /etc/ssl/private/privkey.pem /etc/dovecot/key.pem
+RUN ln -s /etc/ssl/certs/cert.pem /etc/dovecot/cert.pem && \
+    ln -s /etc/ssl/private/key.pem /etc/dovecot/key.pem
 
 # Añadir archivo de configuración de Dovecot
-COPY dovecot.conf /etc/dovecot/dovecot.conf
+ADD dovecot.conf /etc/dovecot/dovecot.conf
 
 # Configurar volúmenes para persistencia
-VOLUME ["/etc/dovecot", "/var/mail/"]
+VOLUME ["/etc/dovecot", "/srv/mail"]
 
 # Configurar el punto de entrada y el comando para iniciar Dovecot
 ENTRYPOINT ["/sbin/tini", "--"]
