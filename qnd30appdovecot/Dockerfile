@@ -44,13 +44,13 @@ RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI
 
 
 # Copiar certificados SSL (asegúrate de que las rutas de origen existan)
-COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
-COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
+COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/fullchain.pem 
+COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/privkey.pem 
 COPY ConfigFiles/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
 
 # Crear enlaces simbólicos para que Dovecot use tus certificados personalizados
-RUN ln -sf /etc/ssl/certs/fullchain.pem /etc/dovecot/fullchain.pem && \
-    ln -sf /etc/ssl/private/privkey.pem  /etc/dovecot/privkey.pem 
+RUN ln -sf /etc/ssl/certs/fullchain.pem  /etc/ssl/certs/fullchain.pem && \
+    ln -sf /etc/ssl/private/privkey.pem  /etc/ssl/private/privkey.pem
 
 # Añadir archivo de configuración de Dovecot
 COPY dovecot.conf /etc/dovecot/dovecot.conf
