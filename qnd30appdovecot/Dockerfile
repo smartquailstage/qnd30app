@@ -10,7 +10,7 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-# Actualizar e instalar los paquetes necesarios de Dovecot, junto con curl para descargar tini
+# Actualizar e instalar los paquetes necesarios de Dovecot y curl
 RUN apt-get -y update && apt-get -y install \
   curl \
   dovecot-core \
@@ -41,13 +41,16 @@ RUN apt-get -y update && apt-get -y install \
 RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     chmod +x /sbin/tini
 
+# Copiar los certificados SSL (asegúrate de que las rutas de origen existan)
+COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/fullchain.pem
+COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/privkey.pem
 
+# Crear enlaces simbólicos para los certificados de Dovecot
+RUN ln -s /etc/ssl/certs/fullchain.pem /etc/dovecot/cert.pem && \
+    ln -s /etc/ssl/private/privkey.pem /etc/dovecot/key.pem
 
-# Copiar certificados SSL (asegúrate de que las rutas de origen existan)
-COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/fullchain.pem 
-COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/privkey.pem 
+# Copiar archivo de configuración SSL
 COPY ConfigFiles/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
-
 
 # Añadir archivo de configuración de Dovecot
 COPY dovecot.conf /etc/dovecot/dovecot.conf
