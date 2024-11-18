@@ -51,7 +51,7 @@ RUN ln -s /etc/ssl/certs/cert.pem /etc/dovecot/cert.pem && \
 
 # Copiar archivo de configuración SSL
 #COPY ConfigFiles/10-passdb.conf /etc/dovecot/conf.d/10-passdb.conf
-COPY ConfigFiles/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
+#COPY ConfigFiles/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
 COPY ConfigFiles/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 
 # Añadir archivo de configuración de Dovecot
