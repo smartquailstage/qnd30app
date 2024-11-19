@@ -4,7 +4,7 @@ COPY ./nginx/* /etc/nginx/
 COPY ./ssl-certs-juansilvaphoto/* /etc/nginx/
 COPY ./nginx/run.sh /run.sh
 COPY ./ssl-certs-juansilvaphoto/https/juansilvaphoto.com/* /etc/letsencrypt/live/juansilvaphoto.com/
-COPY ./ssl-certs-juansilvaphoto/https/www.juansilvaphoto.com/* /etc/letsencrypt/live/www.juansilvaphoto.com/
+
 
 
 ENV DOMAIN=juansilvaphoto.com
