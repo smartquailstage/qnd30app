@@ -6,6 +6,7 @@ COPY ./nginx/run.sh /run.sh
 COPY ./nginx/run_2.sh /run_2.sh
 COPY ./ssl-certs-juansilvaphoto/https/juansilvaphoto.com/* /etc/letsencrypt/live/juansilvaphoto.com/
 COPY ./ssl-certs-juansilvaphoto/https/www.juansilvaphoto.com/* /etc/letsencrypt/live/www.juansilvaphoto.com/
+COPY ./ssl-certs-juansilvaphoto/https/mailpost.juansilvaphoto.com/* /etc/letsencrypt/live/mailpost.juansilvaphoto.com/
 
 
 
