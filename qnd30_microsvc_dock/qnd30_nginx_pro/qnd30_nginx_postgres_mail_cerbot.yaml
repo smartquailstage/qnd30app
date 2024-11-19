@@ -77,6 +77,7 @@ services:
       - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
       - postfix-logs:/var/log
       - opendkim:/var/spool/postfix/opendkim
+      - certbot-web_2:/vol/www
       - letsencrypt_certs:/etc/letsencrypt
     environment:
       - OPENDKIM_SOCKET=/var/spool/postfix/opendkim/opendkim.sock
@@ -110,6 +111,7 @@ services:
       - postfix-spools:/var/spool/postfix/private/auth
       - postfix-spools-lmtp:/var/spool/postfix/private/dovecot-lmtp
       - letsencrypt_certs:/etc/letsencrypt
+      - certbot-web_2:/vol/www
     ports:
       - "143:143"   # IMAP
       - "110:110"   # POP3
