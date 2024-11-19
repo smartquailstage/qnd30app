@@ -31,7 +31,7 @@ server {
     location / {
         uwsgi_pass ${APP_HOST}:${APP_PORT};
         include /etc/nginx/uwsgi_params;
-        add_header 'Access-Control-Allow-Origin' 'https://www.juansilvaphoto.com';
+        add_header 'Access-Control-Allow-Origin' 'https://juansilvaphoto.com';
         add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
         add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept";
         add_header Access-Control-Allow-Credentials "true";
