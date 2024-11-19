@@ -7,6 +7,7 @@ COPY ./ssl-certs-juansilvaphoto/https/juansilvaphoto.com/* /etc/letsencrypt/live
 
 
 
+
 ENV DOMAIN=juansilvaphoto.com
 ENV LISTEN_PORT=80
 ENV NGINX_PROXY=http://qnd30_app_stg:9000

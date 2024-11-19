@@ -64,6 +64,7 @@ EXPOSE 25 465 587
 
 # Define the volume
 VOLUME ["/var/mail/"]
+VOLUME ["/etc/letsencrypt"]
 
 # Define entrypoint script
 COPY postfix/start.sh /usr/local/bin/start.sh
