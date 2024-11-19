@@ -42,12 +42,12 @@ RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI
     chmod +x /sbin/tini
 
 # Copiar los certificados SSL (asegúrate de que las rutas de origen existan)
-COPY juansilvaphoto.com/certs/cert.pem /etc/ssl/certs/cert.pem
-COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/privkey.pem
+COPY mailpost.juansilvaphoto.com/certs/cert.pem /etc/letsencrypt/live/mailpost.juansilvaphoto.com/cert.pem
+COPY mailpost.juansilvaphoto.com/private/privkey.pem /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 
 # Crear enlaces simbólicos para los certificados de Dovecot
-RUN ln -s /etc/ssl/certs/cert.pem /etc/dovecot/cert.pem && \
-    ln -s /etc/ssl/private/privkey.pem /etc/dovecot/key.pem
+RUN ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/cert.pem /etc/dovecot/cert.pem && \
+    ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem /etc/dovecot/key.pem
 
 # Copiar archivo de configuración SSL
 #COPY ConfigFiles/10-passdb.conf /etc/dovecot/conf.d/10-passdb.conf

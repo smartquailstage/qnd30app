@@ -51,13 +51,13 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
 COPY postfix/main.cf /etc/postfix/main.cf
 COPY postfix/master.cf /etc/postfix/master.cf
 COPY postfix /etc/postfix
-COPY juansilvaphoto.com/certs/fullchain.pem /etc/ssl/certs/
-COPY juansilvaphoto.com/private/privkey.pem /etc/ssl/private/
+COPY mailpost.juansilvaphoto.com/certs/fullchain.pem /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem 
+COPY mailpost.juansilvaphoto.com/private/privkey.pem /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 
 # Set correct permissions for the SSL certificates
-RUN chown root:root /etc/ssl/certs/fullchain.pem /etc/ssl/private/privkey.pem \
-    && chmod 644 /etc/ssl/certs/fullchain.pem \
-    && chmod 600 /etc/ssl/private/privkey.pem
+RUN chown root:root /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem  /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem \
+    && chmod 644 /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem \
+    && chmod 600 /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 
 # Expose the necessary ports for SMTP and secure connections
 EXPOSE 25 465 587
