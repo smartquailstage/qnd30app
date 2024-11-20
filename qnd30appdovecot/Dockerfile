@@ -32,6 +32,9 @@ RUN apt-get -y update && apt-get -y install \
   groupadd -g 1000 vmail && \
   useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
   passwd -l vmail && \
+  groupadd -g 1010 postfix && \
+  useradd -u 1010 -g 1010 postfix -d /var/spool/postfix && \
+  passwd -l postfix && \
   rm -rf /etc/dovecot && \
   mkdir -p /srv/mail && \
   chown vmail:vmail /srv/mail && \
