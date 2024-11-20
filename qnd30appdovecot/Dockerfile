@@ -39,11 +39,15 @@ RUN apt-get -y update && apt-get -y install \
   mkdir -p /srv/mail && \
   chown vmail:vmail /srv/mail && \
   mkdir -p /etc/dovecot && \
-  chown -R vmail:vmail /etc/dovecot && \ # Aseguramos que 'vmail' tenga permisos en /etc/dovecot
+  chown -R vmail:vmail /etc/dovecot && \
+  # Aseguramos que 'vmail' tenga permisos en /etc/dovecot
   mkdir -p /var/spool/postfix && \
-  chown -R postfix:postfix /var/spool/postfix && \ # Aseguramos que 'postfix' tenga permisos en /var/spool/postfix
-  chmod 750 /var/spool/postfix && \ # Establecemos permisos adecuados en el directorio postfix
+  chown -R postfix:postfix /var/spool/postfix && \
+  # Aseguramos que 'postfix' tenga permisos en /var/spool/postfix
+  chmod 750 /var/spool/postfix && \
+  # Establecemos permisos adecuados en el directorio postfix
   chmod 750 /srv/mail && \
+  # Establecemos permisos adecuados en el directorio de correo
   # Eliminar archivo master.pid si existe (para evitar conflictos al iniciar Dovecot)
   rm -f /run/dovecot/master.pid
 
