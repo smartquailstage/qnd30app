@@ -116,6 +116,9 @@ smtpd_sasl_authenticated_header = yes
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_tls_security_options = noanonymous
 smtpd_sasl_local_domain = $myhostname
+local_header_rewrite_clients = $mynetworks
+broken_sasl_auth_clients = yes
+smtpd_authorized_xforward_hosts = $mynetworks
 
 ###############
 # Extra Settings
