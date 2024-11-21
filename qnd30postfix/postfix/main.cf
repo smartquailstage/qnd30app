@@ -63,10 +63,13 @@ smtpd_relay_restrictions =
     permit_sasl_authenticated,
     reject_unauth_destination,
 
-smtpd_client_restrictions = permit
+smtpd_client_restrictions =
+    permit_mynetworks,
+    permit_sasl_authenticated,
+    reject_unauth_destination
 
 
-smtpd_relay_before_recipient_restrictions = no
+smtpd_relay_before_recipient_restrictions = yes
 
 ###############
 # TLS Settings
@@ -74,7 +77,7 @@ smtpd_relay_before_recipient_restrictions = no
 
 smtp_tls_security_level = may
 smtpd_tls_security_level = may
-smtpd_tls_auth_only = yes
+smtpd_tls_auth_only = no
 smtpd_tls_cert_file = /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem 
 smtpd_tls_key_file = /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 smtpd_tls_received_header = yes
@@ -113,9 +116,9 @@ smtpd_sasl_authenticated_header = yes
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_tls_security_options = noanonymous
 smtpd_sasl_local_domain = $myhostname
-local_header_rewrite_clients = $mynetworks
-broken_sasl_auth_clients = yes
-smtpd_authorized_xforward_hosts = $mynetworks
+#local_header_rewrite_clients = $mynetworks
+#broken_sasl_auth_clients = yes
+#smtpd_authorized_xforward_hosts = $mynetworks
 
 
 
@@ -137,10 +140,9 @@ virtual_mailbox_domains = pgsql:/etc/postfix/sql/virtual_mailbox_domains.cf
 virtual_mailbox_maps = pgsql:/etc/postfix/sql/virtual_mailbox_maps.cf
 virtual_alias_maps = pgsql:/etc/postfix/sql/virtual_alias_maps.cf
 
-#virtual_uid_maps = static:1000
-#virtual_gid_maps = static:1000
-#virtual_alias_domains = *
+virtual_uid_maps = static:1000
+virtual_gid_maps = static:1000
+virtual_alias_domains = *
 
-virtual_transport = dovecot
-dovecot_destination_recipient_limit = 1
+
 
