@@ -107,11 +107,11 @@ smtp_tls_loglevel = 1
 ###############
 
 smtp_sasl_type = dovecot
-smtp_sasl_path = unix:/var/spool/postfix/private/auth
+smtp_sasl_path = private/auth
 
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_type = dovecot
-smtpd_sasl_path = unix:/var/spool/postfix/private/auth
+smtpd_sasl_path = private/auth
 smtpd_sasl_authenticated_header = yes
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_tls_security_options = noanonymous
