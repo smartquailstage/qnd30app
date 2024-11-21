@@ -57,8 +57,7 @@ scache    unix  -       -       n       -       1       scache
 postlog   unix-dgram n  -       n       -       1       postlogd
 local     unix  -       n       n       -       -       local
 virtual   unix  -       n       n       -       -       virtual
-
 dovecot   unix  -       n       n       -       -       pipe
-flags=DRhu user=vmail:vmail argv=/usr/lib/dovecot/deliver -f ${sender} -d ${user}@${nexthop}
+
 
 
