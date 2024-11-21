@@ -42,10 +42,7 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
     # Set ownership and permissions for /var/mail
     && chown -R vmail:vmail /var/mail \
     && chmod 700 /var/mail \
-    # Set permissions for SSL certificates
-    && mkdir -p /etc/ssl/certs /etc/ssl/private \
-    && chmod 700 /etc/ssl/private \
-    && chown root:root /etc/ssl/certs /etc/ssl/private
+  
 
 # Copy configuration files
 COPY postfix/main.cf /etc/postfix/main.cf
