@@ -30,26 +30,26 @@ RUN apt-get -y update && apt-get -y install \
   dovecot-submissiond \
   ca-certificates && \
   groupadd -g 1000 vmail && \
-  useradd -u 1000 -g 1000 -m vmail && \
+  useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
   passwd -l vmail && \
   groupadd -g 1010 postfix && \
-  useradd -u 1010 -g 1010 -m postfix && \
+  useradd -u 1010 -g 1010 postfix -d /var/spool/postfix && \
   passwd -l postfix && \
-  groupadd -g 8 mail && \
-  usermod -aG mail vmail && \
-  # Crear directorios necesarios y asignar permisos
+  rm -rf /etc/dovecot && \
   mkdir -p /srv/mail && \
-  chown -R vmail:vmail /srv/mail && \
-  chmod 770 /srv/mail && \
+  chown vmail:vmail /srv/mail && \
   mkdir -p /etc/dovecot && \
   chown -R vmail:vmail /etc/dovecot && \
-  chmod 770 /etc/dovecot && \
+  # Aseguramos que 'vmail' tenga permisos en /etc/dovecot
   mkdir -p /var/spool/postfix && \
   chown -R postfix:postfix /var/spool/postfix && \
-  chmod 770 /var/spool/postfix && \
-  # No eliminamos el directorio /etc/dovecot, lo configuramos
+  # Aseguramos que 'postfix' tenga permisos en /var/spool/postfix
+  chmod 750 /var/spool/postfix && \
+  # Establecemos permisos adecuados en el directorio postfix
+  chmod 750 /srv/mail && \
+  # Establecemos permisos adecuados en el directorio de correo
   # Eliminar archivo master.pid si existe (para evitar conflictos al iniciar Dovecot)
-  mkdir -p /run/dovecot && rm -f /run/dovecot/master.pid
+  rm -f /run/dovecot/master.pid
 
 # Descargar e instalar tini
 RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
@@ -64,6 +64,7 @@ RUN ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/cert.pem /etc/doveco
     ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem /etc/dovecot/key.pem
 
 # Copiar archivo de configuración SSL
+#COPY ConfigFiles/10-passdb.conf /etc/dovecot/conf.d/10-passdb.conf
 COPY ConfigFiles/10-master.conf /etc/dovecot/conf.d/10-master.conf
 COPY ConfigFiles/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 
