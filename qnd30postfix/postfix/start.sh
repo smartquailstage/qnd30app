@@ -160,10 +160,6 @@ function setPermissions {
   chown -R postfix:postfix /var/mail/
   chmod 700 /var/mail/
 
-  # Set permissions for SSL certificates
-  chown root:root /etc/ssl/certs/fullchain.pem /etc/ssl/private/privkey.pem
-  chmod 644 /etc/ssl/certs/fullchain.pem
-  chmod 600 /etc/ssl/private/privkey.pem
 }
 
 function serviceStart {
