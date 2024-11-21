@@ -30,24 +30,23 @@ RUN apt-get -y update && apt-get -y install \
   dovecot-submissiond \
   ca-certificates && \
   groupadd -g 1000 vmail && \
-  useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
+  useradd -u 1000 -g 1000 -m vmail && \
   passwd -l vmail && \
   groupadd -g 1010 postfix && \
-  useradd -u 1010 -g 1010 postfix -d /var/spool/postfix && \
+  useradd -u 1010 -g 1010 -m postfix && \
   passwd -l postfix && \
+  groupadd -g 8 mail && \
+  usermod -aG mail vmail && \
   rm -rf /etc/dovecot && \
   mkdir -p /srv/mail && \
-  chown vmail:vmail /srv/mail && \
+  chown -R vmail:vmail /srv/mail && \
+  chmod 770 /srv/mail && \
   mkdir -p /etc/dovecot && \
   chown -R vmail:vmail /etc/dovecot && \
-  # Aseguramos que 'vmail' tenga permisos en /etc/dovecot
+  chmod 770 /etc/dovecot && \
   mkdir -p /var/spool/postfix && \
   chown -R postfix:postfix /var/spool/postfix && \
-  # Aseguramos que 'postfix' tenga permisos en /var/spool/postfix
-  chmod 750 /var/spool/postfix && \
-  # Establecemos permisos adecuados en el directorio postfix
-  chmod 750 /srv/mail && \
-  # Establecemos permisos adecuados en el directorio de correo
+  chmod 770 /var/spool/postfix && \
   # Eliminar archivo master.pid si existe (para evitar conflictos al iniciar Dovecot)
   rm -f /run/dovecot/master.pid
 
@@ -65,7 +64,7 @@ RUN ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/cert.pem /etc/doveco
 
 # Copiar archivo de configuración SSL
 #COPY ConfigFiles/10-passdb.conf /etc/dovecot/conf.d/10-passdb.conf
-#COPY ConfigFiles/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
+COPY ConfigFiles/10-master.conf /etc/dovecot/conf.d/10-master.conf
 COPY ConfigFiles/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 
 # Añadir archivo de configuración de Dovecot
