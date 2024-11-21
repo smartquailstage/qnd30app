@@ -41,7 +41,7 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
     && chmod 750 /var/spool/postfix \
     # Set ownership and permissions for /var/mail
     && chown -R vmail:vmail /var/mail \
-    && chmod 700 /var/mail \
+    && chmod 700 /var/mail 
   
 
 # Copy configuration files
