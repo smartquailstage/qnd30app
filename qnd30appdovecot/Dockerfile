@@ -37,7 +37,7 @@ RUN apt-get -y update && apt-get -y install \
   passwd -l postfix && \
   groupadd -g 8 mail && \
   usermod -aG mail vmail && \
-  rm -rf /etc/dovecot && \
+  # Crear directorios necesarios y asignar permisos
   mkdir -p /srv/mail && \
   chown -R vmail:vmail /srv/mail && \
   chmod 770 /srv/mail && \
@@ -47,8 +47,9 @@ RUN apt-get -y update && apt-get -y install \
   mkdir -p /var/spool/postfix && \
   chown -R postfix:postfix /var/spool/postfix && \
   chmod 770 /var/spool/postfix && \
+  # No eliminamos el directorio /etc/dovecot, lo configuramos
   # Eliminar archivo master.pid si existe (para evitar conflictos al iniciar Dovecot)
-  rm -f /run/dovecot/master.pid
+  mkdir -p /run/dovecot && rm -f /run/dovecot/master.pid
 
 # Descargar e instalar tini
 RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
@@ -63,7 +64,6 @@ RUN ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/cert.pem /etc/doveco
     ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem /etc/dovecot/key.pem
 
 # Copiar archivo de configuración SSL
-#COPY ConfigFiles/10-passdb.conf /etc/dovecot/conf.d/10-passdb.conf
 COPY ConfigFiles/10-master.conf /etc/dovecot/conf.d/10-master.conf
 COPY ConfigFiles/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 
