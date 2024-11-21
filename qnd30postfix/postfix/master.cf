@@ -9,11 +9,15 @@ smtp      inet  n       -       n       -       -       smtpd
   -o smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject_unauth_destination
 
 # Submission service for client mail submission (port 587)
-submission  inet  n       -       n       -       -       smtpd
-    -o smtpd_tls_security_level=may
-    -o smtpd_sasl_auth_enable=yes
-    -o smtpd_sasl_type=dovecot
-    -o smtpd_sasl_path=/var/spool/postfix/private/auth
+submission   inet  n       -       n       -       -       smtpd
+  -o syslog_name=postfix/submission
+  -o smtpd_tls_security_level=encrypt
+  -o smtpd_tls_ask_ccert=yes
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_reject_unlisted_recipient=no
+  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATING
 
 # SMTPS service for secure SMTP (port 465)
 smtps     inet  n       -       n       -       -       smtpd
@@ -53,5 +57,8 @@ scache    unix  -       -       n       -       1       scache
 postlog   unix-dgram n  -       n       -       1       postlogd
 local     unix  -       n       n       -       -       local
 virtual   unix  -       n       n       -       -       virtual
+
+dovecot   unix  -       n       n       -       -       pipe
+flags=DRhu user=vmail:vmail argv=/usr/lib/dovecot/deliver -f ${sender} -d ${user}@${nexthop}
 
 

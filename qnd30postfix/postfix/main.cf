@@ -19,7 +19,7 @@ mynetworks = 127.0.0.0/8, [::1]/128, 172.18.0.0/16 ,64.233.160.0/19, 137.184.0.5
 inet_interfaces = all
 inet_protocols = ipv4
 
-virtual_transport = lmtp:unix:private/dovecot-lmtp
+
 
 transport_maps = pcre:/etc/postfix/transport.pcre
 
@@ -80,7 +80,7 @@ smtpd_relay_before_recipient_restrictions = yes
 
 smtp_tls_security_level = may
 smtpd_tls_security_level = may
-smtpd_tls_auth_only = no
+smtpd_tls_auth_only = yes
 smtpd_tls_cert_file = /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem 
 smtpd_tls_key_file = /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 smtpd_tls_received_header = yes
@@ -109,9 +109,12 @@ smtp_tls_loglevel = 1
 # SASL Settings
 ###############
 
+smtp_sasl_type = dovecot
+smtp_sasl_path = private/auth
+
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_type = dovecot
-smtpd_sasl_path = /var/spool/postfix/private/auth
+smtpd_sasl_path = private/auth
 smtpd_sasl_authenticated_header = yes
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_tls_security_options = noanonymous
@@ -119,6 +122,9 @@ smtpd_sasl_local_domain = $myhostname
 local_header_rewrite_clients = $mynetworks
 broken_sasl_auth_clients = yes
 smtpd_authorized_xforward_hosts = $mynetworks
+
+
+
 
 ###############
 # Extra Settings
@@ -140,3 +146,8 @@ virtual_alias_maps = pgsql:/etc/postfix/sql/virtual_alias_maps.cf
 virtual_uid_maps = static:1000
 virtual_gid_maps = static:1000
 virtual_alias_domains = *
+
+
+virtual_transport = dovecot
+dovecot_destination_recipient_limit = 1
+
