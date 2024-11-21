@@ -21,16 +21,13 @@ inet_protocols = ipv4
 
 
 
-transport_maps = pcre:/etc/postfix/transport.pcre
 
-# Empty alias list to override the configuration variable and disable NIS
-alias_maps = 
 
 # No destination restrictions
 mydestination = $myhostname, localhost.$mydomain, localhost
 
 # Relayhost if any is configured
-relayhost = [smtp.mailpost.juansilvaphoto.com]:587
+relayhost = [smtp.juansilvaphoto.com]:587
 relay_domains = *
 
 
@@ -44,7 +41,7 @@ smtpd_delay_reject = no
 append_dot_mydomain = no
 
 # Helo restrictions are specified for smtp only in master.cf
-smtpd_helo_required = yes
+smtpd_helo_required = no
 
 smtpd_sender_restrictions =
     permit_mynetworks,
@@ -87,11 +84,11 @@ smtpd_tls_session_cache_timeout = 3600s
 
 
 
-tls_random_source = dev:/dev/urandom
-tlsmgr_cache_type = dovecot
-tls_session_cache_database = dovecot
-tls_session_cache_timeout = 1h
-tls_session_cache_size = 100000
+#tls_random_source = dev:/dev/urandom
+#tlsmgr_cache_type = dovecot
+#tls_session_cache_database = dovecot
+#tls_session_cache_timeout = 1h
+#tls_session_cache_size = 100000
 
 # Uncomment if using memcached for TLS session caching
 # tls_session_cache = memcached
@@ -140,10 +137,9 @@ virtual_mailbox_domains = pgsql:/etc/postfix/sql/virtual_mailbox_domains.cf
 virtual_mailbox_maps = pgsql:/etc/postfix/sql/virtual_mailbox_maps.cf
 virtual_alias_maps = pgsql:/etc/postfix/sql/virtual_alias_maps.cf
 
-virtual_uid_maps = static:1000
-virtual_gid_maps = static:1000
-virtual_alias_domains = *
-
+#virtual_uid_maps = static:1000
+#virtual_gid_maps = static:1000
+#virtual_alias_domains = *
 
 virtual_transport = dovecot
 dovecot_destination_recipient_limit = 1
