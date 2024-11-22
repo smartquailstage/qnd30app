@@ -108,8 +108,7 @@ services:
     volumes:
       - dovecot:/etc/dovecot
       - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
-      - postfix-spools:/var/spool/postfix/private/auth
-      - postfix-spools-lmtp:/var/spool/postfix/private/dovecot-lmtp
+      - postfix-spools:/var/spool/postfix/private/
       - letsencrypt_certs:/etc/letsencrypt
       - certbot-web_2:/vol/www
     ports:
@@ -118,10 +117,8 @@ services:
       - "993:993"   # IMAPS (secure IMAP)
       - "995:995"   # POP3S (secure POP3)
     environment:
-      - DOVECOT_USER=dovecot
+      - DOVECOT_USER=postfix
       - DOVECOT_PASSWORD=A1T2J3C42024
-      - DOVECOT_AUTH_SOCKET_PATH=/var/spool/postfix/private/auth
-      - DOVECOT_AUTH_SOCKET_LMTP_PATH=/var/spool/postfix/private/dovecot-lmtp
     networks:
       - lansmartquail
 
