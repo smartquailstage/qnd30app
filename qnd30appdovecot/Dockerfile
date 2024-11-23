@@ -36,7 +36,7 @@ RUN apt-get -y update && apt-get -y install \
   useradd -u 1010 -g 1010 postfix -d /var/spool/postfix && \
   passwd -l postfix && \
   rm -rf /etc/dovecot && \
-  mkdir -p /srv/mail && \
+  mkdir -p /var/mail && \
   chown vmail:vmail /srv/mail && \
   mkdir -p /etc/dovecot && \
   chown -R vmail:vmail /etc/dovecot && \
@@ -46,10 +46,10 @@ RUN apt-get -y update && apt-get -y install \
   # Aseguramos que 'postfix' tenga permisos en /var/spool/postfix
   chmod 750 /var/spool/postfix && \
   # Establecemos permisos adecuados en el directorio postfix
-  chmod 750 /srv/mail && \
+  chmod 750 /var/mail && \
   # Establecemos permisos adecuados en el directorio de correo
   # Eliminar archivo master.pid si existe (para evitar conflictos al iniciar Dovecot)
-  rm -f /run/dovecot/master.pid
+  #rm -f /run/dovecot/master.pid
 
 # Descargar e instalar tini
 RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
@@ -77,4 +77,4 @@ VOLUME ["/etc/dovecot", "/srv/mail"]
 
 # Configurar el punto de entrada y el comando para iniciar Dovecot
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["/start.sh", "/usr/sbin/dovecot", "-F",]
+CMD ["/run.sh"]
