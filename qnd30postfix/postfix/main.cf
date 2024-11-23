@@ -31,7 +31,7 @@ alias_maps =
 mydestination = 
 
 # Relayhost if any is configured
-relayhost = [smtp.mailpost.juansilvaphoto.com]:587
+relayhost = [smtp.juansilvaphoto.com]:587
 relay_domains = *
 
 
@@ -49,7 +49,6 @@ smtpd_helo_required = yes
 
 smtpd_sender_restrictions =
     permit_mynetworks,
-    permit_sasl_authenticated,
     reject_non_fqdn_sender,
     reject_unknown_sender_domain,
     reject_unlisted_sender,
@@ -58,19 +57,18 @@ smtpd_sender_restrictions =
 
 smtpd_recipient_restrictions =
     permit_mynetworks,
-    permit_sasl_authenticated,
     reject_unauth_destination,
     permit
 
 smtpd_relay_restrictions =
     permit_mynetworks,
-    permit_sasl_authenticated,
     reject_unauth_destination,
+    permit
 
 smtpd_client_restrictions =
     permit_mynetworks,
-    permit_sasl_authenticated,
-    reject_unauth_destination
+    reject_unauth_destination,
+    permit
 
 
 smtpd_relay_before_recipient_restrictions = yes

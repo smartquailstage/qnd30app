@@ -63,17 +63,12 @@ services:
       - dovecot
       - smartquaildb
       - opendkim
-    expose:
-      - "25"
-      - "465"
-      - "587"
     ports:
       - "25:25"    # SMTP
       - "465:465"  # SMTPS
       - "587:587"  # Submission
     volumes:
-      - postfix-spools:/var/spool/postfix/private/auth
-      - postfix-spools-lmtp:/var/spool/postfix/private/dovecot-lmtp
+      - postfix-spools:/var/spool/postfix/private/
       - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
       - postfix-logs:/var/log
       - opendkim:/var/spool/postfix/opendkim
@@ -104,7 +99,6 @@ services:
     restart: always
     depends_on:
       - smartquaildb
-      - postfix
     volumes:
       - dovecot:/etc/dovecot
       - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
@@ -117,7 +111,7 @@ services:
       - "993:993"   # IMAPS (secure IMAP)
       - "995:995"   # POP3S (secure POP3)
     environment:
-      - DOVECOT_USER=postfix
+      - DOVECOT_USER=dovecot
       - DOVECOT_PASSWORD=A1T2J3C42024
     networks:
       - lansmartquail
