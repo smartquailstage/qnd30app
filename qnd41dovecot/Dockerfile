@@ -13,7 +13,7 @@ ADD dovecot.list /etc/apt/sources.list.d/
 
 # Copiar archivos de configuración de Dovecot y Postfix
 COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
-COPY postfix/main.cf /etc/postfix/main.cf
+
 
 # Copiar certificados SSL
 COPY mailpost.juansilvaphoto.com/certs/cert.pem /etc/dovecot/private/cert.pem
