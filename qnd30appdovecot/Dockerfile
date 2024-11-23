@@ -77,4 +77,4 @@ VOLUME ["/etc/dovecot", "/srv/mail"]
 
 # Configurar el punto de entrada y el comando para iniciar Dovecot
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["/usr/sbin/dovecot", "-F"]
+CMD ["/start.sh", "/usr/sbin/dovecot", "-F",]
