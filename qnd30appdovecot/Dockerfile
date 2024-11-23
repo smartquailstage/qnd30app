@@ -66,6 +66,7 @@ RUN ln -s /etc/letsencrypt/live/mailpost.juansilvaphoto.com/cert.pem /etc/doveco
 # Copiar archivo de configuración SSL
 #COPY ConfigFiles/10-passdb.conf /etc/dovecot/conf.d/10-passdb.conf
 COPY ConfigFiles/10-master.conf /etc/dovecot/conf.d/10-master.conf
+COPY ConfigFiles/10-auth.conf /etc/dovecot/conf.d/10-auth.conf
 COPY ConfigFiles/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
 
 # Añadir archivo de configuración de Dovecot
