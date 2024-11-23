@@ -51,6 +51,9 @@ RUN apt-get -y update && apt-get -y install \
   # Eliminar archivo master.pid si existe (para evitar conflictos al iniciar Dovecot)
   #rm -f /run/dovecot/master.pid
 
+  RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
 # Descargar e instalar tini
 RUN curl -Lo /sbin/tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
     chmod +x /sbin/tini
