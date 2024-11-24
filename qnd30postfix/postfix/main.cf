@@ -47,13 +47,13 @@ append_dot_mydomain = no
 # Helo restrictions are specified for smtp only in master.cf
 smtpd_helo_required = yes
 
-smtpd_sender_restrictions =
-    permit_mynetworks,
-    reject_non_fqdn_sender,
-    reject_unknown_sender_domain,
-    reject_unlisted_sender,
-    reject_sender_login_mismatch,
-    permit
+#smtpd_sender_restrictions =
+  #  permit_mynetworks,
+  #  reject_non_fqdn_sender,
+  #  reject_unknown_sender_domain,
+  #  reject_unlisted_sender,
+  #  reject_sender_login_mismatch,
+  #  permit
 
 smtpd_recipient_restrictions =
     permit_mynetworks,
@@ -70,8 +70,10 @@ smtpd_client_restrictions =
     reject_unauth_destination,
     permit
 
+smtpd_sender_restrictions = permit_sasl_authenticated, reject
 
-smtpd_relay_before_recipient_restrictions = yes
+
+smtpd_relay_before_recipient_restrictions = no
 
 ###############
 # TLS Settings
