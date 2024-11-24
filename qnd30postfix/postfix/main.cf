@@ -26,7 +26,7 @@ transport_maps = pcre:/etc/postfix/transport.pcre
 
 
 # Relayhost if any is configured
-relayhost = [smtp.mailpost.juansilvaphoto.com]:587
+relayhost = [smtp.juansilvaphoto.com]:587
 relay_domains = *
 
 
@@ -42,9 +42,6 @@ append_dot_mydomain = no
 # Helo restrictions are specified for smtp only in master.cf
 smtpd_helo_required = yes
 
-# Configuración de control de flujo
-default_transport = smtp
-
 #smtpd_sender_restrictions =
   #  permit_mynetworks,
   #  reject_non_fqdn_sender,
@@ -53,22 +50,22 @@ default_transport = smtp
   #  reject_sender_login_mismatch,
   #  permit
 
-smtpd_recipient_restrictions = 
-    permit_sasl_authenticated,   
-    reject_unauth_destination,      
-    reject_invalid_helo_hostname,   
-    reject_non_fqdn_helo_hostname,  
-    reject_rbl_client zen.spamhaus.org,  
+smtpd_recipient_restrictions =
+    permit_mynetworks,
+    reject_unauth_destination,
     permit
 
-
-# Restricciones para los remitentes
-smtpd_sender_restrictions = 
-    permit_sasl_authenticated,    
-    reject_non_fqdn_sender,       
-    reject_unknown_sender_domain,
-    reject_rbl_client zen.spamhaus.org, 
+smtpd_relay_restrictions =
+    permit_mynetworks,
+    reject_unauth_destination,
     permit
+
+smtpd_client_restrictions =
+    permit_mynetworks,
+    reject_unauth_destination,
+    permit
+
+smtpd_sender_restrictions = permit_sasl_authenticated, reject
 
 
 smtpd_relay_before_recipient_restrictions = no

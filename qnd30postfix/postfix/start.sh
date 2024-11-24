@@ -92,9 +92,11 @@ function insertInitialData {
   log "Inserting initial data into PostgreSQL tables..."
 
   local insert_sql="
-    INSERT INTO virtual_domains (domain) VALUES ('juansilvaphoto.com') ON CONFLICT DO NOTHING;
+    INSERT INTO virtual_domains (domain) VALUES
+    ('juansilvaphoto.com')
+    ON CONFLICT DO NOTHING;
     INSERT INTO virtual_users (domain_id, email, password) VALUES 
-      ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'A1T2J3C42024') 
+    ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'A1T2J3C42024') 
     ON CONFLICT DO NOTHING;
     INSERT INTO virtual_aliases (domain_id, source, destination) VALUES 
       ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'info') 
@@ -172,7 +174,7 @@ function serviceStart {
   /usr/sbin/postfix start-fg
 }
 
-export DOMAIN=${DOMAIN:-"mailpost.juansilvaphoto.com"}
+export DOMAIN=${DOMAIN:-"juansilvaphoto.com"}
 export HOSTNAME=${HOSTNAME:-"mailpost.juansilvaphoto.com"}
 export MESSAGE_SIZE_LIMIT=${MESSAGE_SIZE_LIMIT:-"50000000"}
 export RELAYNETS=${RELAYNETS:-""}
