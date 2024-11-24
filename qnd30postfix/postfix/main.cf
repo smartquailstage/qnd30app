@@ -3,38 +3,35 @@
 ###############
 
 # Main domain and hostname
-mydomain = {{ DOMAIN }}
-myhostname = {{ HOSTNAME }}
+mydomain = {{ DOMAIN }}  # Reemplazar por el dominio real
+myhostname = {{ HOSTNAME }}  # Reemplazar por el hostname real
 myorigin = $mydomain
 
 home_mailbox = Maildir/
 
 # Message size limit
-message_size_limit = {{ MESSAGE_SIZE_LIMIT }}
+message_size_limit = {{ MESSAGE_SIZE_LIMIT }}  # Reemplazar por el límite de tamaño de mensaje
 
 # Relayed networks
-mynetworks = 127.0.0.0/8, [::1]/128, 172.18.0.0/16, 64.23.235.13/32 ,64.233.160.0/19, 137.184.0.57/32, 66.102.0.0/20, 66.249.80.0/20, 72.14.192.0/18, 74.125.0.0/16, 108.177.0.0/17, 173.194.0.0/16, 209.85.128.0/17, 216.58.192.0/19, 35.190.0.0/17, {{ RELAYNETS }}
-
-
+mynetworks = 127.0.0.0/8, [::1]/128, 172.18.0.0/16, 64.23.235.13/32, 64.233.160.0/19, 137.184.0.57/32, 66.102.0.0/20, 66.249.80.0/20, 72.14.192.0/18, 74.125.0.0/16, 108.177.0.0/17, 173.194.0.0/16, 209.85.128.0/17, 216.58.192.0/19, 35.190.0.0/17, {{ RELAYNETS }}  # Reemplazar con las redes de retransmisión necesarias
 
 inet_interfaces = all
 inet_protocols = ipv4
 
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 
+# Define transport maps
 transport_maps = pcre:/etc/postfix/transport.pcre
 
-# Empty alias list to override the configuration variable and disable NIS
-alias_maps = 
+# Empty alias list to override the configuration variable and disable NIS (si no usas NIS o alias)
+alias_maps =  # Si no estás usando alias, puedes dejar esto vacío o eliminarlo.
 
 # No destination restrictions
-mydestination = 
+mydestination = $mydomain, localhost.$mydomain  # Especifica los destinos locales si es necesario
 
 # Relayhost if any is configured
 relayhost = [smtp.juansilvaphoto.com]:587
 relay_domains = *
-
-
 
 ###############
 # Restrictions
@@ -47,13 +44,14 @@ append_dot_mydomain = no
 # Helo restrictions are specified for smtp only in master.cf
 smtpd_helo_required = yes
 
-#smtpd_sender_restrictions =
-  #  permit_mynetworks,
-  #  reject_non_fqdn_sender,
-  #  reject_unknown_sender_domain,
-  #  reject_unlisted_sender,
-  #  reject_sender_login_mismatch,
-  #  permit
+# Las restricciones del remitente pueden ser configuradas, pero están comentadas en el original.
+# smtpd_sender_restrictions =
+#    permit_mynetworks,
+#    reject_non_fqdn_sender,
+#    reject_unknown_sender_domain,
+#    reject_unlisted_sender,
+#    reject_sender_login_mismatch,
+#    permit
 
 smtpd_recipient_restrictions =
     permit_mynetworks,
@@ -70,8 +68,8 @@ smtpd_client_restrictions =
     reject_unauth_destination,
     permit
 
+# Se permite autenticación SASL para remitentes, pero se rechaza cualquier otro.
 smtpd_sender_restrictions = permit_sasl_authenticated, reject
-
 
 smtpd_relay_before_recipient_restrictions = no
 
@@ -83,7 +81,7 @@ smtp_tls_security_level = may
 smtpd_tls_security_level = may
 smtpd_tls_auth_only = no
 smtpd_tls_cert_file = /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem 
-smtpd_tls_key_file =  /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 smtpd_tls_received_header = yes
 smtp_tls_note_starttls_offer = yes
 smtpd_tls_loglevel = 1
@@ -120,7 +118,7 @@ smtpd_sasl_local_domain = $myhostname
 # Extra Settings
 ###############
 
-maillog_file = /dev/stdout
+maillog_file = /dev/stdout  # Redirige los logs de correo a la salida estándar (puede ser útil para depuración)
 
 ##############
 # PostgreSQL configuration
@@ -128,11 +126,11 @@ maillog_file = /dev/stdout
 
 virtual_mailbox_base = /var/mail
 
-#virtual_mailbox_domains = mailpost.juansilvaphoto.com
+# Si utilizas PostgreSQL para los dominios de buzones virtuales, estas líneas son correctas
 virtual_mailbox_domains = pgsql:/etc/postfix/sql/virtual_mailbox_domains.cf
 virtual_mailbox_maps = pgsql:/etc/postfix/sql/virtual_mailbox_maps.cf
 virtual_alias_maps = pgsql:/etc/postfix/sql/virtual_alias_maps.cf
 
 virtual_uid_maps = static:1000
 virtual_gid_maps = static:1000
-virtual_alias_domains = *
+virtual_alias_domains = *  # Define los dominios de alias; '*' indica todos los dominios.
