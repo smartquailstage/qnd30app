@@ -9,7 +9,8 @@ myorigin = $mydomain
 
 home_mailbox = Maildir/
 
-alias_maps = lmdb:/etc/postfix/aliases.lmdb
+alias_maps = hash:/etc/postfix/aliases
+
 
 
 # Message size limit
