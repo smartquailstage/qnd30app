@@ -8,6 +8,12 @@ RUN apt-get update && \
     openssl && \
     apt-get clean
 
+# Crear el grupo postfix si no existe
+RUN groupadd postfix || true && \
+    mkdir -p /var/spool/postfix/opendkim && \
+    chown -R opendkim:postfix /var/spool/postfix/opendkim && \
+    chmod 750 /var/spool/postfix/opendkim
+
 # Crear el grupo y el usuario 'opendkim' de forma segura (evitar errores si ya existen)
 RUN groupadd -r opendkim || true && \
     useradd -r -g opendkim -m opendkim || true && \
@@ -17,6 +23,8 @@ RUN groupadd -r opendkim || true && \
     chmod 700 /var/spool/postfix/opendkim && \
     chmod 755 /etc/opendkim && \
     chmod 755 /var/spool/postfix
+
+
 
 # Copiar la configuración de OpenDKIM (asegúrate de que estos archivos existan en el contexto de construcción)
 COPY opendkim.conf /etc/opendkim.conf
