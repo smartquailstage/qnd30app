@@ -6,11 +6,15 @@ chown -R opendkim:opendkim /etc/opendkim/keys
 chmod 700 /etc/opendkim/keys
 
 # Generar las claves DKIM
-opendkim-genkey --bits=2048 --domain=juansilvaphoto.com --selector=default --directory=/etc/opendkim/keys
+#opendkim-genkey --bits=2048 --domain=juansilvaphoto.com --selector=default --directory=/etc/opendkim/keys
+
+opendkim-genkey -s mailpost -d juansilvaphoto.com -b 2048 -v
 
 # Cambiar los permisos de las claves generadas
 chmod 600 /etc/opendkim/keys/default.private
 chmod 644 /etc/opendkim/keys/default.txt
+chmod 600 /etc/opendkim/keys/mailpost.juansilvaphoto.com.private
+chmod 644 /etc/opendkim/keys/mailpost.juansilvaphoto.com.txt
 
 # Generar la clave pública para agregarla al DNS
 chown opendkim:opendkim /etc/opendkim/keys/default.txt
