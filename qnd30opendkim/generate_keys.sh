@@ -20,6 +20,13 @@ if [ ! -f /etc/opendkim/keys/mailpost.txt ]; then
     exit 1
 fi
 
+# Crear el directorio para las claves DKIM si no existe
+mkdir -p /etc/opendkim/keys
+# Cambiar el propietario y el grupo a 'opendkim'
+chown -R opendkim:opendkim /etc/opendkim/keys
+# Asegurarse de que el directorio tenga permisos de escritura solo para el usuario
+chmod 700 /etc/opendkim/keys
+
 # Cambiar los permisos de las claves generadas
 chmod 600 /etc/opendkim/keys/mailpost.private
 chmod 644 /etc/opendkim/keys/mailpost.txt
