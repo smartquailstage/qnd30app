@@ -96,10 +96,10 @@ function insertInitialData {
     ('juansilvaphoto.com')
     ON CONFLICT DO NOTHING;
     INSERT INTO virtual_users (domain_id, email, password) VALUES 
-    ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@juansilvaphoto.com', 'A1T2J3C42024') 
+    ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'A1T2J3C42024') 
     ON CONFLICT DO NOTHING;
     INSERT INTO virtual_aliases (domain_id, source, destination) VALUES 
-      ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@juansilvaphoto.com', 'info') 
+      ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'info') 
     ON CONFLICT DO NOTHING;
   "
 
