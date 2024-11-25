@@ -24,7 +24,7 @@ mydestination = $myhostname, localhost.$mydomain, localhost
 inet_interfaces = all
 inet_protocols = all
 
-virtual_transport =
+virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 transport_maps = pcre:/etc/postfix/transport.pcre
 
