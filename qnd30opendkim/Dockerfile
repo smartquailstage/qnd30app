@@ -8,6 +8,14 @@ RUN apt-get update && \
     openssl && \
     apt-get clean
 
+
+USER root
+
+    # Crear el directorio y ajustar los permisos
+RUN mkdir -p /etc/opendkim/keys && \
+    hown -R opendkim:opendkim /etc/opendkim/keys && \
+    chmod 700 /etc/opendkim/keys
+
 # Crear el grupo postfix si no existe
 RUN groupadd postfix || true && \
     mkdir -p /var/spool/postfix/opendkim && \
