@@ -28,6 +28,10 @@ COPY TrustedHosts /etc/opendkim/TrustedHosts
 COPY generate_keys.sh /usr/local/bin/generate_keys.sh
 RUN chmod +x /usr/local/bin/generate_keys.sh
 
+RUN mkdir -p /var/spool/postfix/opendkim && \
+    chown -R opendkim:postfix /var/spool/postfix/opendkim && \
+    chmod 750 /var/spool/postfix/opendkim
+
 EXPOSE 8891
 
 # Exponer el socket y las claves como volúmenes

@@ -128,8 +128,9 @@ virtual_gid_maps = static:1000
 virtual_alias_domains = *
 
 # Activar el filtro de DKIM
-smtpd_milters = inet:localhost:8891
-non_smtpd_milters = $smtpd_milters
+# Configuración de Postfix para conectar con OpenDKIM por socket Unix
 
-milter_default_action = accept
 milter_protocol = 6
+milter_default_action = accept
+smtpd_milters = unix:/var/spool/postfix/opendkim/opendkim.sock
+non_smtpd_milters = unix:/var/spool/postfix/opendkim/opendkim.sock
