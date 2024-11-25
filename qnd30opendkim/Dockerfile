@@ -14,7 +14,9 @@ RUN groupadd -r opendkim || true && \
     mkdir -p /etc/opendkim/keys /var/spool/postfix/opendkim && \
     chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix && \
     chmod 700 /etc/opendkim/keys && \
-    chmod 700 /var/spool/postfix/opendkim
+    chmod 700 /var/spool/postfix/opendkim && \
+    chmod 755 /etc/opendkim && \
+    chmod 755 /var/spool/postfix
 
 # Copiar la configuración de OpenDKIM (asegúrate de que estos archivos existan en el contexto de construcción)
 COPY opendkim.conf /etc/opendkim.conf
@@ -31,6 +33,10 @@ EXPOSE 8891
 # Exponer el socket y las claves como volúmenes
 VOLUME ["/var/spool/postfix/opendkim"]
 VOLUME ["/etc/opendkim/keys"]
+
+# Cambiar el propietario de las carpetas para evitar problemas de permisos al ejecutar OpenDKIM
+USER root
+RUN chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix
 
 # Ejecutar el script de generación de claves y luego OpenDKIM como usuario opendkim
 USER opendkim
