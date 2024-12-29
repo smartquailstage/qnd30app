@@ -41,7 +41,7 @@ RUN python -m venv /py && \
         jpeg-dev go zlib-dev libjpeg build-base wget \
         fontconfig ttf-freefont font-noto terminus-font \
         gtk+3.0 pango busybox-extras \
-        openssl-dev gettext neofetch && \
+        openssl-dev gettext && \
     /py/bin/pip install -r /requirements.txt && \
     apk del openssl-dev
 
