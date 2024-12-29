@@ -5,7 +5,7 @@ django==4.2.16
 wagtail==6.2.1
 
 # Django Baton
-django-baton==4.1.0
+django-baton
 
 matplotlib
 scipy
