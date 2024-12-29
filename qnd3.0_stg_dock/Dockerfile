@@ -1,5 +1,5 @@
-# Use Python 3.11 Alpine image
-FROM python:3.11.3-alpine3.18
+# Use Python 3.12 Alpine image
+FROM python:3.12-alpine
 
 # Metadata
 LABEL maintainer="mau_dev@smartquail.io"
@@ -52,8 +52,8 @@ RUN adduser --disabled-password --no-create-home ${USER} && \
     chown -R ${USER}:${USER} /${NODE_VERSION}/${NODE_APP_NAME} /var/log/uwsgi/ /scripts && \
     chmod -R 755 /${NODE_VERSION}/${NODE_APP_NAME} /scripts && \
     chmod -R u+x /scripts/uwsgi.sh && \
-    rm /py/lib/python3.11/site-packages/baton/static/baton/app/dist/baton.min.js && \
-    cp /${NODE_VERSION}/${NODE_APP_NAME}/baton.min.js /py/lib/python3.11/site-packages/baton/static/baton/app/dist/
+    rm /py/lib/python3.12/site-packages/baton/static/baton/app/dist/baton.min.js && \
+    cp /${NODE_VERSION}/${NODE_APP_NAME}/baton.min.js /py/lib/python3.12/site-packages/baton/static/baton/app/dist/
 
 # Set time zone
 RUN apk add --no-cache --update musl musl-utils musl-locales tzdata && \
