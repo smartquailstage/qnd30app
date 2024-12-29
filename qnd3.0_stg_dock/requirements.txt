@@ -2,7 +2,7 @@
 django==4.2.16
 
 # Wagtail
-wagtail==6.2.1
+wagtail==6.3.1
 
 # Django Baton
 django-baton
@@ -30,7 +30,7 @@ requests
 celery>=5.2.7,<6.0  # Compatible with Django 4.2
 
 # uWSGI
-uWSGI==2.0.26
+uWSGI==2.0.28
 
 # Redis
 redis>=4.5.5
