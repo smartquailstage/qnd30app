@@ -74,8 +74,6 @@ services:
       - opendkim:/var/spool/postfix/opendkim
       - certbot-web_2:/vol/www
       - letsencrypt_certs:/etc/letsencrypt
-    environment:
-      - OPENDKIM_SOCKET=/var/spool/postfix/opendkim/opendkim.sock
     networks:
       - lansmartquail
 
