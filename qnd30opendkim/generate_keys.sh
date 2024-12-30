@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Asegúrate de que el directorio exista y tenga permisos correctos
+# Asegúrate de que el directorio de claves de OpenDKIM exista y tenga los permisos correctos
 mkdir -p /etc/opendkim/keys
 chown -R opendkim:opendkim /etc/opendkim/keys
 chmod 700 /etc/opendkim/keys
@@ -20,29 +20,17 @@ if [ ! -f /etc/opendkim/keys/mailpost.txt ]; then
     exit 1
 fi
 
-# Crear el directorio para las claves DKIM si no existe
-mkdir -p /etc/opendkim/keys
-# Cambiar el propietario y el grupo a 'opendkim'
-chown -R opendkim:opendkim /etc/opendkim/keys
-# Asegurarse de que el directorio tenga permisos de escritura solo para el usuario
-chmod 700 /etc/opendkim/keys
-
-# Cambiar los permisos de las claves generadas
+# Cambiar la propiedad y los permisos de las claves generadas
 chmod 600 /etc/opendkim/keys/mailpost.private
 chmod 644 /etc/opendkim/keys/mailpost.txt
-
-# Cambiar la propiedad de la clave pública para el acceso correcto
 chown opendkim:opendkim /etc/opendkim/keys/mailpost.txt
 
-# Permitir que Postfix acceda al socket de OpenDKIM
-# Crear el directorio donde se encuentra el socket si no existe
+# Asegurarse de que Postfix tenga acceso al directorio de OpenDKIM
 mkdir -p /var/spool/postfix/opendkim
-
-# Dar permisos para que Postfix pueda acceder al socket de OpenDKIM
 chown postfix:postfix /var/spool/postfix/opendkim
 chmod 750 /var/spool/postfix/opendkim
 
-# Verificar que el socket de OpenDKIM tiene permisos correctos
+# Verificar que el socket de OpenDKIM tenga los permisos correctos
 if [ -S /var/spool/postfix/opendkim/opendkim.sock ]; then
     echo "El socket de OpenDKIM está listo para ser utilizado por Postfix."
 else
