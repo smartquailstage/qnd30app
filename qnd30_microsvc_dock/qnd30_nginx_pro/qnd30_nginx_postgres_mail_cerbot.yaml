@@ -53,7 +53,7 @@ services:
     networks: 
       - lansmartquail
 
-  postfix:
+   postfix:
     image: smartquail/qnd30postfix:prod
     restart: always
     container_name: postfix
@@ -69,7 +69,7 @@ services:
       - "587:587"  # Submission
     volumes:
       - postfix-spools:/var/spool/postfix/private/
-      - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
+      - mail:/var/mail  # Correo en /var/mail para Postfix y Dovecot
       - postfix-logs:/var/log
       - opendkim:/var/spool/postfix/opendkim
       - certbot-web_2:/vol/www
@@ -101,7 +101,7 @@ services:
       - smartquaildb
     volumes:
       - dovecot:/etc/dovecot
-      - mail:/home/info/Maildir  # Correo en /home/info/Maildir para Postfix y Dovecot
+      - mail:/var/mail  # Correo en /var/mail para Postfix y Dovecot
       - postfix-spools:/var/spool/postfix/private/
       - letsencrypt_certs:/etc/letsencrypt
       - certbot-web_2:/vol/www
@@ -115,6 +115,7 @@ services:
       - DOVECOT_PASSWORD=A1T2J3C42024
     networks:
       - lansmartquail
+
 
   pgadmin:
     image: dpage/pgadmin4:latest

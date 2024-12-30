@@ -24,6 +24,7 @@ COPY configPD/10-auth.conf /etc/dovecot/conf.d/10-auth.conf
 COPY configPD/10-mail.conf /etc/dovecot/conf.d/10-mail.conf
 COPY configPD/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf
 
+
 # Copiar el script de inicio
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
@@ -62,9 +63,9 @@ RUN apt-get -y update && \
     passwd -l vmail && \
     mkdir -p /srv/vmail && \
     chown -R vmail:vmail /srv/vmail && \
-    mkdir -p /var/vmail && \
-    chown -R vmail:vmail /var/vmail && \
-    chmod -R 770 /var/vmail && \
+    mkdir -p /var/mail && \
+    chown -R vmail:vmail /var/mail && \
+    chmod -R 770 /var/mail && \
     mkdir -p /var/spool/postfix/private && \
     chown -R postfix:postfix /var/spool/postfix && \
     chmod -R 770 /var/spool/postfix && \
@@ -75,8 +76,9 @@ RUN apt-get -y update && \
 # Configurar permisos y propiedad para directorios adicionales
 RUN mkdir -p /var/mail/info@mailpost.juansilvaphoto.com/tmp && \
     chown -R vmail:vmail /var/mail/info@mailpost.juansilvaphoto.com && \
-    chmod -R 770 /var/mail/info@mailpost.juansilvaphoto.com && \
+    chmod -R 700 /var/mail/info@mailpost.juansilvaphoto.com && \
     chmod 755 /var/mail
+
 
 EXPOSE 24
 EXPOSE 110

@@ -5,7 +5,7 @@ USER="vmail"
 GROUP="vmail"
 
 # Define the main directory
-MAIL_DIR="/var/vmail"
+MAIL_DIR="/var/mail"
 
 # Start Dovecot in the background
 echo "Starting Dovecot..."
