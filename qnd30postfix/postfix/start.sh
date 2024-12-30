@@ -13,36 +13,27 @@ function log {
 
 function addUserInfo {
   local user_name="info"
-  local user_home="/home/${user_name}"
+  local user_maildir="/var/mail/juansilvaphoto.com/${user_name}"
 
   # Verifica si el usuario ya existe
   if ! id -u "$user_name" &>/dev/null; then
     log "Adding user '${user_name}'"
 
-    # Añade el usuario con un directorio home
-    adduser --system --home "$user_home" --no-create-home "$user_name"
+    # Añade el usuario con un directorio home (el directorio home no será utilizado para el correo)
+    adduser --system --home "/home/$user_name" --no-create-home "$user_name"
 
-    # Crea el directorio home si no existe
-    mkdir -p "$user_home"
-
-    # Ajusta los permisos del directorio home
-    chown "$user_name:$user_name" "$user_home"
-    chmod 700 "$user_home"
-
-    # Asegúrate de que el usuario postfix tenga acceso al directorio home del usuario
-    chown -R postfix:postfix "$user_home"
-    chmod -R 700 "$user_home"
-
-    # Configura los permisos adecuados para vmail en Maildir
-    chown -R vmail:vmail "$user_home/var/mail"  # Se asume que es /home/info/var/mail
-    chmod -R 700 "$user_home/var/mail"
+    # Crea el directorio de Maildir si no existe
+    mkdir -p "$user_maildir/{tmp,new,cur}"
     
-    log "User '${user_name}' added with home directory '${user_home}'"
+    # Ajusta los permisos del directorio de Maildir
+    chown -R vmail:vmail "$user_maildir"
+    chmod -R 700 "$user_maildir"
+
+    log "User '${user_name}' added with maildir '${user_maildir}'"
   else
     log "User '${user_name}' already exists"
   fi
 }
-
 
 function createTable {
   local table_name=$1
@@ -113,7 +104,6 @@ function insertInitialData {
   fi
 }
 
-
 function serviceConf {
   if [[ ! $HOSTNAME =~ \. ]]; then
     HOSTNAME="$HOSTNAME.$DOMAIN"
@@ -162,7 +152,6 @@ function setPermissions {
   # Set ownership and permissions for mail directories
   chown -R postfix:postfix /var/mail/
   chmod 700 /var/mail/
-
 }
 
 function serviceStart {
