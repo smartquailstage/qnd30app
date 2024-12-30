@@ -11,7 +11,9 @@ RUN apt-get update && \
 # Crear el grupo y el usuario 'opendkim' de forma segura (evitar errores si ya existen)
 RUN groupadd -r opendkim || true && \
     useradd -r -g opendkim -m opendkim || true && \
-    groupadd postfix || true && \
+    # Crear el grupo y el usuario postfix
+    groupadd -r postfix || true && \
+    useradd -r -g postfix -m postfix || true && \
     mkdir -p /etc/opendkim/keys /var/spool/postfix/opendkim && \
     chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix && \
     chmod 700 /etc/opendkim/keys && \
@@ -34,9 +36,9 @@ RUN mkdir -p /var/spool/postfix/opendkim && \
     chown -R opendkim:postfix /var/spool/postfix/opendkim && \
     chmod 750 /var/spool/postfix/opendkim
 
+# Exponer el puerto y volúmenes
 EXPOSE 8891
 
-# Exponer el socket y las claves como volúmenes
 VOLUME ["/var/spool/postfix/opendkim"]
 VOLUME ["/etc/opendkim/keys"]
 
