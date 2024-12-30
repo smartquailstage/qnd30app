@@ -5,25 +5,23 @@ RUN apt-get update && \
     apt-get install -y \
     opendkim \
     opendkim-tools \
-    openssl && \
+    openssl \
     procps && \
     apt-get clean
 
-# Crear el grupo y el usuario 'opendkim' de forma segura (evitar errores si ya existen)
+# Crear grupos y usuarios necesarios
 RUN groupadd -r opendkim || true && \
     useradd -r -g opendkim -m opendkim || true && \
-    # Crear el grupo y el usuario postfix
     groupadd -r postfix || true && \
     useradd -r -g postfix -m postfix || true && \
     mkdir -p /etc/opendkim/keys /var/spool/postfix/opendkim /var/run/opendkim && \
-    chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix /var/run/opendkim && \
+    chown -R opendkim:opendkim /etc/opendkim /var/run/opendkim && \
+    chown -R opendkim:postfix /var/spool/postfix/opendkim && \
     chmod 700 /etc/opendkim/keys && \
-    chmod 700 /var/spool/postfix/opendkim && \
-    chmod 755 /etc/opendkim && \
-    chmod 755 /var/spool/postfix && \
-    chmod 755 /var/run/opendkim
+    chmod 750 /var/spool/postfix/opendkim && \
+    chmod 755 /etc/opendkim /var/run/opendkim
 
-# Copiar la configuración de OpenDKIM
+# Copiar los archivos de configuración necesarios
 COPY opendkim.conf /etc/opendkim.conf
 COPY KeyTable /etc/opendkim/KeyTable
 COPY SigningTable /etc/opendkim/SigningTable
@@ -33,19 +31,9 @@ COPY TrustedHosts /etc/opendkim/TrustedHosts
 COPY generate_keys.sh /usr/local/bin/generate_keys.sh
 RUN chmod +x /usr/local/bin/generate_keys.sh
 
-# Asegurar que postfix pueda acceder a los archivos de OpenDKIM
-RUN chown -R opendkim:postfix /var/spool/postfix/opendkim && \
-    chmod 750 /var/spool/postfix/opendkim
-
-# Exponer el puerto y volúmenes
+# Exponer el puerto de OpenDKIM y configurar volúmenes
 EXPOSE 8891
+VOLUME ["/var/spool/postfix/opendkim", "/etc/opendkim/keys"]
 
-VOLUME ["/var/spool/postfix/opendkim"]
-VOLUME ["/etc/opendkim/keys"]
-
-# Cambiar el propietario de las carpetas para evitar problemas de permisos al ejecutar OpenDKIM
-RUN chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix /var/run/opendkim
-
-# Ejecutar el script de generación de claves y luego OpenDKIM como usuario opendkim
-USER root
-CMD ["/bin/bash", "-c", "/usr/local/bin/generate_keys.sh"]
+# Configuración final
+CMD ["/bin/bash", "-c", "/usr/local/bin/generate_keys.sh && service opendkim start && tail -f /dev/null"]
