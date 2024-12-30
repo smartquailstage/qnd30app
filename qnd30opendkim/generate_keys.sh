@@ -7,7 +7,7 @@ chmod 700 /etc/opendkim/keys
 
 # Generar las claves DKIM con los parámetros correctos (selector y dominio)
 echo "Generando las claves DKIM..."
-opendkim-genkey -s mailpost -d juansilvaphoto.com -b 2048 -v -D /etc/opendkim/keys || { echo "Error: Fallo al generar las claves DKIM"; exit 1; }
+opendkim-genkey -s mailpost -d mailpost.juansilvaphoto.com -b 2048 -v -D /etc/opendkim/keys || { echo "Error: Fallo al generar las claves DKIM"; exit 1; }
 
 # Verificar que las claves hayan sido generadas
 if [ ! -f /etc/opendkim/keys/mailpost.private ]; then
@@ -33,6 +33,22 @@ chmod 644 /etc/opendkim/keys/mailpost.txt
 
 # Cambiar la propiedad de la clave pública para el acceso correcto
 chown opendkim:opendkim /etc/opendkim/keys/mailpost.txt
+
+# Permitir que Postfix acceda al socket de OpenDKIM
+# Crear el directorio donde se encuentra el socket si no existe
+mkdir -p /var/spool/postfix/opendkim
+
+# Dar permisos para que Postfix pueda acceder al socket de OpenDKIM
+chown postfix:postfix /var/spool/postfix/opendkim
+chmod 750 /var/spool/postfix/opendkim
+
+# Verificar que el socket de OpenDKIM tiene permisos correctos
+if [ -S /var/spool/postfix/opendkim/opendkim.sock ]; then
+    echo "El socket de OpenDKIM está listo para ser utilizado por Postfix."
+else
+    echo "Error: El socket de OpenDKIM no se encuentra o tiene permisos incorrectos."
+    exit 1
+fi
 
 # Mostrar las claves generadas
 echo "Clave pública DKIM:"
