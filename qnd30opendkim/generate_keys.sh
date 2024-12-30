@@ -18,16 +18,10 @@ if [ ! -f /etc/opendkim/keys/mailpost.txt ]; then
     exit 1
 fi
 
-# Asegurarse de que Postfix tenga acceso al directorio de OpenDKIM
-mkdir -p /var/spool/postfix/opendkim
-
-# Verificar que el socket de OpenDKIM tenga los permisos correctos
-if [ -S /var/spool/postfix/opendkim/opendkim.sock ]; then
-    echo "El socket de OpenDKIM está listo para ser utilizado por Postfix."
-else
-    echo "Error: El socket de OpenDKIM no se encuentra o tiene permisos incorrectos."
-    exit 1
-fi
+# Cambiar la propiedad y los permisos de las claves generadas
+chmod 600 /etc/opendkim/keys/mailpost.private
+chmod 644 /etc/opendkim/keys/mailpost.txt
+chown opendkim:opendkim /etc/opendkim/keys/mailpost.txt
 
 # Mostrar las claves generadas
 echo "Clave pública DKIM:"
