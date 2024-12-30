@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# Asegúrate de que el directorio de claves de OpenDKIM exista y tenga los permisos correctos
+# Asegúrate de que el directorio de claves de OpenDKIM exista
 mkdir -p /etc/opendkim/keys
-chown -R opendkim:opendkim /etc/opendkim/keys
-chmod 700 /etc/opendkim/keys
 
 # Generar las claves DKIM con los parámetros correctos (selector y dominio)
 echo "Generando las claves DKIM..."
@@ -20,15 +18,8 @@ if [ ! -f /etc/opendkim/keys/mailpost.txt ]; then
     exit 1
 fi
 
-# Cambiar la propiedad y los permisos de las claves generadas
-chmod 600 /etc/opendkim/keys/mailpost.private
-chmod 644 /etc/opendkim/keys/mailpost.txt
-chown opendkim:opendkim /etc/opendkim/keys/mailpost.txt
-
 # Asegurarse de que Postfix tenga acceso al directorio de OpenDKIM
 mkdir -p /var/spool/postfix/opendkim
-chown postfix:postfix /var/spool/postfix/opendkim
-chmod 750 /var/spool/postfix/opendkim
 
 # Verificar que el socket de OpenDKIM tenga los permisos correctos
 if [ -S /var/spool/postfix/opendkim/opendkim.sock ]; then
