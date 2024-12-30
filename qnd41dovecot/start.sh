@@ -20,12 +20,12 @@ mkdir -p "$MAIL_DIR"
 # Adjust ownership and permissions for the main mail directory
 echo "Setting permissions and ownership for $MAIL_DIR"
 chown -R $USER:$GROUP "$MAIL_DIR"
-chmod 755 "$MAIL_DIR"
+chmod 750 "$MAIL_DIR"  # Permissions to allow group access and prevent others
 
-# Recursively adjust ownership and permissions for all directories and files
-echo "Setting permissions and ownership for all directories and files under $MAIL_DIR"
-find "$MAIL_DIR" -type d -exec chown $USER:$GROUP {} \; -exec chmod 755 {} \;
-find "$MAIL_DIR" -type f -exec chown $USER:$GROUP {} \; -exec chmod 644 {} \;
+# Recursively adjust ownership and permissions for all directories under /var/mail
+echo "Setting permissions and ownership for all directories under $MAIL_DIR"
+find "$MAIL_DIR" -type d -exec chown $USER:$GROUP {} \; -exec chmod 750 {} \;  # Directories need execute permissions
+find "$MAIL_DIR" -type f -exec chown $USER:$GROUP {} \; -exec chmod 640 {} \;  # Files need read and write for owner
 
 # Check if /var/mail/info@mail.smartquail.io/tmp exists; create if needed
 INFO_DIR="$MAIL_DIR/info@mailpost.juansilvaphoto.com/tmp"
@@ -34,7 +34,7 @@ mkdir -p "$INFO_DIR"
 # Adjust ownership and permissions for the specific info directory
 echo "Setting permissions and ownership for $INFO_DIR"
 chown $USER:$GROUP "$INFO_DIR"
-chmod 755 "$INFO_DIR"
+chmod 750 "$INFO_DIR"  # Directories under user email need write access for the user and group
 
 # Verify the results
 echo "Verification of permissions and ownership:"
