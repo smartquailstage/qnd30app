@@ -14,7 +14,7 @@ dovecot &
 # Wait a few seconds to ensure Dovecot starts up correctly
 sleep 10
 
-# Create the directories if they don't exist
+# Create the main mail directory if it doesn't exist
 mkdir -p "$MAIL_DIR"
 
 # Adjust ownership and permissions for the main mail directory
@@ -27,20 +27,27 @@ echo "Setting permissions and ownership for all directories under $MAIL_DIR"
 find "$MAIL_DIR" -type d -exec chown $USER:$GROUP {} \; -exec chmod 750 {} \;  # Directories need execute permissions
 find "$MAIL_DIR" -type f -exec chown $USER:$GROUP {} \; -exec chmod 640 {} \;  # Files need read and write for owner
 
-# Check if /var/mail/info@mail.smartquail.io/tmp exists; create if needed
-INFO_DIR="$MAIL_DIR/info@mailpost.juansilvaphoto.com/tmp"
-mkdir -p "$INFO_DIR"
+# Ensure Maildir structure for the domain (in this case juansilvaphoto.com)
+MAILDIR_STRUCTURE="$MAIL_DIR/juansilvaphoto.com/info/Maildir"
+mkdir -p "$MAILDIR_STRUCTURE/{cur,new,tmp}"
 
-# Adjust ownership and permissions for the specific info directory
-echo "Setting permissions and ownership for $INFO_DIR"
-chown $USER:$GROUP "$INFO_DIR"
-chmod 750 "$INFO_DIR"  # Directories under user email need write access for the user and group
+# Adjust ownership and permissions for the Maildir structure
+echo "Setting permissions and ownership for the Maildir structure: $MAILDIR_STRUCTURE"
+chown -R $USER:$GROUP "$MAILDIR_STRUCTURE"
+chmod -R 700 "$MAILDIR_STRUCTURE"  # Only owner should have full access
+
+# Set ownership and permissions for subdirectories in Maildir (cur, new, tmp)
+echo "Setting permissions for Maildir subdirectories"
+find "$MAILDIR_STRUCTURE" -type d -exec chown $USER:$GROUP {} \; -exec chmod 700 {} \;  # Only owner should have full access
+find "$MAILDIR_STRUCTURE" -type f -exec chown $USER:$GROUP {} \; -exec chmod 640 {} \;  # Files need read and write for owner
 
 # Verify the results
 echo "Verification of permissions and ownership:"
 ls -ld "$MAIL_DIR"
-ls -ld "$MAIL_DIR/info@mailpost.juansilvaphoto.com"
-ls -ld "$INFO_DIR"
+ls -ld "$MAILDIR_STRUCTURE"
+ls -ld "$MAILDIR_STRUCTURE/cur"
+ls -ld "$MAILDIR_STRUCTURE/new"
+ls -ld "$MAILDIR_STRUCTURE/tmp"
 
 echo "Permissions and ownership have been set."
 
