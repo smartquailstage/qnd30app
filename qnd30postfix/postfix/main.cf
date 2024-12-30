@@ -31,7 +31,7 @@ virtual_transport = lmtp:unix:private/dovecot-lmtp
 transport_maps = pcre:/etc/postfix/transport.pcre
 
 # Relayhost if any is configured
-relayhost = [smtp.mailpost.juansilvaphoto.com]:587
+relayhost = 
 relay_domains = $mydestination
 
 
@@ -40,11 +40,17 @@ relay_domains = $mydestination
 # Restrictions
 ###############
 
+# Rechazo inmediato de conexiones no válidas (más eficiente)
 smtpd_delay_reject = no
+
+# No agregar automáticamente el dominio local a direcciones incompletas
 append_dot_mydomain = no
 
+# Requiere que los clientes se identifiquen correctamente durante el saludo HELO
 smtpd_helo_required = yes
 
+
+# Restricciones para el remitente
 smtpd_sender_restrictions =
     permit_mynetworks,
     permit_sasl_authenticated,
@@ -54,20 +60,25 @@ smtpd_sender_restrictions =
     reject_sender_login_mismatch,
     permit
 
+# Restricciones para el destinatario
 smtpd_recipient_restrictions =
     permit_mynetworks,
     reject_unauth_destination,
     permit
 
+# Restricciones para el reenvío
 smtpd_relay_restrictions =
     permit_mynetworks,
     permit_sasl_authenticated,
-    reject_unauth_destination,
+    reject_unauth_destination
 
+# Restricciones para el cliente
 smtpd_client_restrictions =
     permit_mynetworks,
     reject_unknown_client,
     permit
+
+
 
 smtpd_relay_before_recipient_restrictions = no
 
@@ -99,13 +110,27 @@ smtp_tls_loglevel = 1
 # SASL Settings
 ###############
 
+# Habilitar la autenticación SASL en Postfix
 smtpd_sasl_auth_enable = yes
+
+# Especificar que el tipo de autenticación es Dovecot
 smtpd_sasl_type = dovecot
+
+# Ruta al socket de autenticación de Dovecot
 smtpd_sasl_path = unix:/var/spool/postfix/private/auth
+
+# Añadir un encabezado 'Authenticated-By' a los correos de usuarios autenticados
 smtpd_sasl_authenticated_header = yes
+
+# Impedir la autenticación anónima (seguridad)
 smtpd_sasl_security_options = noanonymous
+
+# Impedir la autenticación anónima en conexiones TLS (seguridad)
 smtpd_sasl_tls_security_options = noanonymous
+
+# Configurar el dominio local para la autenticación (por defecto es el hostname)
 smtpd_sasl_local_domain = $myhostname
+
 
 ###############
 # Extra Settings
