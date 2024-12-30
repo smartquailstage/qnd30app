@@ -34,7 +34,7 @@ RUN addgroup -g 1001 postfix || true \
     && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true
 
 # Create necessary directories and set permissions
-RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
+RUN mkdir -p /var/spool/postfix/private \
     # Set ownership and permissions for /var/spool/postfix
     && chown -R postfix:postfix /var/spool/postfix \
     && chmod 750 /var/spool/postfix/private \
@@ -44,6 +44,8 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
     && chmod 700 /var/mail \
     # Create and configure Maildir structure for specific domain and user
     && mkdir -p /var/mail/juansilvaphoto.com/info/{cur,new,tmp} \
+    && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info \
+    && chmod -R 700 /var/mail/juansilvaphoto.com/info
     && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info \
     && chmod 700 /var/mail/juansilvaphoto.com/info \
     && find /var/mail/juansilvaphoto.com/info -type d -exec chmod 750 {} \; \
@@ -61,6 +63,9 @@ RUN chown root:root /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.
     && chmod 644 /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem \
     && chmod 600 /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 
+
+
+    
 # Expose the necessary ports for SMTP and secure connections
 EXPOSE 25 465 587
 
