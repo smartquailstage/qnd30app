@@ -1,33 +1,25 @@
 #!/bin/bash
 
-# Asegúrate de que el directorio de claves de OpenDKIM exista
-mkdir -p /etc/opendkim/keys
+# Directorio donde se almacenarán las claves
+KEY_DIR="/etc/opendkim/keys"
+DOMAIN="mailpost.juansilvaphoto.com"
+SELECTOR="mail"
 
-# Generar las claves DKIM con los parámetros correctos (selector y dominio)
-echo "Generando las claves DKIM..."
-opendkim-genkey -s mailpost -d mailpost.juansilvaphoto.com -b 2048 -v -D /etc/opendkim/keys || { echo "Error: Fallo al generar las claves DKIM"; exit 1; }
+# Crear el directorio de claves si no existe
+mkdir -p $KEY_DIR
 
-# Verificar que las claves hayan sido generadas
-if [ ! -f /etc/opendkim/keys/mailpost.private ]; then
-    echo "Error: No se encontró la clave privada mailpost.private"
+# Generar las claves DKIM
+opendkim-genkey -s $SELECTOR -d $DOMAIN -b 2048 -v -D $KEY_DIR
+
+# Verificar si las claves se generaron correctamente
+if [ ! -f $KEY_DIR/$SELECTOR.private ]; then
+    echo "Error: No se encontró la clave privada $KEY_DIR/$SELECTOR.private"
     exit 1
 fi
 
-if [ ! -f /etc/opendkim/keys/mailpost.txt ]; then
-    echo "Error: No se encontró la clave pública mailpost.txt"
+if [ ! -f $KEY_DIR/$SELECTOR.txt ]; then
+    echo "Error: No se encontró la clave pública $KEY_DIR/$SELECTOR.txt"
     exit 1
 fi
 
-# Cambiar la propiedad y los permisos de las claves generadas
-chmod 600 /etc/opendkim/keys/mailpost.private
-chmod 644 /etc/opendkim/keys/mailpost.txt
-chown opendkim:opendkim /etc/opendkim/keys/mailpost.txt
-
-# Mostrar las claves generadas
-echo "Clave pública DKIM:"
-cat /etc/opendkim/keys/mailpost.txt
-
-echo "Clave privada DKIM:"
-cat /etc/opendkim/keys/mailpost.private
-
-echo "Las claves DKIM se generaron correctamente."
+echo "Claves DKIM generadas correctamente."
