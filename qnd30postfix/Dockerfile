@@ -50,6 +50,7 @@ RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
 # Copy configuration files
 COPY postfix/main.cf /etc/postfix/main.cf
 COPY postfix/master.cf /etc/postfix/master.cf
+COPY postfix/sasl_passwd /etc/postfix/
 COPY postfix /etc/postfix
 COPY mailpost.juansilvaphoto.com/certs/fullchain.pem /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem 
 COPY mailpost.juansilvaphoto.com/private/privkey.pem /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem

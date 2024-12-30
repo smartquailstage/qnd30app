@@ -65,6 +65,7 @@ smtpd_sender_restrictions =
 # Restricciones para el destinatario
 smtpd_recipient_restrictions =
     permit_mynetworks,
+    permit_sasl_authenticated,
     reject_unauth_destination,
     permit
 
@@ -79,6 +80,8 @@ smtpd_client_restrictions =
     permit_mynetworks,
     reject_unknown_client,
     permit
+
+    
 
 
 
@@ -120,6 +123,8 @@ smtpd_sasl_type = dovecot
 
 # Ruta al socket de autenticación de Dovecot
 smtpd_sasl_path = unix:/var/spool/postfix/private/auth
+
+smtp_sasl_password_maps = unix:/etc/postfix/sasl_passwd
 
 # Añadir un encabezado 'Authenticated-By' a los correos de usuarios autenticados
 smtpd_sasl_authenticated_header = yes
