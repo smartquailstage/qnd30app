@@ -22,7 +22,7 @@ function addUserInfo {
     # Añade el usuario con un directorio home
     adduser --system --home "$user_home" --no-create-home "$user_name"
 
-    # Crea el directorio home
+    # Crea el directorio home si no existe
     mkdir -p "$user_home"
 
     # Ajusta los permisos del directorio home
@@ -33,8 +33,9 @@ function addUserInfo {
     chown -R postfix:postfix "$user_home"
     chmod -R 700 "$user_home"
 
-    chown -R vmail:vmail "$user_home"
-    chmod -R 700 "$user_home"
+    # Configura los permisos adecuados para vmail en Maildir
+    chown -R vmail:vmail "$user_home/var/mail"  # Se asume que es /home/info/var/mail
+    chmod -R 700 "$user_home/var/mail"
     
     log "User '${user_name}' added with home directory '${user_home}'"
   else
