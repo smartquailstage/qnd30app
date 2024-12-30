@@ -7,7 +7,7 @@ mydomain = juansilvaphoto.com
 myhostname = mailpost.juansilvaphoto.com
 myorigin = $mydomain
 
-home_mailbox = /var/mail/%d/%u/
+home_mailbox = /var/mail/%d/%u/Maildir/
 
 
 # Empty alias list to override the configuration variable and disable NIS

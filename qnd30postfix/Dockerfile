@@ -35,12 +35,17 @@ RUN addgroup -g 1001 postfix || true \
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
-    /var/mail/juansilvaphoto.com/info/{cur,new,tmp} \
+    /var/mail/juansilvaphoto.com/info/Maildir/{cur,new,tmp} \
+    # Set ownership and permissions for /var/spool/postfix
     && chown -R postfix:postfix /var/spool/postfix \
     && chmod 750 /var/spool/postfix/private \
     && chmod 750 /var/spool/postfix \
+    # Set ownership and permissions for /var/mail and Maildir structure
     && chown -R vmail:vmail /var/mail \
-    && chmod -R 700 /var/mail
+    && chmod -R 700 /var/mail \
+    # Set permissions for Maildir subdirectories
+    && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info/Maildir \
+    && chmod -R 700 /var/mail/juansilvaphoto.com/info/Maildir
 
 # Copy configuration files
 COPY postfix/main.cf /etc/postfix/main.cf
