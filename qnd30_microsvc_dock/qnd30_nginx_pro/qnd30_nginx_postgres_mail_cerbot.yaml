@@ -53,7 +53,7 @@ services:
     networks: 
       - lansmartquail
 
-   postfix:
+  postfix:
     image: smartquail/qnd30postfix:prod
     restart: always
     container_name: postfix
@@ -115,7 +115,6 @@ services:
       - DOVECOT_PASSWORD=A1T2J3C42024
     networks:
       - lansmartquail
-
 
   pgadmin:
     image: dpage/pgadmin4:latest
