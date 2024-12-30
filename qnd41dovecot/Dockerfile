@@ -60,11 +60,11 @@ RUN apt-get -y update && \
     groupadd -g 1000 vmail && \
     useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
     passwd -l vmail && \
-    mkdir -p /srv/mail && \
-    chown -R vmail:vmail /srv/mail && \
-    mkdir -p /var/mail && \
-    chown -R vmail:vmail /var/mail && \
-    chmod -R 770 /var/mail && \
+    mkdir -p /srv/vmail && \
+    chown -R vmail:vmail /srv/vmail && \
+    mkdir -p /var/vmail && \
+    chown -R vmail:vmail /var/vmail && \
+    chmod -R 770 /var/vmail && \
     mkdir -p /var/spool/postfix/private && \
     chown -R postfix:postfix /var/spool/postfix && \
     chmod -R 770 /var/spool/postfix && \
