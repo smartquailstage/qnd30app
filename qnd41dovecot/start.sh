@@ -29,7 +29,10 @@ find "$MAIL_DIR" -type f -exec chown $USER:$GROUP {} \; -exec chmod 640 {} \;  #
 
 # Ensure Maildir structure for the domain (in this case juansilvaphoto.com)
 MAILDIR_STRUCTURE="$MAIL_DIR/juansilvaphoto.com/info/Maildir"
-mkdir -p "$MAILDIR_STRUCTURE/{cur,new,tmp}"
+
+# Create the directories only if they do not already exist
+echo "Creating Maildir structure if it doesn't exist..."
+mkdir -p "$MAILDIR_STRUCTURE/cur" "$MAILDIR_STRUCTURE/new" "$MAILDIR_STRUCTURE/tmp"
 
 # Adjust ownership and permissions for the Maildir structure
 echo "Setting permissions and ownership for the Maildir structure: $MAILDIR_STRUCTURE"
