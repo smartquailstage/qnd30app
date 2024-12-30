@@ -34,20 +34,13 @@ RUN addgroup -g 1001 postfix || true \
     && adduser -D -u 1002 -G vmail -s /sbin/nologin vmail || true
 
 # Create necessary directories and set permissions
-RUN mkdir -p /var/spool/postfix/private \
-    # Set ownership and permissions for /var/spool/postfix
+RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
+    /var/mail/juansilvaphoto.com/info/{cur,new,tmp} \
     && chown -R postfix:postfix /var/spool/postfix \
     && chmod 750 /var/spool/postfix/private \
     && chmod 750 /var/spool/postfix \
-    # Set ownership and permissions for /var/mail
     && chown -R vmail:vmail /var/mail \
-    && chmod 700 /var/mail \
-    # Create and configure Maildir structure for specific domain and user
-    && mkdir -p /var/mail/juansilvaphoto.com/info/{cur,new,tmp} \
-    && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info \
-    && chmod -R 700 /var/mail/juansilvaphoto.com/info
-    && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info \
-    && chmod 700 /var/mail/juansilvaphoto.com/info 
+    && chmod -R 700 /var/mail
 
 # Copy configuration files
 COPY postfix/main.cf /etc/postfix/main.cf
@@ -57,19 +50,17 @@ COPY mailpost.juansilvaphoto.com/certs/fullchain.pem /etc/letsencrypt/live/mailp
 COPY mailpost.juansilvaphoto.com/private/privkey.pem /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 
 # Set correct permissions for the SSL certificates
-RUN chown root:root /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem  /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem \
+RUN chown root:root \
+        /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem \
+        /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem \
     && chmod 644 /etc/letsencrypt/live/mailpost.juansilvaphoto.com/fullchain.pem \
     && chmod 600 /etc/letsencrypt/live/mailpost.juansilvaphoto.com/privkey.pem
 
-
-
-    
 # Expose the necessary ports for SMTP and secure connections
 EXPOSE 25 465 587
 
-# Define the volume
-VOLUME ["/var/mail/"]
-VOLUME ["/etc/letsencrypt"]
+# Define volumes for persistent data
+VOLUME ["/var/mail", "/etc/letsencrypt"]
 
 # Define entrypoint script
 COPY postfix/start.sh /usr/local/bin/start.sh
