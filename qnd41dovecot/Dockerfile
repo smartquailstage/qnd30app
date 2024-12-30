@@ -14,12 +14,9 @@ ADD dovecot.list /etc/apt/sources.list.d/
 # Copiar archivos de configuración de Dovecot y Postfix
 COPY dovecot.conf /etc/dovecot/conf.d/dovecot.conf
 
-
 # Copiar certificados SSL
 COPY mailpost.juansilvaphoto.com/certs/cert.pem /etc/dovecot/private/cert.pem
 COPY mailpost.juansilvaphoto.com/private/privkey.pem /etc/dovecot/private/privkey.pem
-
-
 
 # Archivos de configuración postfix+Dovecot
 COPY configPD/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext
@@ -64,31 +61,28 @@ RUN apt-get -y update && \
     useradd -u 1000 -g 1000 vmail -d /srv/vmail && \
     passwd -l vmail && \
     mkdir -p /srv/mail && \
-    chown vmail:vmail /srv/mail && \
+    chown -R vmail:vmail /srv/mail && \
     mkdir -p /var/mail && \
-    chown vmail:vmail /var/mail && \
-    chmod 755 /var/mail && \
+    chown -R vmail:vmail /var/mail && \
+    chmod -R 770 /var/mail && \
     mkdir -p /var/spool/postfix/private && \
-    chown vmail:vmail /var/spool/postfix/private && \
+    chown -R postfix:postfix /var/spool/postfix && \
+    chmod -R 770 /var/spool/postfix && \
     # Configurar la zona horaria
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
-
-
-# Configurar permisos y propiedad para directorios
+# Configurar permisos y propiedad para directorios adicionales
 RUN mkdir -p /var/mail/info@mailpost.juansilvaphoto.com/tmp && \
-    chown -R vmail:vmail /var/mail && \
-    chmod -R 755 /var/mail
+    chown -R vmail:vmail /var/mail/info@mailpost.juansilvaphoto.com && \
+    chmod -R 770 /var/mail/info@mailpost.juansilvaphoto.com && \
+    chmod 755 /var/mail
 
 EXPOSE 24
 EXPOSE 110
 EXPOSE 143
-#EXPOSE 587
 EXPOSE 993
 EXPOSE 995
-#EXPOSE 4190
-
 
 VOLUME ["/etc/dovecot", "/var/mail/"]
 
