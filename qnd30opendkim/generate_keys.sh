@@ -1,48 +1,60 @@
-FROM debian:bullseye
+#!/bin/bash
 
-# Actualizar e instalar dependencias necesarias
-RUN apt-get update && \
-    apt-get install -y \
-    opendkim \
-    opendkim-tools \
-    openssl && \
-    apt-get clean
+# Asegúrate de que el directorio exista y tenga permisos correctos
+mkdir -p /etc/opendkim/keys
+chown -R opendkim:opendkim /etc/opendkim/keys
+chmod 700 /etc/opendkim/keys
 
-# Crear el grupo y el usuario 'opendkim' de forma segura (evitar errores si ya existen)
-RUN groupadd -r opendkim || true && \
-    useradd -r -g opendkim -m opendkim || true && \
-    groupadd postfix || true && \
-    mkdir -p /etc/opendkim/keys /var/spool/postfix/opendkim && \
-    chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix && \
-    chmod 700 /etc/opendkim/keys && \
-    chmod 700 /var/spool/postfix/opendkim && \
-    chmod 755 /etc/opendkim && \
-    chmod 755 /var/spool/postfix
+# Generar las claves DKIM con los parámetros correctos (selector y dominio)
+echo "Generando las claves DKIM..."
+opendkim-genkey -s mailpost -d mailpost.juansilvaphoto.com -b 2048 -v -D /etc/opendkim/keys || { echo "Error: Fallo al generar las claves DKIM"; exit 1; }
 
-# Copiar la configuración de OpenDKIM
-COPY opendkim.conf /etc/opendkim.conf
-COPY KeyTable /etc/opendkim/KeyTable
-COPY SigningTable /etc/opendkim/SigningTable
-COPY TrustedHosts /etc/opendkim/TrustedHosts
+# Verificar que las claves hayan sido generadas
+if [ ! -f /etc/opendkim/keys/mailpost.private ]; then
+    echo "Error: No se encontró la clave privada mailpost.private"
+    exit 1
+fi
 
-# Script para generar las claves DKIM
-COPY generate_keys.sh /usr/local/bin/generate_keys.sh
-RUN chmod +x /usr/local/bin/generate_keys.sh
+if [ ! -f /etc/opendkim/keys/mailpost.txt ]; then
+    echo "Error: No se encontró la clave pública mailpost.txt"
+    exit 1
+fi
 
-# Asegurar que postfix pueda acceder a los archivos de OpenDKIM
-RUN mkdir -p /var/spool/postfix/opendkim && \
-    chown -R opendkim:postfix /var/spool/postfix/opendkim && \
-    chmod 750 /var/spool/postfix/opendkim
+# Crear el directorio para las claves DKIM si no existe
+mkdir -p /etc/opendkim/keys
+# Cambiar el propietario y el grupo a 'opendkim'
+chown -R opendkim:opendkim /etc/opendkim/keys
+# Asegurarse de que el directorio tenga permisos de escritura solo para el usuario
+chmod 700 /etc/opendkim/keys
 
-EXPOSE 8891
+# Cambiar los permisos de las claves generadas
+chmod 600 /etc/opendkim/keys/mailpost.private
+chmod 644 /etc/opendkim/keys/mailpost.txt
 
-# Exponer el socket y las claves como volúmenes
-VOLUME ["/var/spool/postfix/opendkim"]
-VOLUME ["/etc/opendkim/keys"]
+# Cambiar la propiedad de la clave pública para el acceso correcto
+chown opendkim:opendkim /etc/opendkim/keys/mailpost.txt
 
-# Cambiar el propietario de las carpetas para evitar problemas de permisos al ejecutar OpenDKIM
-RUN chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix
+# Permitir que Postfix acceda al socket de OpenDKIM
+# Crear el directorio donde se encuentra el socket si no existe
+mkdir -p /var/spool/postfix/opendkim
 
-# Ejecutar el script de generación de claves y luego OpenDKIM como usuario opendkim
-USER root
-CMD ["/bin/bash", "-c", "/usr/local/bin/generate_keys.sh && opendkim -f -x /etc/opendkim.conf"]
+# Dar permisos para que Postfix pueda acceder al socket de OpenDKIM
+chown postfix:postfix /var/spool/postfix/opendkim
+chmod 750 /var/spool/postfix/opendkim
+
+# Verificar que el socket de OpenDKIM tiene permisos correctos
+if [ -S /var/spool/postfix/opendkim/opendkim.sock ]; then
+    echo "El socket de OpenDKIM está listo para ser utilizado por Postfix."
+else
+    echo "Error: El socket de OpenDKIM no se encuentra o tiene permisos incorrectos."
+    exit 1
+fi
+
+# Mostrar las claves generadas
+echo "Clave pública DKIM:"
+cat /etc/opendkim/keys/mailpost.txt
+
+echo "Clave privada DKIM:"
+cat /etc/opendkim/keys/mailpost.private
+
+echo "Las claves DKIM se generaron correctamente."

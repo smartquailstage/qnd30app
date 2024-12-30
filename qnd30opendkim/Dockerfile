@@ -19,7 +19,7 @@ RUN groupadd -r opendkim || true && \
     chmod 755 /etc/opendkim && \
     chmod 755 /var/spool/postfix
 
-# Copiar la configuración de OpenDKIM (asegúrate de que estos archivos existan en el contexto de construcción)
+# Copiar la configuración de OpenDKIM
 COPY opendkim.conf /etc/opendkim.conf
 COPY KeyTable /etc/opendkim/KeyTable
 COPY SigningTable /etc/opendkim/SigningTable
@@ -44,5 +44,5 @@ VOLUME ["/etc/opendkim/keys"]
 RUN chown -R opendkim:opendkim /etc/opendkim /var/spool/postfix
 
 # Ejecutar el script de generación de claves y luego OpenDKIM como usuario opendkim
-USER opendkim
+USER root
 CMD ["/bin/bash", "-c", "/usr/local/bin/generate_keys.sh && opendkim -f -x /etc/opendkim.conf"]
