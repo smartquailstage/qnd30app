@@ -5,8 +5,7 @@ RUN apt-get update && \
     apt-get install -y \
     opendkim \
     opendkim-tools \
-    openssl \
-    sudo && \
+    openssl && \
     apt-get clean
 
 # Crear el grupo y el usuario 'opendkim' de forma segura (evitar errores si ya existen)
