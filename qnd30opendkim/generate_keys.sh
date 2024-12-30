@@ -3,6 +3,7 @@
 # Variables
 KEY_DIR="/etc/opendkim/keys"
 SOCKET_DIR="/var/spool/postfix/opendkim"
+SOCKET="$SOCKET_DIR/opendkim.sock"
 DOMAIN="mailpost.juansilvaphoto.com"
 SELECTOR="mail"
 
@@ -33,13 +34,16 @@ fi
 
 echo "Claves DKIM generadas correctamente."
 
-# Iniciar el servicio de OpenDKIM para que se cree el socket
+# Iniciar el servicio de OpenDKIM
 echo "Iniciando el servicio OpenDKIM..."
 service opendkim start
 
+# Pausar brevemente para dar tiempo a que se cree el socket
+sleep 2
+
 # Verificar si el socket se creó
-if [ -S $SOCKET_DIR/opendkim.sock ]; then
-    echo "El socket de OpenDKIM se creó correctamente en $SOCKET_DIR/opendkim.sock"
+if [ -S $SOCKET ]; then
+    echo "El socket de OpenDKIM se creó correctamente en $SOCKET"
 else
     echo "Error: El socket de OpenDKIM no se creó."
     exit 1
