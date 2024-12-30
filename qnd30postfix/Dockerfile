@@ -47,9 +47,7 @@ RUN mkdir -p /var/spool/postfix/private \
     && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info \
     && chmod -R 700 /var/mail/juansilvaphoto.com/info
     && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info \
-    && chmod 700 /var/mail/juansilvaphoto.com/info \
-    && find /var/mail/juansilvaphoto.com/info -type d -exec chmod 750 {} \; \
-    && find /var/mail/juansilvaphoto.com/info -type f -exec chmod 640 {} \;
+    && chmod 700 /var/mail/juansilvaphoto.com/info 
 
 # Copy configuration files
 COPY postfix/main.cf /etc/postfix/main.cf
