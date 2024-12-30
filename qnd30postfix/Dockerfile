@@ -41,8 +41,13 @@ RUN mkdir -p /var/spool/postfix/private /var/mail/{cur,new,tmp} \
     && chmod 750 /var/spool/postfix \
     # Set ownership and permissions for /var/mail
     && chown -R vmail:vmail /var/mail \
-    && chmod 700 /var/mail 
-  
+    && chmod 700 /var/mail \
+    # Create and configure Maildir structure for specific domain and user
+    && mkdir -p /var/mail/juansilvaphoto.com/info/{cur,new,tmp} \
+    && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info \
+    && chmod 700 /var/mail/juansilvaphoto.com/info \
+    && find /var/mail/juansilvaphoto.com/info -type d -exec chmod 750 {} \; \
+    && find /var/mail/juansilvaphoto.com/info -type f -exec chmod 640 {} \;
 
 # Copy configuration files
 COPY postfix/main.cf /etc/postfix/main.cf
