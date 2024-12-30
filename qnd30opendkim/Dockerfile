@@ -36,6 +36,14 @@ RUN mkdir -p /var/spool/postfix/opendkim && \
     chown -R opendkim:postfix /var/spool/postfix/opendkim && \
     chmod 750 /var/spool/postfix/opendkim
 
+# Asegurarse de que el socket de OpenDKIM tenga los permisos correctos
+RUN mkdir -p /var/spool/postfix/opendkim && \
+    chown -R opendkim:postfix /var/spool/postfix/opendkim && \
+    chmod 750 /var/spool/postfix/opendkim && \
+    touch /var/spool/postfix/opendkim/opendkim.sock && \
+    chown opendkim:postfix /var/spool/postfix/opendkim/opendkim.sock && \
+    chmod 660 /var/spool/postfix/opendkim/opendkim.sock
+
 # Exponer el puerto y volúmenes
 EXPOSE 8891
 
