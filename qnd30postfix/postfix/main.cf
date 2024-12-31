@@ -62,12 +62,6 @@ smtpd_sender_restrictions =
     reject_sender_login_mismatch,
     permit
 
-# Restricciones para el destinatario
-smtpd_recipient_restrictions =
-    permit_mynetworks,
-    permit_sasl_authenticated,
-    reject_unauth_destination,
-    permit
 
 # Restricciones para el reenvío
 smtpd_relay_restrictions =
@@ -79,6 +73,13 @@ smtpd_relay_restrictions =
 smtpd_client_restrictions =
     permit_mynetworks,
     reject_unknown_client,
+    permit_sasl_authenticated,
+    permit
+
+smtpd_recipient_restrictions = 
+    permit_mynetworks,
+    permit_sasl_authenticated,
+    reject_unauth_destination,
     permit
 
     
