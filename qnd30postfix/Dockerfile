@@ -48,6 +48,7 @@ RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
     && chmod -R 700 /var/mail/juansilvaphoto.com/info/Maildir
 
 # Copy configuration files
+COPY postfix/virtual /etc/postfix/virtual
 COPY postfix/main.cf /etc/postfix/main.cf
 COPY postfix/master.cf /etc/postfix/master.cf
 COPY postfix/sasl_passwd /etc/postfix/
