@@ -82,41 +82,18 @@ function createVirtualTables {
 
 function insertInitialData {
   log "Inserting initial data into PostgreSQL tables..."
-function insertInitialData {
-  log "Inserting initial data into PostgreSQL tables..."
 
-  # Inserta los dominios si no existen
   local insert_sql="
     INSERT INTO virtual_domains (domain) VALUES
     ('juansilvaphoto.com')
     ON CONFLICT DO NOTHING;
-
-    INSERT INTO virtual_domains (domain) VALUES
-    ('mailpost.juansilvaphoto.com')
+    INSERT INTO virtual_users (domain_id, email, password) VALUES 
+    ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@juansilvaphoto.com', 'A1T2J3C42024') 
     ON CONFLICT DO NOTHING;
-
-    INSERT INTO virtual_users (domain_id, email, password) 
-    SELECT id, 'info@juansilvaphoto.com', 'A1T2J3C42024'
-    FROM virtual_domains
-    WHERE domain = 'juansilvaphoto.com'
-    ON CONFLICT DO NOTHING;
-
-    INSERT INTO virtual_aliases (domain_id, source, destination) 
-    SELECT id, 'info@mailpost.juansilvaphoto.com', 'info'
-    FROM virtual_domains
-    WHERE domain = 'mailpost.juansilvaphoto.com'
+    INSERT INTO virtual_aliases (domain_id, source, destination) VALUES 
+      ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'info') 
     ON CONFLICT DO NOTHING;
   "
-
-  psql -U "$POSTFIX_POSTGRES_USER" -d "$POSTFIX_POSTGRES_DB" -h "$POSTFIX_POSTGRES_HOST" -c "$insert_sql"
-
-  if [ $? -eq 0 ]; then
-    log "Initial data inserted successfully."
-  else
-    log "Failed to insert initial data."
-  fi
-}
-
 
   psql -U "$POSTFIX_POSTGRES_USER" -d "$POSTFIX_POSTGRES_DB" -h "$POSTFIX_POSTGRES_HOST" -c "$insert_sql"
 
