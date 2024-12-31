@@ -90,10 +90,10 @@ function insertInitialData {
     INSERT INTO virtual_users (domain_id, email, password) VALUES 
     ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@juansilvaphoto.com', 'A1T2J3C42024') 
     ON CONFLICT DO NOTHING;
-    INSERT INTO virtual_aliases (domain_id, source, destination)
-    VALUES 
-    ((SELECT id FROM virtual_domains WHERE domain = 'mailpost.juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'info@juansilvaphoto.com') 
+    INSERT INTO virtual_aliases (domain_id, source, destination) VALUES 
+      ((SELECT id FROM virtual_domains WHERE domain = 'mailpost.juansilvaphoto.com'), 'info@mailpost.juansilvaphoto.com', 'info') 
     ON CONFLICT DO NOTHING;
+
   "
 
   psql -U "$POSTFIX_POSTGRES_USER" -d "$POSTFIX_POSTGRES_DB" -h "$POSTFIX_POSTGRES_HOST" -c "$insert_sql"
