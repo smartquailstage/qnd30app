@@ -62,10 +62,16 @@ smtpd_sender_restrictions =
     permit
 
 smtpd_recipient_restrictions =
-    permit
+    permit_mynetworks,
+    permit_sasl_authenticated,
+    reject_unauth_destination
+
 
 smtpd_relay_restrictions =
-    permit
+    permit_mynetworks,
+    permit_sasl_authenticated,
+    reject_unauth_destination
+
 
 
 
