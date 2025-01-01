@@ -78,14 +78,6 @@ smtpd_recipient_restrictions =
     reject_non_fqdn_recipient,         
     reject_unknown_recipient_domain    
 
-
-
-
-
-    
-
-
-
 smtpd_relay_before_recipient_restrictions = no
 
 ###############
