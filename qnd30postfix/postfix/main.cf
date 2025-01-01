@@ -55,37 +55,36 @@ append_dot_mydomain = no
 smtpd_helo_required = yes
 
 
-# Restricciones para el remitente
 smtpd_sender_restrictions =
-    permit_mynetworks,
-    permit_sasl_authenticated,
-    reject_non_fqdn_sender,
-    reject_unknown_sender_domain,
-    reject_unlisted_sender,
-    reject_sender_login_mismatch
+    permit_mynetworks,                 # Permitir direcciones de la red interna
+    permit_sasl_authenticated,         # Permitir usuarios autenticados
+    reject_non_fqdn_sender,            # Rechazar remitentes sin un dominio completamente calificado
+    reject_unknown_sender_domain,      # Rechazar remitentes con dominios desconocidos
+    reject_unlisted_sender,            # Rechazar remitentes no listados en las tablas de usuarios
+    reject_sender_login_mismatch       # Rechazar remitentes si no coincide el login y el correo
 
-# Restricciones para el reenvío (Relay)
+
 smtpd_relay_restrictions =
-    permit_mynetworks,
-    permit_sasl_authenticated,
-    reject_unauth_destination
+    permit_mynetworks,                 # Permitir reenvío para la red interna
+    permit_sasl_authenticated,         # Permitir reenvío para usuarios autenticados
+    reject_unauth_destination           # Rechazar correos que no tengan un destino permitido
+
+smtpd_client_restrictions =
+    permit_mynetworks,                 # Permitir clientes de la red interna
+    permit_sasl_authenticated,         # Permitir clientes autenticados
+    reject_unknown_client_hostname,    # Rechazar clientes con hostnames desconocidos
+    reject_rbl_client zen.spamhaus.org # Rechazar clientes listados en bases de datos de spam
 
 smtpd_recipient_restrictions =
-    permit_mynetworks,
-    permit_sasl_authenticated,
-    reject_unauth_destination,
-    reject_non_fqdn_recipient,
-    reject_unknown_recipient_domain,
-    permit
+    permit_mynetworks,                 # Permitir destinatarios en la red interna
+    permit_sasl_authenticated,         # Permitir destinatarios de usuarios autenticados
+    reject_unauth_destination,         # Rechazar destinatarios no autorizados
+    reject_non_fqdn_recipient,         # Rechazar destinatarios sin un dominio completamente calificado
+    reject_unknown_recipient_domain    # Rechazar destinatarios con dominios desconocidos
 
 
-# Restricciones para el destinatario
-smtpd_recipient_restrictions =
-    permit_mynetworks,
-    permit_sasl_authenticated,
-    reject_unauth_destination,
-    reject_non_fqdn_recipient,
-    reject_unknown_recipient_domain
+
+
 
     
 
