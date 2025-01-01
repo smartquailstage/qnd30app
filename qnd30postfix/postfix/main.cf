@@ -14,6 +14,12 @@ home_mailbox = /var/mail/%d/%u/Maildir/
 alias_maps = 
 
 
+#mailbox_transport = lmtp:unix:private/dovecot-lmtp
+#virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+
 
 # Message size limit
 message_size_limit = {{ MESSAGE_SIZE_LIMIT }}
