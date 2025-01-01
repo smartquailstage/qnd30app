@@ -94,7 +94,7 @@ local insert_sql="
     ON CONFLICT DO NOTHING;
 
     INSERT INTO virtual_aliases (domain_id, source, destination) VALUES 
-    ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@mjuansilvaphoto.com', 'info') 
+    ((SELECT id FROM virtual_domains WHERE domain = 'juansilvaphoto.com'), 'info@juansilvaphoto.com', 'info') 
     ON CONFLICT DO NOTHING;
 "
 
