@@ -75,8 +75,6 @@ smtpd_relay_restrictions =
 smtpd_client_restrictions =
     permit_mynetworks,
     permit_sasl_authenticated,
-    warn_if_reject,
-    reject_rbl_client zen.spamhaus.org,
     permit
 
 smtpd_recipient_restrictions = 
