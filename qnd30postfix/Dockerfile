@@ -44,13 +44,13 @@ RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
     && chmod 750 /var/spool/postfix \
     # Set ownership and permissions for /var/mail and Maildir structure
     && chown -R vmail:vmail /var/mail \
-    && chmod -R 700 /var/mail \
+    && chmod -R 750 /var/mail \
     # Set permissions for Maildir subdirectories
     && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info/Maildir \
-    && chmod -R 700 /var/mail/juansilvaphoto.com/info/Maildir \
-    && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/cur \
-    && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/new \
-    && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/tmp
+    && chmod -R 750 /var/mail/juansilvaphoto.com/info/Maildir \
+    && chmod 750 /var/mail/juansilvaphoto.com/info/Maildir/cur \
+    && chmod 750 /var/mail/juansilvaphoto.com/info/Maildir/new \
+    && chmod 750 /var/mail/juansilvaphoto.com/info/Maildir/tmp
 
 # Copy configuration files
 COPY postfix/transport.pcre /etc/postfix/transport.pcre
