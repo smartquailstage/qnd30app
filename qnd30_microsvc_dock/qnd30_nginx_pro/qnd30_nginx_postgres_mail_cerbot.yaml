@@ -129,6 +129,7 @@ services:
     networks:
       - lansmartquail
 
+
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -139,25 +140,28 @@ services:
     networks:
       - lansmartquail
 
-  postfixadmin:
-    image: postfixadmin
-    container_name: postfixadmin
-    environment:
-      - DBHOST=smartquaildb
-      - DBUSER=sqadmindb    # Cambia esto al usuario que usa tu base de datos
-      - DBPASS=smartquaildev1719pass   # Cambia esto a la contraseña correcta
-      - DBNAME=POSTFIXDB   # Base de datos existente
-      - ADMIN_EMAIL="info@juansilvaphoto.com" # Correo del administrador
-      - POSTFIXADMIN_PASSWORD="A1T2J3C42024"  # Contraseña para el administrador de PostfixAdmin
-    ports:
-      - "8080:80"
-    volumes:
-      - postfixadmin_data:/var/lib/postfixadmin
-    depends_on:
-      - smartquaildb
-    networks:
-      - lansmartquail
-    restart: unless-stopped
+      
+postfixadmin:
+  image: hardware/postfixadmin
+  container_name: postfixadmin
+  environment:
+    DBHOST: smartquaildb # Cambiado a formato sin lista para evitar errores
+    DBUSER: sqadmindb    # Usuario de la base de datos
+    DBPASS: smartquaildev1719pass  # Contraseña de la base de datos
+    DBNAME: POSTFIXDB    # Nombre de la base de datos
+    ADMIN_EMAIL: admin@juansilvaphoto.com # Correo del administrador
+    ADMIN_PASSWORD: A1T2J3C42024  # Contraseña para el administrador
+    SETUP_PASSWORD: A1T2J3C42024  # Contraseña para completar la configuración inicial
+  ports:
+    - "8080:80"
+  volumes:
+    - postfixadmin_data:/var/lib/postfixadmin
+  depends_on:
+    - smartquaildb
+  networks:
+    - lansmartquail
+  restart: unless-stopped
+
 
 volumes:
   opendkim:
