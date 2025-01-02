@@ -140,9 +140,9 @@ services:
     networks:
       - lansmartquail
 
-
+      
 postfixadmin:
-  image: hardware/postfixadmin
+  image: postfixadmin
   container_name: postfixadmin
   environment:
     DBHOST: smartquaildb # Cambiado a formato sin lista para evitar errores
@@ -151,6 +151,7 @@ postfixadmin:
     DBNAME: POSTFIXDB    # Nombre de la base de datos
     ADMIN_EMAIL: admin@juansilvaphoto.com # Correo del administrador
     ADMIN_PASSWORD: A1T2J3C42024  # Contraseña para el administrador
+    SETUP_PASSWORD: A1T2J3C42024  # Contraseña para completar la configuración inicial
   ports:
     - "8080:80"
   volumes:
