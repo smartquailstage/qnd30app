@@ -35,7 +35,9 @@ RUN addgroup -g 1001 postfix || true \
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
-    /var/mail/juansilvaphoto.com/info/Maildir/{cur,new,tmp} \
+    /var/mail/juansilvaphoto.com/info/Maildir/cur \
+    /var/mail/juansilvaphoto.com/info/Maildir/new \
+    /var/mail/juansilvaphoto.com/info/Maildir/tmp \
     # Set ownership and permissions for /var/spool/postfix
     && chown -R postfix:postfix /var/spool/postfix \
     && chmod 750 /var/spool/postfix/private \
@@ -46,7 +48,6 @@ RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
     # Set permissions for Maildir subdirectories
     && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info/Maildir \
     && chmod -R 700 /var/mail/juansilvaphoto.com/info/Maildir \
-    # Set permissions for tmp and new directories in Maildir
     && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/cur \
     && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/new \
     && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/tmp
