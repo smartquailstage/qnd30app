@@ -147,8 +147,8 @@ services:
       - DBUSER=sqadmindb    # Cambia esto al usuario que usa tu base de datos
       - DBPASS=smartquaildev1719pass   # Cambia esto a la contraseña correcta
       - DBNAME=POSTFIXDB   # Base de datos existente
-      - ADMIN_EMAIL=smartquail.info@gmail.com  # Correo del administrador
-      - POSTFIXADMIN_PASSWORD=smartquaildev1719pass  # Contraseña para el administrador de PostfixAdmin
+      - ADMIN_EMAIL="info@juansilvaphoto.com" # Correo del administrador
+      - POSTFIXADMIN_PASSWORD="A1T2J3C42024"  # Contraseña para el administrador de PostfixAdmin
     ports:
       - "8080:80"
     volumes:
