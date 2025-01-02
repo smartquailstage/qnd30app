@@ -140,7 +140,7 @@ services:
       - lansmartquail
 
   postfixadmin:
-    image: postfixadmin/postfixadmin:latest
+    image: postfixadmin
     container_name: postfixadmin
     environment:
       - DBHOST=smartquaildb
