@@ -45,7 +45,11 @@ RUN mkdir -p /var/spool/postfix/private /var/spool/postfix \
     && chmod -R 700 /var/mail \
     # Set permissions for Maildir subdirectories
     && chown -R vmail:vmail /var/mail/juansilvaphoto.com/info/Maildir \
-    && chmod -R 700 /var/mail/juansilvaphoto.com/info/Maildir
+    && chmod -R 700 /var/mail/juansilvaphoto.com/info/Maildir \
+    # Set permissions for tmp and new directories in Maildir
+    && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/cur \
+    && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/new \
+    && chmod 700 /var/mail/juansilvaphoto.com/info/Maildir/tmp
 
 # Copy configuration files
 COPY postfix/transport.pcre /etc/postfix/transport.pcre
