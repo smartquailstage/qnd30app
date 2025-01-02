@@ -139,6 +139,26 @@ services:
     networks:
       - lansmartquail
 
+  postfixadmin:
+    image: postfixadmin/postfixadmin:latest
+    container_name: postfixadmin
+    environment:
+      - DBHOST=smartquaildb
+      - DBUSER=sqadmindb    # Cambia esto al usuario que usa tu base de datos
+      - DBPASS=smartquaildev1719pass   # Cambia esto a la contraseña correcta
+      - DBNAME=POSTFIXDB   # Base de datos existente
+      - ADMIN_EMAIL=smartquail.info@gmail.com  # Correo del administrador
+      - POSTFIXADMIN_PASSWORD=smartquaildev1719pass  # Contraseña para el administrador de PostfixAdmin
+    ports:
+      - "8080:80"
+    volumes:
+      - postfixadmin_data:/var/lib/postfixadmin
+    depends_on:
+      - smartquaildb
+    networks:
+      - lansmartquail
+    restart: unless-stopped
+
 volumes:
   opendkim:
   certbot-web_2:
@@ -151,6 +171,7 @@ volumes:
   mail:  # Volumen compartido entre Postfix y Dovecot para el almacenamiento de correos
   postfix-logs:
   dovecot:
+  postfixadmin_data:
 
 networks: 
   lansmartquail:
