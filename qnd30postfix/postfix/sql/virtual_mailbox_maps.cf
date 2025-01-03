@@ -4,5 +4,4 @@ dbname = POSFIXDB
 hosts = smartquaildb
 
 # Consulta para obtener la ruta del buzón de correo
-query = SELECT CONCAT('/var/mail/', (SELECT domain FROM virtual_domains WHERE id = virtual_users.domain_id), '/', email, '/Maildir/')
-FROM virtual_users WHERE email='%s'
+query = SELECT CONCAT('/var/mail/', domain, '/', email, '/Maildir/') FROM virtual_users, virtual_domains WHERE virtual_users.domain_id = virtual_domains.id AND email='%s'
