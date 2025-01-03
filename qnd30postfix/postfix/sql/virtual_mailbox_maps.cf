@@ -3,6 +3,5 @@ password = smartquaildev1719pass
 dbname = POSFIXDB
 hosts = smartquaildb
 
-# Query para obtener la ruta del buzón de correo
-query = SELECT CONCAT('/var/mail/', SUBSTRING_INDEX(email, '@', -1), '/', SUBSTRING_INDEX(email, '@', 1), '/') FROM virtual_users WHERE email='%s'
-
+# Consulta para obtener la ruta del buzón de correo
+query = SELECT CONCAT('/var/mail/', domain, '/', email, '/Maildir/') FROM virtual_users WHERE email='%s'
